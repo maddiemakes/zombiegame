@@ -1,0 +1,15 @@
+#TODO
+- [ ] Game world
+- [ ] Character
+- [ ] Character moves
+- [ ] Zombies can spawn
+- [ ] Zombies can move
+- [ ] Zombies follow you
+- [ ] Weapons
+- [ ] Health
+- [ ] Upgrades
+- [ ] Medpacks
+- [ ] Buildings
+- [ ] Buildings randomly spawn
+- [ ] Items are random
+- [ ] Points (upgrade system)
