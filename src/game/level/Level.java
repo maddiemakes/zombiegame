@@ -1,5 +1,7 @@
 package game.level;
 
+import game.character.Character;
+
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -14,7 +16,7 @@ public class Level {
 
     public Level(String level) throws SlickException {
         map = new TiledMap("tiled/" + level + ".tmx", "tiled");
-        characters = new ArrayList<Character>();
+        characters = new ArrayList<>();
     }
 
     public void addCharacter(Character c) {
