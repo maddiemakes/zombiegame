@@ -2,7 +2,7 @@
 - [ ] Game world
 - [x] Character
 - [x] Character moves
-- [ ] World moves around character
+- [x] World moves around character
 - [ ] Collision detection for walls and lava
 - [ ] Zombies can spawn
 - [ ] Zombies can move
@@ -16,3 +16,7 @@
 - [ ] Points (upgrade system)
 - [ ] Character sprites
 - [ ] Zombie sprites
+    - [ ] Multiple zombie types
+- [ ] Game gets harder as you play
+    - [ ] More zombies as you play
+    - [ ] Stronger zombies as you play
