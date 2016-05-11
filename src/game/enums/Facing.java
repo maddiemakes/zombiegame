@@ -1,5 +1,5 @@
 package game.enums;
 
 public enum Facing {
-    LEFT, RIGHT
+    LEFT, RIGHT, UP, DOWN
 }

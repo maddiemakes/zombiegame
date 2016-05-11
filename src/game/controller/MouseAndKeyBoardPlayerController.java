@@ -25,6 +25,9 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
             player.moveUp(delta);
         } else if (i.isKeyDown(Input.KEY_S) || i.isKeyDown(Input.KEY_DOWN)) {
             player.moveDown(delta);
+        }else{
+            //we dont move if we don't press left or right, this will have the effect that our player decelerates
+            player.setMoving(false);
         }
     }
 
