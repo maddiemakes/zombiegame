@@ -28,27 +28,4 @@ public class Player extends Character {
     }
 
 
-    public void moveUpLeft(int delta) {
-        x = x - (0.15f*delta);
-        y = y - (0.15f*delta);
-        lastTimeMoved = System.currentTimeMillis();
-    }
-
-    public void moveUpRight(int delta) {
-        x = x + (0.15f*delta);
-        y = y - (0.15f*delta);
-        lastTimeMoved = System.currentTimeMillis();
-    }
-
-    public void moveDownLeft(int delta) {
-        x = x - (0.15f*delta);
-        y = y + (0.15f*delta);
-        lastTimeMoved = System.currentTimeMillis();
-    }
-
-    public void moveDownRight(int delta) {
-        x = x + (0.15f*delta);
-        y = y + (0.15f*delta);
-        lastTimeMoved = System.currentTimeMillis();
-    }
 }

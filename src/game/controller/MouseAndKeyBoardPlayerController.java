@@ -18,15 +18,27 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
     private void handleKeyboardInput(Input i, int delta){
         //we can both use the WASD or arrow keys to move around, obviously we can't move both left and right simultaneously
         if(i.isKeyDown(Input.KEY_A) || i.isKeyDown(Input.KEY_LEFT)){
-            player.moveLeft(delta);
+            if(i.isKeyDown(Input.KEY_W) || i.isKeyDown(Input.KEY_UP)) {
+                player.moveUpLeft(delta);
+            } else if (i.isKeyDown(Input.KEY_S) || i.isKeyDown(Input.KEY_DOWN)) {
+                player.moveDownLeft(delta);
+            } else {
+                player.moveLeft(delta);
+            }
         }else if(i.isKeyDown(Input.KEY_D) || i.isKeyDown(Input.KEY_RIGHT)){
-            player.moveRight(delta);
+            if(i.isKeyDown(Input.KEY_W) || i.isKeyDown(Input.KEY_UP)) {
+                player.moveUpRight(delta);
+            } else if (i.isKeyDown(Input.KEY_S) || i.isKeyDown(Input.KEY_DOWN)) {
+                player.moveDownRight(delta);
+            } else {
+                player.moveRight(delta);
+            }
         } else if (i.isKeyDown(Input.KEY_W) || i.isKeyDown(Input.KEY_UP)) {
             player.moveUp(delta);
         } else if (i.isKeyDown(Input.KEY_S) || i.isKeyDown(Input.KEY_DOWN)) {
             player.moveDown(delta);
         }else{
-            //we dont move if we don't press left or right, this will have the effect that our player decelerates
+            //we don't move if we don't press left or right, this will have the effect that our player decelerates
             player.setMoving(false);
         }
     }
