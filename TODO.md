@@ -1,7 +1,9 @@
 #TODO
 - [ ] Game world
-- [ ] Character
-- [ ] Character moves
+- [x] Character
+- [x] Character moves
+- [ ] World moves around character
+- [ ] Collision detection for walls and lava
 - [ ] Zombies can spawn
 - [ ] Zombies can move
 - [ ] Zombies follow you
@@ -10,6 +12,7 @@
 - [ ] Upgrades
 - [ ] Medpacks
 - [ ] Buildings
-- [ ] Buildings randomly spawn
 - [ ] Items are random
 - [ ] Points (upgrade system)
+- [ ] Character sprites
+- [ ] Zombie sprites

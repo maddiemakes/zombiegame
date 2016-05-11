@@ -9,11 +9,10 @@ public class Player extends Character {
 
     public Player(float x, float y) throws SlickException {
         super(x, y);
+        this.x = x;
+        this.y = y;
 //        setSprite(new Image("data/images/player_down_1.png"));
         setSprite("data/images/player/player");
-//        setMovingAnimation(new Image[]{new Image("data/img/characters/player/player_1.png"),new Image("data/img/characters/player/player_2.png"),
-//                        new Image("data/img/characters/player/player_3.png"),new Image("data/img/characters/player/player_4.png")}
-//                ,125);
         setMovingAnimation("data/images/player/player", 3, 100);
 
         boundingShape = new AABoundingRect(x + 3, y, 26, 32);

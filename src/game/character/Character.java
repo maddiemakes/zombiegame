@@ -30,23 +30,34 @@ public abstract class Character extends LevelObject {
         setSprite("data/images/placeholder/placeholder");
     }
 
-//    public float getX() {
-//        return x;
-//    }
-//
-//    public float getY() {
-//        return y;
-//    }
+    public float getX() {
+        return x;
+    }
 
-    public void render(){
+    public float getY() {
+        return y;
+    }
+
+//    public void render(){
+    public void render(float offset_x, float offset_y){
 
         //draw a moving animation if we have one and we moved within the last 150 milliseconds
         if(movingAnimations != null && lastTimeMoved+150 > System.currentTimeMillis()){
-            movingAnimations.get(facing).draw(x-2,y-2);
+            movingAnimations.get(facing).draw(x-2-offset_x,y-2-offset_y);
         }else{
-            sprites.get(facing).draw(x-2, y-2);
+            sprites.get(facing).draw(x-2-offset_x, y-2-offset_y);
         }
     }
+
+//    public void render(float offset_x, float offset_y){
+
+        //draw a moving animation if we have one and we moved within the last 150 miliseconds
+//        if(movingAnimations != null && moving){
+//            movingAnimations.get(facing).draw(x-2-offset_x,y-2-offset_y);
+//        }else{
+//            sprites.get(facing).draw(x-2-offset_x, y-2-offset_y);
+//        }
+//    }
 
     protected void setSprite(String i) throws SlickException {
         sprites = new HashMap<Facing,Image>();
