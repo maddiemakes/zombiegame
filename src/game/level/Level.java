@@ -112,7 +112,7 @@ public class Level {
         int half_width = (int) (Game.WINDOW_WIDTH/Game.SCALE/2);
 
         //next up is the maximum offset, this is the most right side of the map, minus half of the screen offcourse
-        int maxX = (int) (map.getWidth()*32)-half_width;
+        int maxX = (int) (map.getWidth()*16)-half_width;
 
         //now we have 3 cases here
         if(player.getX() < half_width){
@@ -135,7 +135,7 @@ public class Level {
 
         int half_heigth = (int) (Game.WINDOW_HEIGTH/Game.SCALE/2);
 
-        int maxY = (int) (map.getHeight()*32)-half_heigth;
+        int maxY = (int) (map.getHeight()*16)-half_heigth;
 
         if(player.getY() < half_heigth){
             offset_y = 0;
