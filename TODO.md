@@ -6,9 +6,10 @@
 - [x] Collision detection
 - [ ] Water
 - [ ] Lava
-- [ ] Zombies can spawn
-- [ ] Zombies can move
-- [ ] Zombies follow you
+- [x] Zombies can spawn
+- [x] Zombies can move
+- [x] Zombies follow you
+- [ ] To make zombie types, just make more "zombie" classes that extend Zombie
 - [ ] Weapons
 - [ ] Health
 - [ ] Upgrades
