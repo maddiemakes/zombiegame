@@ -19,21 +19,9 @@ public abstract class LevelObject {
         this.x = x;
         this.y = y;
 
-        //default bounding shape is a 32 by 32 box
+        //default bounding shape is a 16 by 16 box
         boundingShape = new AABoundingRect(x,y,16,16);
     }
-
-//    public void applyGravity(float gravity){
-//        //if we aren't already moving at maximum speed
-//        if(y_velocity < maximumFallSpeed){
-//            //accelerate
-//            y_velocity += gravity;
-//            if(y_velocity > maximumFallSpeed){
-//                //and if we exceed maximum speed, set it to maximum speed
-//                y_velocity = maximumFallSpeed;
-//            }
-//        }
-//    }
 
     public float getYVelocity() {
         return y_velocity;
@@ -72,14 +60,6 @@ public abstract class LevelObject {
     public void updateBoundingShape(){
         boundingShape.updatePosition(x,y);
     }
-
-//    public boolean isOnGround(){
-//        return onGround;
-//    }
-
-//    public void setOnGround(boolean b){
-//        onGround = b;
-//    }
 
     public BoundingShape getBoundingShape(){
         return boundingShape;

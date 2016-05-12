@@ -21,13 +21,6 @@ public class Level {
     //a list of all characters present somewhere on this map
     private ArrayList<Character> characters;
 
-//    public Level(String level) throws SlickException {
-//        map = new TiledMap("data/levels/" + level + ".tmx", "data/levels/");
-//        characters = new ArrayList<>();
-//
-//        loadTileMap();
-//    }
-
     public Level(String level, Player player) throws SlickException{
         map = new TiledMap("data/levels/" + level + ".tmx","data/levels/");
         characters = new ArrayList<>();
@@ -84,16 +77,6 @@ public class Level {
     public Tile[][] getTiles(){
         return tiles;
     }
-
-//    public void render() {
-//        render the map first
-//        map.render(0, 0, 39, 35, 32, 18);
-//
-//        and then render the characters on top of the map
-//        for (Character c : characters) {
-//            c.render();
-//        }
-//    }
 
     public void render(){
 

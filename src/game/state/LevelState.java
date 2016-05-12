@@ -25,20 +25,7 @@ public class LevelState extends BasicGameState {
 
     public LevelState(String startingLevel){
         this.startinglevel = startingLevel;
-//        physics = new Physics();
     }
-
-//    public void init(GameContainer container, StateBasedGame sbg) throws SlickException {
-//        once we initialize our level, we want to load the right level
-//        level = new Level(startinglevel);
-//
-//        at the start of the game we don't have a player yet
-//        player = new Player(228,150);
-//        level.addCharacter(player);
-//
-//        and we create a controller, for now we use the MouseAndKeyBoardPlayerController
-//        playerController = new MouseAndKeyBoardPlayerController(player);
-//    }
 
     public void init(GameContainer container, StateBasedGame sbg) throws SlickException {
 
@@ -50,8 +37,6 @@ public class LevelState extends BasicGameState {
 
         //and we create a controller, for now we use the MouseAndKeyBoardPlayerController
         playerController = new MouseAndKeyBoardPlayerController(player);
-
-//        physics = new Physics();
     }
 
     public void update(GameContainer container, StateBasedGame sbg, int delta) throws SlickException {

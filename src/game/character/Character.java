@@ -13,7 +13,6 @@ public abstract class Character extends LevelObject {
     protected Facing facing;
     protected HashMap<Facing,Image> sprites;
     protected HashMap<Facing,Animation> movingAnimations;
-    protected long lastTimeMoved;
     protected boolean                   moving = false;
     protected float                     accelerationSpeed = 1;
     protected float                     decelerationSpeed = 1;
@@ -33,16 +32,6 @@ public abstract class Character extends LevelObject {
     public float getY() {
         return y;
     }
-
-//    public void render(float offset_x, float offset_y){
-//
-//        //draw a moving animation if we have one and we moved within the last 150 milliseconds
-//        if(movingAnimations != null && lastTimeMoved+150 > System.currentTimeMillis()){
-//            movingAnimations.get(facing).draw(x-2-offset_x,y-2-offset_y);
-//        }else{
-//            sprites.get(facing).draw(x-2-offset_x, y-2-offset_y);
-//        }
-//    }
 
     public void render(float offset_x, float offset_y){
 
@@ -108,19 +97,6 @@ public abstract class Character extends LevelObject {
         moving = b;
     }
 
-    //move towards x_velocity = 0
-//    public void decelerate(int delta) {
-//        if(x_velocity > 0){
-//            x_velocity -= decelerationSpeed * delta;
-//            if(x_velocity < 0)
-//                x_velocity = 0;
-//        }else if(x_velocity < 0){
-//            x_velocity += decelerationSpeed * delta;
-//            if(x_velocity > 0)
-//                x_velocity = 0;
-//        }
-//    }
-
     public void moveLeft(int delta){
         x_velocity = -0.15f;
         y_velocity = 0;
@@ -141,7 +117,7 @@ public abstract class Character extends LevelObject {
         moving = true;
         facing = Facing.UP;
     }
-//
+
     public void moveDown(int delta) {
         x_velocity = 0;
         y_velocity = 0.15f;

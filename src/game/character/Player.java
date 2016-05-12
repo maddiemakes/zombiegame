@@ -1,17 +1,12 @@
 package game.character;
 
-import game.enums.Facing;
 import game.physics.AABoundingRect;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 public class Player extends Character {
 
     public Player(float x, float y) throws SlickException {
         super(x, y);
-//        this.x = x;
-//        this.y = y;
-//        setSprite(new Image("data/images/player_down_1.png"));
         setSprite("data/images/player/player");
         setMovingAnimation("data/images/player/player", 3, 100);
 
