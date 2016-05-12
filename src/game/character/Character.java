@@ -109,92 +109,72 @@ public abstract class Character extends LevelObject {
     }
 
     //move towards x_velocity = 0
-    public void decelerate(int delta) {
-        if(x_velocity > 0){
-            x_velocity -= decelerationSpeed * delta;
-            if(x_velocity < 0)
-                x_velocity = 0;
-        }else if(x_velocity < 0){
-            x_velocity += decelerationSpeed * delta;
-            if(x_velocity > 0)
-                x_velocity = 0;
-        }
-    }
+//    public void decelerate(int delta) {
+//        if(x_velocity > 0){
+//            x_velocity -= decelerationSpeed * delta;
+//            if(x_velocity < 0)
+//                x_velocity = 0;
+//        }else if(x_velocity < 0){
+//            x_velocity += decelerationSpeed * delta;
+//            if(x_velocity > 0)
+//                x_velocity = 0;
+//        }
+//    }
 
     public void moveLeft(int delta){
         x_velocity = -0.15f;
+        y_velocity = 0;
         moving = true;
         facing = Facing.LEFT;
     }
 
     public void moveRight(int delta){
         x_velocity = 0.15f;
+        y_velocity = 0;
         moving = true;
         facing = Facing.RIGHT;
     }
 
     public void moveUp(int delta) {
+        x_velocity = 0;
         y_velocity = -0.15f;
         moving = true;
         facing = Facing.UP;
     }
 //
     public void moveDown(int delta) {
+        x_velocity = 0;
         y_velocity = 0.15f;
         moving = true;
         facing = Facing.DOWN;
     }
 
-//    public void moveLeft(int delta){
-//        facing = Facing.LEFT;
-//        x = x - (x_speed*delta);
-//        lastTimeMoved = System.currentTimeMillis();
-//    }
-//
-//    public void moveRight(int delta){
-//        facing = Facing.RIGHT;
-//        x = x + (x_speed*delta);
-//        lastTimeMoved = System.currentTimeMillis();
-//    }
-
-//    public void moveUp(int delta) {
-//        facing = Facing.UP;
-//        y = y - (0.15f*delta);
-//        lastTimeMoved = System.currentTimeMillis();
-//    }
-//
-//    public void moveDown(int delta) {
-//        facing = Facing.DOWN;
-//        y = y + (0.15f*delta);
-//        lastTimeMoved = System.currentTimeMillis();
-//    }
-
     public void moveUpLeft(int delta) {
+        x_velocity = -0.1f;
+        y_velocity = -0.1f;
+        moving = true;
         facing = Facing.UPLEFT;
-        x = x - (0.1f*delta);
-        y = y - (0.1f*delta);
-        lastTimeMoved = System.currentTimeMillis();
     }
 
     public void moveUpRight(int delta) {
+        x_velocity = 0.1f;
+        y_velocity = -0.1f;
+        moving = true;
         facing = Facing.UPRIGHT;
-        x = x + (0.1f*delta);
-        y = y - (0.1f*delta);
-        lastTimeMoved = System.currentTimeMillis();
     }
 
     public void moveDownLeft(int delta) {
+        x_velocity = -0.1f;
+        y_velocity = 0.1f;
+        moving = true;
         facing = Facing.DOWNLEFT;
-        x = x - (0.1f*delta);
-        y = y + (0.1f*delta);
-        lastTimeMoved = System.currentTimeMillis();
     }
 
     public void moveDownRight(int delta) {
+        x_velocity = 0.1f;
+        y_velocity = 0.1f;
+        moving = true;
         facing = Facing.DOWNRIGHT;
-        x = x + (0.1f*delta);
-        y = y + (0.1f*delta);
-        lastTimeMoved = System.currentTimeMillis();
     }
 
 }

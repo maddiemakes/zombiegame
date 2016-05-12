@@ -58,9 +58,9 @@ public class Physics {
         for(Character c : level.getCharacters()){
 
             //and now decelerate the character if he is not moving anymore
-            if(!c.isMoving()){
-                c.decelerate(delta);
-            }
+//            if(!c.isMoving()){
+//                c.decelerate(delta);
+//            }
 
             handleGameObject(c,level,delta);
         }
@@ -127,7 +127,7 @@ public class Physics {
 //        if(!obj.isOnGround() || obj.getYVelocity() < 0)
 //            obj.applyGravity(gravity*delta);
 //        else
-            obj.setYVelocity(0);
+//            obj.setYVelocity(0);
 
         //calculate how much we actually have to move
         float x_movement = obj.getXVelocity()*delta;
@@ -140,27 +140,33 @@ public class Physics {
         float step_x = 0;
 
         if(x_movement != 0){
-            step_y = Math.abs(y_movement)/Math.abs(x_movement);
-            if(y_movement < 0)
-                step_y = -step_y;
+//            step_y = Math.abs(y_movement)/Math.abs(x_movement);
+//            if(y_movement < 0)
+//                step_y = -step_y;
 
             if(x_movement > 0)
                 step_x = 1;
             else
                 step_x = -1;
 
-            if((step_y > 1 || step_y < -1) && step_y != 0){
-                step_x = Math.abs(step_x)/Math.abs(step_y);
-                if(x_movement < 0)
-                    step_x = -step_x;
-                if(y_movement < 0)
-                    step_y = -1;
-                else
-                    step_y = 1;
-            }
-        }else if(y_movement != 0){
-            //if we only have vertical movement, we can just use a step of 1
-            if(y_movement > 0)
+//            if((step_y > 1 || step_y < -1) && step_y != 0){
+//                step_x = Math.abs(step_x)/Math.abs(step_y);
+//                if(x_movement < 0)
+//                    step_x = -step_x;
+//                if(y_movement < 0)
+//                    step_y = -1;
+//                else
+//                    step_y = 1;
+//            }
+//        }else if(y_movement != 0){
+//            //if we only have vertical movement, we can just use a step of 1
+//            if(y_movement > 0)
+//                step_y = 1;
+//            else
+//                step_y = -1;
+        }
+        if(y_movement != 0) {
+            if (y_movement > 0)
                 step_y = 1;
             else
                 step_y = -1;

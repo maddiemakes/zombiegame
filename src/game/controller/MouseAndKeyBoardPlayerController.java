@@ -40,6 +40,8 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
         }else{
             //we don't move if we don't press left or right, this will have the effect that our player decelerates
             player.setMoving(false);
+            player.setXVelocity(0);
+            player.setYVelocity(0);
         }
     }
 
