@@ -3,7 +3,9 @@
 - [x] Character
 - [x] Character moves
 - [x] World moves around character
-- [ ] Collision detection for walls and lava
+- [x] Collision detection
+- [ ] Water
+- [ ] Lava
 - [ ] Zombies can spawn
 - [ ] Zombies can move
 - [ ] Zombies follow you
