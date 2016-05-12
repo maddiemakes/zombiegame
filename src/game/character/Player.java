@@ -18,10 +18,10 @@ public class Player extends Character {
         //TODO move these around to fix the box to fit to the character sprite
         boundingShape = new AABoundingRect(x, y, 32, 32);
 
-//        accelerationSpeed = 0.001f;
-//        maximumSpeed = 0.15f;
-//        maximumFallSpeed = 0.3f;
-//        decelerationSpeed = 0.001f;
+        accelerationSpeed = 0.001f;
+        maximumSpeed = 0.15f;
+        maximumFallSpeed = 0.3f;
+        decelerationSpeed = 0.001f;
     }
 
     public void updateBoundingShape(){

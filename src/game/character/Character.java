@@ -124,37 +124,37 @@ public abstract class Character extends LevelObject {
                 x_velocity = 0;
         }
     }
+//
+//    public void jump(){
+//        if(onGround)
+//            y_velocity = -0.4f;
+//    }
 
-    public void jump(){
-        if(onGround)
-            y_velocity = -0.4f;
+    public void moveLeft(int delta){
+        //if we aren't already moving at maximum speed
+        if(x_velocity > -maximumSpeed){
+            //accelerate
+            x_velocity -= accelerationSpeed*delta;
+            if(x_velocity < -maximumSpeed){
+                //and if we exceed maximum speed, set it to maximum speed
+                x_velocity = -maximumSpeed;
+            }
+        }
+        moving = true;
+        facing = Facing.LEFT;
     }
 
-////    public void moveLeft(int delta){
-////        //if we aren't already moving at maximum speed
-////        if(x_velocity > -maximumSpeed){
-////            //accelerate
-////            x_velocity -= accelerationSpeed*delta;
-////            if(x_velocity < -maximumSpeed){
-////                //and if we exceed maximum speed, set it to maximum speed
-////                x_velocity = -maximumSpeed;
-////            }
-////        }
-////        moving = true;
-////        facing = Facing.LEFT;
-////    }
-//
-//    public void moveRight(int delta){
-//        if(x_velocity < maximumSpeed){
-//            x_velocity += accelerationSpeed*delta;
-//            if(x_velocity > maximumSpeed){
-//                x_velocity = maximumSpeed;
-//            }
-//        }
-//        moving = true;
-//        facing = Facing.RIGHT;
-//    }
-//
+    public void moveRight(int delta){
+        if(x_velocity < maximumSpeed){
+            x_velocity += accelerationSpeed*delta;
+            if(x_velocity > maximumSpeed){
+                x_velocity = maximumSpeed;
+            }
+        }
+        moving = true;
+        facing = Facing.RIGHT;
+    }
+
 //    public void moveUp(int delta) {
 //        if(y_velocity > -maximumSpeed) {
 //            y_velocity -= accelerationSpeed*delta;
@@ -177,17 +177,17 @@ public abstract class Character extends LevelObject {
 //        facing = Facing.DOWN;
 //    }
 
-    public void moveLeft(int delta){
-        facing = Facing.LEFT;
-        x = x - (0.15f*delta);
-        lastTimeMoved = System.currentTimeMillis();
-    }
-
-    public void moveRight(int delta){
-        facing = Facing.RIGHT;
-        x = x + (0.15f*delta);
-        lastTimeMoved = System.currentTimeMillis();
-    }
+//    public void moveLeft(int delta){
+//        facing = Facing.LEFT;
+//        x = x - (x_speed*delta);
+//        lastTimeMoved = System.currentTimeMillis();
+//    }
+//
+//    public void moveRight(int delta){
+//        facing = Facing.RIGHT;
+//        x = x + (x_speed*delta);
+//        lastTimeMoved = System.currentTimeMillis();
+//    }
 
     public void moveUp(int delta) {
         facing = Facing.UP;

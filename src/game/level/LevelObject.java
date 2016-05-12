@@ -9,9 +9,9 @@ public abstract class LevelObject {
     protected float y;
     protected BoundingShape boundingShape;
 
-//    protected float    x_velocity = 0;
-//    protected float    y_velocity = 0;
-//    protected float    maximumFallSpeed = 1;
+    protected float    x_velocity = 0;
+    protected float    y_velocity = 0;
+    protected float    maximumFallSpeed = 1;
 
 //    protected boolean  onGround = true;
 
@@ -35,21 +35,21 @@ public abstract class LevelObject {
 //        }
 //    }
 
-//    public float getYVelocity() {
-//        return y_velocity;
-//    }
+    public float getYVelocity() {
+        return y_velocity;
+    }
 
-//    public void setYVelocity(float f){
-//        y_velocity = f;
-//    }
+    public void setYVelocity(float f){
+        y_velocity = f;
+    }
 
-//    public float getXVelocity(){
-//        return x_velocity;
-//    }
+    public float getXVelocity(){
+        return x_velocity;
+    }
 
-//    public void setXVelocity(float f){
-//        x_velocity = f;
-//    }
+    public void setXVelocity(float f){
+        x_velocity = f;
+    }
 
     public float getX(){
         return x;
