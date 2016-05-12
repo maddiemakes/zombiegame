@@ -11,9 +11,7 @@ public abstract class LevelObject {
 
     protected float    x_velocity = 0;
     protected float    y_velocity = 0;
-    protected float    maximumFallSpeed = 1;
 
-//    protected boolean  onGround = true;
 
     public LevelObject(float x, float y){
         this.x = x;

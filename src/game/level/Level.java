@@ -4,6 +4,7 @@ import game.Game;
 import game.character.Character;
 
 import game.character.Player;
+import game.character.Zombie;
 import game.level.tile.AirTile;
 import game.level.tile.SolidTile;
 import game.level.tile.Tile;
@@ -11,6 +12,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Level {
 

@@ -13,10 +13,9 @@ public abstract class Character extends LevelObject {
     protected Facing facing;
     protected HashMap<Facing,Image> sprites;
     protected HashMap<Facing,Animation> movingAnimations;
-    protected boolean                   moving = false;
-    protected float                     accelerationSpeed = 1;
-    protected float                     decelerationSpeed = 1;
-    protected float                     maximumSpeed = 1;
+    protected boolean moving = false;
+    protected float maximumSpeed = 1;
+    protected float diagonalSpeed = 1;
 
     public Character(float x, float y) throws SlickException {
         super(x,y);
@@ -38,7 +37,6 @@ public abstract class Character extends LevelObject {
         //draw a moving animation if we have one and we moved within the last 150 miliseconds
         if(movingAnimations != null && moving){
             movingAnimations.get(facing).draw(x-2-offset_x,y-2-offset_y);
-            System.out.println("draw");
         }else{
             sprites.get(facing).draw(x-2-offset_x, y-2-offset_y);
         }
@@ -56,7 +54,6 @@ public abstract class Character extends LevelObject {
         sprites.put(Facing.RIGHT , new Image(i + "_right_1.png"));
     }
 
-//    protected void setMovingAnimation(Image[] images, int frameDuration){
     protected void setMovingAnimation(String url, int images, int frameDuration) throws SlickException {
         movingAnimations = new HashMap<>();
 
@@ -98,14 +95,14 @@ public abstract class Character extends LevelObject {
     }
 
     public void moveLeft(int delta){
-        x_velocity = -0.15f;
+        x_velocity = -maximumSpeed;
         y_velocity = 0;
         moving = true;
         facing = Facing.LEFT;
     }
 
     public void moveRight(int delta){
-        x_velocity = 0.15f;
+        x_velocity = maximumSpeed;
         y_velocity = 0;
         moving = true;
         facing = Facing.RIGHT;
@@ -113,42 +110,42 @@ public abstract class Character extends LevelObject {
 
     public void moveUp(int delta) {
         x_velocity = 0;
-        y_velocity = -0.15f;
+        y_velocity = -maximumSpeed;
         moving = true;
         facing = Facing.UP;
     }
 
     public void moveDown(int delta) {
         x_velocity = 0;
-        y_velocity = 0.15f;
+        y_velocity = maximumSpeed;
         moving = true;
         facing = Facing.DOWN;
     }
 
     public void moveUpLeft(int delta) {
-        x_velocity = -0.1f;
-        y_velocity = -0.1f;
+        x_velocity = -diagonalSpeed;
+        y_velocity = -diagonalSpeed;
         moving = true;
         facing = Facing.UPLEFT;
     }
 
     public void moveUpRight(int delta) {
-        x_velocity = 0.1f;
-        y_velocity = -0.1f;
+        x_velocity = diagonalSpeed;
+        y_velocity = -diagonalSpeed;
         moving = true;
         facing = Facing.UPRIGHT;
     }
 
     public void moveDownLeft(int delta) {
-        x_velocity = -0.1f;
-        y_velocity = 0.1f;
+        x_velocity = -diagonalSpeed;
+        y_velocity = diagonalSpeed;
         moving = true;
         facing = Facing.DOWNLEFT;
     }
 
     public void moveDownRight(int delta) {
-        x_velocity = 0.1f;
-        y_velocity = 0.1f;
+        x_velocity = diagonalSpeed;
+        y_velocity = diagonalSpeed;
         moving = true;
         facing = Facing.DOWNRIGHT;
     }

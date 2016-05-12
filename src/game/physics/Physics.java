@@ -75,7 +75,6 @@ public class Physics {
                 if(checkCollision(obj,level.getTiles())){
 
                     //undo our step, and set the velocity and amount we still have to move to 0, because we can't move in that direction
-                    System.out.println("we hit something");
                     obj.setX(obj.getX()-step_x);
                     obj.setXVelocity(0);
                     x_movement = 0;

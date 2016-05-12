@@ -2,7 +2,15 @@ package game.controller;
 
 import game.character.Player;
 
+import game.character.Zombie;
+import game.state.LevelState;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
+
+import java.util.Random;
+
+import static game.state.LevelState.zombies;
+import static game.state.LevelState.zombieControllers;
 
 public class MouseAndKeyBoardPlayerController extends PlayerController {
 
@@ -42,6 +50,18 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
             player.setMoving(false);
             player.setXVelocity(0);
             player.setYVelocity(0);
+        }
+
+        if(i.isKeyPressed(Input.KEY_Z)) {
+            Random rand = new Random();
+            try {
+                zombies.add(new Zombie(rand.nextInt(LevelState.containerHeight), rand.nextInt(LevelState.containerWidth)));
+            } catch (SlickException e) {
+                e.printStackTrace();
+            }
+            LevelState.level.addCharacter(zombies.get(zombies.size()-1));
+            zombieControllers.add(new ZombieController(zombies.get(zombies.size()-1)));
+
         }
     }
 
