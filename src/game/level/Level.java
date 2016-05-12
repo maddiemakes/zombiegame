@@ -81,6 +81,10 @@ public class Level {
         return characters;
     }
 
+    public Tile[][] getTiles(){
+        return tiles;
+    }
+
 //    public void render() {
 //        render the map first
 //        map.render(0, 0, 39, 35, 32, 18);
@@ -148,7 +152,4 @@ public class Level {
         return offset_y;
     }
 
-    public Tile[][] getTiles(){
-        return tiles;
-    }
 }

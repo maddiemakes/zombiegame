@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class Physics {
 
-    private final float gravity = 0.0015f;
+//    private final float gravity = 0.0015f;
 
     public void handlePhysics(Level level, int delta){
         handleCharacters(level,delta);

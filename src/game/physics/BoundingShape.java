@@ -20,6 +20,6 @@ public abstract class BoundingShape {
 
     public abstract ArrayList<Tile> getTilesOccupying(Tile[][] tiles);
 
-    public abstract ArrayList<Tile> getGroundTiles(Tile[][] tiles);
+//    public abstract ArrayList<Tile> getGroundTiles(Tile[][] tiles);
 
 }

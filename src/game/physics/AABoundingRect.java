@@ -44,14 +44,14 @@ public class AABoundingRect extends BoundingShape {
         return occupiedTiles;
     }
 
-    public ArrayList<Tile> getGroundTiles(Tile[][] tiles) {
-        ArrayList<Tile> tilesUnderneath = new ArrayList<Tile>();
-        int j = (int) (y+height+1);
-
-        for(int i = (int) x; i <= x+width+(16-width%16); i+=16){
-            tilesUnderneath.add(tiles[i/16][j/16]);
-        }
-
-        return tilesUnderneath;
-    }
+//    public ArrayList<Tile> getGroundTiles(Tile[][] tiles) {
+//        ArrayList<Tile> tilesUnderneath = new ArrayList<Tile>();
+//        int j = (int) (y+height+1);
+//
+//        for(int i = (int) x; i <= x+width+(16-width%16); i+=16){
+//            tilesUnderneath.add(tiles[i/16][j/16]);
+//        }
+//
+//        return tilesUnderneath;
+//    }
 }

@@ -9,11 +9,11 @@ public abstract class LevelObject {
     protected float y;
     protected BoundingShape boundingShape;
 
-    protected float    x_velocity = 0;
-    protected float    y_velocity = 0;
-    protected float    maximumFallSpeed = 1;
+//    protected float    x_velocity = 0;
+//    protected float    y_velocity = 0;
+//    protected float    maximumFallSpeed = 1;
 
-    protected boolean  onGround = true;
+//    protected boolean  onGround = true;
 
     public LevelObject(float x, float y){
         this.x = x;
@@ -23,33 +23,33 @@ public abstract class LevelObject {
         boundingShape = new AABoundingRect(x,y,16,16);
     }
 
-    public void applyGravity(float gravity){
-        //if we aren't already moving at maximum speed
-        if(y_velocity < maximumFallSpeed){
-            //accelerate
-            y_velocity += gravity;
-            if(y_velocity > maximumFallSpeed){
-                //and if we exceed maximum speed, set it to maximum speed
-                y_velocity = maximumFallSpeed;
-            }
-        }
-    }
+//    public void applyGravity(float gravity){
+//        //if we aren't already moving at maximum speed
+//        if(y_velocity < maximumFallSpeed){
+//            //accelerate
+//            y_velocity += gravity;
+//            if(y_velocity > maximumFallSpeed){
+//                //and if we exceed maximum speed, set it to maximum speed
+//                y_velocity = maximumFallSpeed;
+//            }
+//        }
+//    }
 
-    public float getYVelocity() {
-        return y_velocity;
-    }
+//    public float getYVelocity() {
+//        return y_velocity;
+//    }
 
-    public void setYVelocity(float f){
-        y_velocity = f;
-    }
+//    public void setYVelocity(float f){
+//        y_velocity = f;
+//    }
 
-    public float getXVelocity(){
-        return x_velocity;
-    }
+//    public float getXVelocity(){
+//        return x_velocity;
+//    }
 
-    public void setXVelocity(float f){
-        x_velocity = f;
-    }
+//    public void setXVelocity(float f){
+//        x_velocity = f;
+//    }
 
     public float getX(){
         return x;
@@ -73,13 +73,13 @@ public abstract class LevelObject {
         boundingShape.updatePosition(x,y);
     }
 
-    public boolean isOnGround(){
-        return onGround;
-    }
+//    public boolean isOnGround(){
+//        return onGround;
+//    }
 
-    public void setOnGround(boolean b){
-        onGround = b;
-    }
+//    public void setOnGround(boolean b){
+//        onGround = b;
+//    }
 
     public BoundingShape getBoundingShape(){
         return boundingShape;

@@ -15,12 +15,13 @@ public class Player extends Character {
         setSprite("data/images/player/player");
         setMovingAnimation("data/images/player/player", 3, 100);
 
-        boundingShape = new AABoundingRect(x + 3, y, 26, 32);
+        //TODO move these around to fix the box to fit to the character sprite
+        boundingShape = new AABoundingRect(x, y, 32, 32);
 
-        accelerationSpeed = 0.001f;
-        maximumSpeed = 0.15f;
-        maximumFallSpeed = 0.3f;
-        decelerationSpeed = 0.001f;
+//        accelerationSpeed = 0.001f;
+//        maximumSpeed = 0.15f;
+//        maximumFallSpeed = 0.3f;
+//        decelerationSpeed = 0.001f;
     }
 
     public void updateBoundingShape(){
