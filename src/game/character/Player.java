@@ -9,14 +9,14 @@ public class Player extends Character {
 
     public Player(float x, float y) throws SlickException {
         super(x, y);
-        this.x = x;
-        this.y = y;
+//        this.x = x;
+//        this.y = y;
 //        setSprite(new Image("data/images/player_down_1.png"));
         setSprite("data/images/player/player");
         setMovingAnimation("data/images/player/player", 3, 100);
 
         //TODO move these around to fix the box to fit to the character sprite
-        boundingShape = new AABoundingRect(x, y, 32, 32);
+        boundingShape = new AABoundingRect(x+3, y, 26, 32);
 
         accelerationSpeed = 0.001f;
         maximumSpeed = 0.15f;

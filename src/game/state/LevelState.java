@@ -20,12 +20,12 @@ public class LevelState extends BasicGameState {
     private String startinglevel;
     private Player player;
     private PlayerController playerController;
-    private Physics physics;
+    private Physics physics = new Physics();
 
 
     public LevelState(String startingLevel){
         this.startinglevel = startingLevel;
-        physics = new Physics();
+//        physics = new Physics();
     }
 
 //    public void init(GameContainer container, StateBasedGame sbg) throws SlickException {
@@ -51,7 +51,7 @@ public class LevelState extends BasicGameState {
         //and we create a controller, for now we use the MouseAndKeyBoardPlayerController
         playerController = new MouseAndKeyBoardPlayerController(player);
 
-        physics = new Physics();
+//        physics = new Physics();
     }
 
     public void update(GameContainer container, StateBasedGame sbg, int delta) throws SlickException {
