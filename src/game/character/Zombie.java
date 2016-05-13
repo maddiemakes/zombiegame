@@ -15,6 +15,8 @@ public class Zombie extends Character {
 
         maximumSpeed = 0.06f;
         diagonalSpeed = 0.04f;
+        health = 10;
+        type = "zombie";
     }
 
     public void updateBoundingShape(){

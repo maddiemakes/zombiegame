@@ -35,7 +35,7 @@ public class Level {
 
     private void loadTileMap(){
         //create an array to hold all the tiles in the map
-        tiles = new Tile[map.getWidth()][map.getHeight()];
+        tiles = new Tile[map.getWidth()+1][map.getHeight()+1];
 
         int layerIndex = map.getLayerIndex("CollisionLayer");
 
@@ -80,7 +80,7 @@ public class Level {
         return tiles;
     }
 
-    public void render(){
+    public void render() throws SlickException {
 
         int offset_x = getXOffset();
         int offset_y = getYOffset();

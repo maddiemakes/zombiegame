@@ -61,7 +61,19 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
             }
             LevelState.level.addCharacter(zombies.get(zombies.size()-1));
             zombieControllers.add(new ZombieController(zombies.get(zombies.size()-1)));
+            System.out.println("Zombie spawned.");
 
+        }
+
+        if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+            double mx = (player.getX() - ((640-i.getMouseX())/(2.5)));
+            double my = (player.getY() - ((390-i.getMouseY())/(2.5)));
+            for (Zombie zombie: zombies) {
+                if (mx >= zombie.getX() - 0 && mx <= zombie.getX() + 20 && my >= zombie.getY() - 10 && mx <= zombie.getY() + 10) {
+                    zombie.damage(1);
+                    System.out.println("Health: " + zombie.getHealth());
+                }
+            }
         }
     }
 

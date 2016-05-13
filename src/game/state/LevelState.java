@@ -18,13 +18,12 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class LevelState extends BasicGameState {
 
     public static Level  level;
     private String startinglevel;
-    private Player player;
+    public static Player player;
     public static int containerHeight;
     public static int containerWidth;
     private PlayerController playerController;
@@ -41,12 +40,7 @@ public class LevelState extends BasicGameState {
 
         //at the start of the game we don't have a player yet
         player = new Player(228,150);
-//        zombie = new Zombie(532,184);
-//        for (int k=0; k < 5; k++) {
-//            Random rand = new Random();
-//            zombies.add(new Zombie(rand.nextInt(container.getHeight()), rand.nextInt(container.getWidth())));
-//            zombieControllers.add(new ZombieController(zombies.get(k)));
-//        }
+
         containerHeight = container.getHeight();
         containerWidth = container.getWidth();
 

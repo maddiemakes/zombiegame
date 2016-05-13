@@ -53,6 +53,10 @@ public class ZombieController {
             zombie.moveDown(delta);
         } else if (obj_y_location < y_location-10) {
             zombie.moveUp(delta);
+        } else {
+            zombie.setXVelocity(0);
+            zombie.setYVelocity(0);
+            zombie.setMoving(false);
         }
 
     }
