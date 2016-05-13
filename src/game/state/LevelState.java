@@ -61,7 +61,16 @@ public class LevelState extends BasicGameState {
         if (spawnNew) {
             Random rand = new Random();
             try {
-                zombies.add(new Zombie(rand.nextInt(LevelState.containerHeight), rand.nextInt(LevelState.containerWidth)));
+                int x;
+                int y;
+                do {
+                    x = rand.nextInt(LevelState.containerWidth);
+                } while (x > player.offsetx - 640 && x < player.offsetx + 640);
+                do {
+                    y = rand.nextInt(LevelState.containerHeight);
+                } while (y > player.offsety - 360 && y < player.offsety + 360);
+//                zombies.add(new Zombie(rand.nextInt(LevelState.containerHeight), rand.nextInt(LevelState.containerWidth)));
+                zombies.add(new Zombie(x,y));
             } catch (SlickException e) {
                 e.printStackTrace();
             }
