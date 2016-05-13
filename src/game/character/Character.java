@@ -18,8 +18,6 @@ public abstract class Character extends LevelObject {
     protected float diagonalSpeed = 1;
     protected int health = 10;
     public String type;
-    public float offsetx;
-    public float offsety;
 
     public Character(float x, float y) throws SlickException {
         super(x,y);
@@ -38,8 +36,6 @@ public abstract class Character extends LevelObject {
 
     public void render(float offset_x, float offset_y) throws SlickException {
 
-        offsetx = offset_x;
-        offsety = offset_y;
         //draw a moving animation if we have one and we moved within the last 150 milliseconds
         if (health > 0) {
             if (movingAnimations != null && moving) {
