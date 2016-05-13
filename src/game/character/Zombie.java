@@ -5,6 +5,8 @@ import org.newdawn.slick.SlickException;
 
 public class Zombie extends Character {
 
+    protected int attack;
+
     public Zombie(float x, float y) throws SlickException {
         super(x, y);
         setSprite("data/images/zombie/zombie");
@@ -17,6 +19,11 @@ public class Zombie extends Character {
         diagonalSpeed = 0.04f;
         health = 10;
         type = "zombie";
+        attack = 5;
+    }
+
+    public int getAttack() {
+        return attack;
     }
 
     public void updateBoundingShape(){

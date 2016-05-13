@@ -5,6 +5,8 @@ import game.character.Zombie;
 import game.level.Level;
 import game.level.LevelObject;
 
+import static game.state.LevelState.player;
+
 public class ZombieController {
     //zombie will head towards another character
     //we pass the ZombieAI a character for it to head towards
@@ -49,14 +51,26 @@ public class ZombieController {
             } else {
                 zombie.moveLeft(delta);
             }
-        } else if (obj_y_location > y_location+10) {
+        } else if (obj_y_location > y_location + 10) {
             zombie.moveDown(delta);
-        } else if (obj_y_location < y_location-10) {
+        } else if (obj_y_location < y_location - 10) {
             zombie.moveUp(delta);
         } else {
-            zombie.setXVelocity(0);
-            zombie.setYVelocity(0);
-            zombie.setMoving(false);
+//            zombie.setXVelocity(0);
+//            zombie.setYVelocity(0);
+//            zombie.setMoving(false);
+            player.damage(zombie.getAttack());
+            if (player.getX() > (x_location + 5)) {
+                player.setX(player.getX() + 25);
+            } else if (player.getX() < (x_location - 5)) {
+                player.setX(player.getX() - 25);
+            }
+            if (player.getY() > (y_location + 5)) {
+                player.setY(player.getY() + 25);
+            } else if (player.getY() < (y_location - 5)) {
+                player.setY(player.getY() - 25);
+            }
+            System.out.println("Remaining health: " + player.getHealth());
         }
 
     }
