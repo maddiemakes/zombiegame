@@ -12,8 +12,15 @@
 - [x] Zombies can spawn
 - [x] Zombies can move
 - [x] Zombies follow you
+- [x] Zombies don't spawn inside objects
+- [ ] Zombies don't walk through each other
+    - Kinda got this, but it's a bit glitchy and gets them stuck together. Check Physics.handleGameObject
+- [x] Kill counter
+- [ ] Health meter
+    - [x] Text health number bar thing first
 - [ ] To make zombie types, just make more "zombie" classes that extend Zombie
 - [ ] Weapons
+    - [ ] Guns shoot in direction of cursor (need help with the math here) Gun.shoot()
 - [x] Health
 - [ ] Upgrades
 - [ ] Medpacks
@@ -28,3 +35,8 @@
     - [ ] Stronger zombies as you play
 - [ ] Destroy bullets when they hit outer walls (probably just make strength of these like 1000000000)
 - [ ] Make outer walls
+
+##Bugfixes
+- [x] Game crashes when you shoot wall
+- [x] Game crashes when you kill zombies too quickly
+- [ ] Bullets turn into white boxes (.png is destroyed before bullet is removed)

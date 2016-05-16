@@ -5,6 +5,7 @@ import game.level.Level;
 import game.level.LevelObject;
 import game.level.tile.Tile;
 import game.character.Character;
+import game.state.LevelState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +19,24 @@ public class Physics {
         handleCharacters(level,delta);
     }
 
-    private boolean checkCollision(LevelObject obj, Tile[][] mapTiles){
+    public static boolean checkCollision(LevelObject obj, Tile[][] mapTiles){
         //get only the tiles that matter
         ArrayList<Tile> tiles = obj.getBoundingShape().getTilesOccupying(mapTiles);
         for(Tile t : tiles){
             //if this tile has a bounding shape
             if(t.getBoundingShape() != null){
                 if(t.getBoundingShape().checkCollision(obj.getBoundingShape())){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean checkZombieCollision(LevelObject obj, List<Zombie> list) {
+        if (obj.getType().equals("zombie")) {
+            for (Zombie zombie : list) {
+                if (zombie.getBoundingShape().checkCollision(obj.getBoundingShape())) {
                     return true;
                 }
             }
@@ -41,7 +53,7 @@ public class Physics {
 
     private void handleHealthCheck(Character c) {
         if (c.getHealth() <= 0) {
-            if (!(c.type.equals("player"))) {
+            if (c.type.equals("zombie")) {
                 Integer k = 0;
                 List<Integer> dead = new ArrayList<>();
                 for (Zombie zombie: zombies) {
@@ -51,10 +63,13 @@ public class Physics {
                     k++;
                 }
                 for (Integer i: dead) {
-                    zombies.set(i, zombies.get(zombies.size() - 1));
-                    zombies.remove(zombies.size() - 1);
-                    zombieControllers.set(i, zombieControllers.get(zombieControllers.size() - 1));
-                    zombieControllers.remove(zombieControllers.size() - 1);
+                    if (zombies.size() > i && zombieControllers.size() > i) {
+                        LevelState.killCount++;
+                        zombies.set(i, zombies.get(zombies.size() - 1));
+                        zombies.remove(zombies.size() - 1);
+                        zombieControllers.set(i, zombieControllers.get(zombieControllers.size() - 1));
+                        zombieControllers.remove(zombieControllers.size() - 1);
+                    }
                 }
             }
         }
@@ -106,6 +121,14 @@ public class Physics {
                     obj.setXVelocity(0);
                     x_movement = 0;
                 }
+
+                //TODO
+                //zombies don't walk perfectly on top of each other, but this also breaks them to where they get stuck together
+//                if (checkZombieCollision(obj, zombies)) {
+//                    obj.setX(obj.getX()-step_x);
+//                    obj.setXVelocity(0);
+//                    x_movement = 0;
+//                }
 
             }
             //same thing for the vertical, or y movement

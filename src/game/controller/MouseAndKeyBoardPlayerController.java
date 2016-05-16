@@ -26,6 +26,8 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
     public void handleInput(Input i, int delta) {
         //handle any input from the keyboard
         handleKeyboardInput(i,delta);
+        //TODO
+        player.setMouseQuadrant();
     }
 
     private void handleKeyboardInput(Input i, int delta){

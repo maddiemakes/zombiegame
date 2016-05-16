@@ -1,6 +1,8 @@
 package game.character;
 
+import game.enums.Facing;
 import game.physics.AABoundingRect;
+import game.state.LevelState;
 import org.newdawn.slick.SlickException;
 
 public class Player extends Character {
@@ -23,5 +25,30 @@ public class Player extends Character {
         boundingShape.updatePosition(x+6,y+6);
     }
 
+    //TODO
+    public void setMouseQuadrant()
+    {
+        double xPos = LevelState.getMousePos().getX();
+        double yPos = LevelState.getMousePos().getY();
+        double line1 = 0.5625*xPos;
+        double line2 = -0.5625*xPos + 720;
+
+        if(yPos >= line1 && yPos > line2)
+        {
+            facing = Facing.UP;
+        }
+        else if(yPos <= line1 && yPos < line2)
+        {
+            facing = Facing.DOWN;
+        }
+        else if(yPos < line1 && yPos >= line2)
+        {
+            facing = Facing.RIGHT;
+        }
+        else
+        {
+            facing = Facing.LEFT;
+        }
+    }
 
 }

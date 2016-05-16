@@ -8,6 +8,7 @@ public abstract class LevelObject {
     protected float x;
     protected float y;
     protected BoundingShape boundingShape;
+    public String type;
 
     protected float    x_velocity = 0;
     protected float    y_velocity = 0;
@@ -63,4 +64,7 @@ public abstract class LevelObject {
         return boundingShape;
     }
 
+    public String getType() {
+        return type;
+    }
 }

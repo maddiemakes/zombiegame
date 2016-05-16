@@ -17,7 +17,6 @@ public abstract class Character extends LevelObject {
     protected float maximumSpeed = 1;
     protected float diagonalSpeed = 1;
     protected int health = 10;
-    public String type;
     public float offsetx;
     public float offsety;
 
@@ -169,4 +168,5 @@ public abstract class Character extends LevelObject {
     public int getHealth() {
         return health;
     }
+
 }

@@ -12,13 +12,14 @@ import game.physics.Physics;
 import game.weapons.Bullet;
 import game.weapons.Gun;
 import game.weapons.Pistol;
-import org.newdawn.slick.GameContainer;
+import org.lwjgl.input.Mouse;
+import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import java.awt.*;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -26,6 +27,7 @@ import java.util.Random;
 public class LevelState extends BasicGameState {
 
     public static Level  level;
+    public static int killCount = 0;
     private String startinglevel;
     public static Player player;
     public static Gun playerGun;
@@ -38,6 +40,7 @@ public class LevelState extends BasicGameState {
     private Physics physics = new Physics();
     public static boolean spawnNew = false;
     public static boolean attackMe = false;
+    public static int zombiesSpawned;
 
 
     public LevelState(String startingLevel){
@@ -75,13 +78,17 @@ public class LevelState extends BasicGameState {
                 do {
                     y = rand.nextInt(LevelState.containerHeight);
                 } while (y > player.offsety - 360 && y < player.offsety + 360);
-                zombies.add(new Zombie(x,y));
+                zombies.add(new Zombie(x, y));
+                if (Physics.checkCollision(zombies.get(zombies.size() - 1), level.getTiles())) {
+                    zombies.remove(zombies.size() - 1);
+                } else {
+                    zombiesSpawned++;
+                    LevelState.level.addCharacter(zombies.get(zombies.size() - 1));
+                    zombieControllers.add(new ZombieController(zombies.get(zombies.size() - 1)));
+                }
             } catch (SlickException e) {
                 e.printStackTrace();
             }
-            LevelState.level.addCharacter(zombies.get(zombies.size() - 1));
-            zombieControllers.add(new ZombieController(zombies.get(zombies.size() - 1)));
-            System.out.println("Zombie spawned.");
         }
 
         playerController.handleInput(container.getInput(), delta);
@@ -107,7 +114,9 @@ public class LevelState extends BasicGameState {
                     zombie.damage(playerGun.getDamage());
                     bullet.damage(1);
                     if (bullet.getHealth() < 1) {
-//                        gone.add(k);
+                        if (bullets.size() > k ) {
+                            gone.add(k);
+                        }
                         bullet.kill();
                     }
                 }
@@ -123,8 +132,10 @@ public class LevelState extends BasicGameState {
             k++;
         }
         for (Integer i: gone) {
-            bullets.set(i, bullets.get(bullets.size() - 1));
-            bullets.remove(bullets.size() - 1);
+            if (bullets.size() > i) {
+                bullets.set(i, bullets.get(bullets.size() - 1));
+                bullets.remove(bullets.size() - 1);
+            }
         }
     }
 
@@ -132,6 +143,14 @@ public class LevelState extends BasicGameState {
         g.scale(Game.SCALE, Game.SCALE);
         //render the level
         level.render();
+        Font font = new Font("Verdana", Font.BOLD, 10);
+        TrueTypeFont ttf = new TrueTypeFont(font, true);
+        g.setFont(ttf);
+        g.drawString("Health: " + player.getHealth(), 5, 15);
+        g.drawString("Kills: " + killCount, 5, 27);
+        g.drawString("Zombies remaining: " + (zombiesSpawned - killCount), 5, 39);
+        g.drawString("Zombies spawn: " + spawnNew, 5, 51);
+        g.drawString("Attack me: " + attackMe, 5, 63);
     }
 
     //this method is overriden from basicgamestate and will trigger once you press any key on your keyboard
@@ -147,4 +166,7 @@ public class LevelState extends BasicGameState {
         return 0;
     }
 
+    public static Point getMousePos() {
+        return new Point(Mouse.getX(), Mouse.getY());
+    }
 }

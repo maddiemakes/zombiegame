@@ -29,20 +29,26 @@ public abstract class Gun {
     }
 
     public void shoot(int delta) {
-//        int ccc = 0;
-//        while ((ccc % 2000) == 0) {
-            Bullet bullet = null;
-            try {
-                bullet = new Bullet(player.getX(), player.getY());
-            } catch (SlickException e) {
-                e.printStackTrace();
-            }
-            bullet.setYVelocity(-bulletSpeed*delta);
-            LevelState.bullets.add(bullet);
-            currentAmmo--;
-//            ccc++;
+        Bullet bullet = null;
+        try {
+            bullet = new Bullet(player.getX(), player.getY());
+        } catch (SlickException e) {
+            e.printStackTrace();
         }
-//    }
+        bullet.setYVelocity(-bulletSpeed*delta);
+        LevelState.bullets.add(bullet);
+        currentAmmo--;
+
+        //TODO all this below
+//        double mouseX = LevelState.getMousePos().getX();
+//        double mouseY = LevelState.getMousePos().getY();
+//
+//        double angle = Math.toDegrees(Math.atan2(mouseX - player.getX(), mouseY - player.getY()));
+////        double xVelocity = (bulletSpeed) * Math.cos(angle);
+////        double yVelocity = (bulletSpeed) * Math.sin(angle);
+//        bullet.setXVelocity((float) ((bulletSpeed*delta*01) * (Math.cos(angle))));
+//        bullet.setYVelocity((float) ((bulletSpeed*delta*01) * (Math.sin(angle))));
+    }
 
     public int getDamage() {
         return damage;
