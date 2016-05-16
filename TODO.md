@@ -4,6 +4,7 @@
 - [x] Character moves
 - [x] World moves around character
 - [x] Collision detection
+- [ ] Player knockback when zombie hits you so they don't just rek u
 - [ ] Game Over menu
 - [ ] Main menu
 - [ ] Water
