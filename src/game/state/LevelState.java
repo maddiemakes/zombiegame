@@ -92,25 +92,25 @@ public class LevelState extends BasicGameState {
 
         //make arraylist of bullets
         //every time a bullet reaches x or y of 0, we delete it
-        int k = 0;
-        List<Integer> gone = new ArrayList<>();
-        for (Bullet bullet: bullets) {
-            bullet.render(player.getX(), player.getY());
-            for (Zombie zombie: zombies) {
-                if (bullet.getX() >= zombie.getX() && bullet.getX() <= zombie.getX() + 10 && bullet.getY() >= zombie.getY() && bullet.getY() <= zombie.getY() +10) {
-                    zombie.damage(1);
-                    System.out.println("Health: " + zombie.getHealth());
-                }
-            }
-            if (bullet.getX() < 16 || bullet.getY() < 16) {
-                gone.add(k);
-            }
-            k++;
-        }
-        for (Integer i: gone) {
-            bullets.set(i, bullets.get(bullets.size() - 1));
-            bullets.remove(bullets.size() - 1);
-        }
+//        int k = 0;
+//        List<Integer> gone = new ArrayList<>();
+//        for (Bullet bullet: bullets) {
+//            bullet.render(player.getX(), player.getY());
+//            for (Zombie zombie: zombies) {
+//                if (bullet.getX() >= zombie.getX() && bullet.getX() <= zombie.getX() + 10 && bullet.getY() >= zombie.getY() && bullet.getY() <= zombie.getY() +10) {
+//                    zombie.damage(1);
+//                    System.out.println("Health: " + zombie.getHealth());
+//                }
+//            }
+//            if (bullet.getX() < 16 || bullet.getY() < 16) {
+//                gone.add(k);
+//            }
+//            k++;
+//        }
+//        for (Integer i: gone) {
+//            bullets.set(i, bullets.get(bullets.size() - 1));
+//            bullets.remove(bullets.size() - 1);
+//        }
     }
 
     public void render(GameContainer container, StateBasedGame sbg, Graphics g) throws SlickException {

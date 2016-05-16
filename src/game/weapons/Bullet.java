@@ -23,7 +23,5 @@ public class Bullet extends LevelObject {
         sprite.draw(x - offset_x, y - offset_y);
         setX(x + x_velocity);
         setY(y + y_velocity);
-//        setX(x + 1);
-//        setY(y + 1);
     }
 }
