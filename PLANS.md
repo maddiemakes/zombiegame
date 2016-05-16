@@ -1,0 +1,3 @@
+- [ ] Bullets are only shot from guns
+- [ ] Change the clicking thing to not spawn bullets but trigger something like gun.shoot()
+- [ ] Make gun.shoot() to spawn bullets
