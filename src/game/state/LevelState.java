@@ -10,6 +10,8 @@ import game.level.Level;
 import game.physics.Physics;
 
 import game.weapons.Bullet;
+import game.weapons.Gun;
+import game.weapons.Pistol;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -26,6 +28,7 @@ public class LevelState extends BasicGameState {
     public static Level  level;
     private String startinglevel;
     public static Player player;
+    public static Gun playerGun;
     public static int containerHeight;
     public static int containerWidth;
     private PlayerController playerController;
@@ -45,6 +48,9 @@ public class LevelState extends BasicGameState {
 
         //at the start of the game we don't have a player yet
         player = new Player(228,150);
+        Pistol pistol = new Pistol();
+        playerGun = pistol;
+
 
         containerHeight = container.getHeight();
         containerWidth = container.getWidth();
@@ -69,7 +75,6 @@ public class LevelState extends BasicGameState {
                 do {
                     y = rand.nextInt(LevelState.containerHeight);
                 } while (y > player.offsety - 360 && y < player.offsety + 360);
-//                zombies.add(new Zombie(rand.nextInt(LevelState.containerHeight), rand.nextInt(LevelState.containerWidth)));
                 zombies.add(new Zombie(x,y));
             } catch (SlickException e) {
                 e.printStackTrace();
@@ -90,27 +95,37 @@ public class LevelState extends BasicGameState {
         }
         physics.handlePhysics(level, delta);
 
+
         //make arraylist of bullets
         //every time a bullet reaches x or y of 0, we delete it
-//        int k = 0;
-//        List<Integer> gone = new ArrayList<>();
-//        for (Bullet bullet: bullets) {
+        int k = 0;
+        List<Integer> gone = new ArrayList<>();
+        for (Bullet bullet: bullets) {
 //            bullet.render(player.getX(), player.getY());
-//            for (Zombie zombie: zombies) {
+            for (Zombie zombie: zombies) {
+                if (bullet.getBoundingShape().checkCollision(zombie.getBoundingShape())) {
+                    zombie.damage(playerGun.getDamage());
+                    bullet.damage(1);
+                    if (bullet.getHealth() < 1) {
+//                        gone.add(k);
+                        bullet.kill();
+                    }
+                }
 //                if (bullet.getX() >= zombie.getX() && bullet.getX() <= zombie.getX() + 10 && bullet.getY() >= zombie.getY() && bullet.getY() <= zombie.getY() +10) {
 //                    zombie.damage(1);
 //                    System.out.println("Health: " + zombie.getHealth());
 //                }
-//            }
-//            if (bullet.getX() < 16 || bullet.getY() < 16) {
-//                gone.add(k);
-//            }
-//            k++;
-//        }
-//        for (Integer i: gone) {
-//            bullets.set(i, bullets.get(bullets.size() - 1));
-//            bullets.remove(bullets.size() - 1);
-//        }
+            }
+            //TODO destroy bullets when they hit the outer walls
+            if (bullet.getX() < 0 || bullet.getY() < 0) {
+                gone.add(k);
+            }
+            k++;
+        }
+        for (Integer i: gone) {
+            bullets.set(i, bullets.get(bullets.size() - 1));
+            bullets.remove(bullets.size() - 1);
+        }
     }
 
     public void render(GameContainer container, StateBasedGame sbg, Graphics g) throws SlickException {

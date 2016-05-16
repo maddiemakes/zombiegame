@@ -11,10 +11,13 @@ import org.newdawn.slick.SpriteSheet;
 
 import java.util.Random;
 
+import static game.state.LevelState.playerGun;
 import static game.state.LevelState.zombies;
 import static game.state.LevelState.zombieControllers;
 
 public class MouseAndKeyBoardPlayerController extends PlayerController {
+
+    private int shot;
 
     public MouseAndKeyBoardPlayerController(Player player) {
         super(player);
@@ -86,22 +89,29 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
 //            }
 //        }
         if (i.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
+            if (shot > 0) {
+                playerGun.shoot(delta);
+                shot--;
+            }
             //make a new bullet at the location of the player
             //point bullet at direction of cursor
             //when zombie gets hit by bullet they take damage
             //bullet disappears when it hits a zombie
-            int ccc = 0;
-            while ((ccc % 2000) == 0) {
-                Bullet bullet = null;
-                try {
-                    bullet = new Bullet(player.getX(), player.getY());
-                } catch (SlickException e) {
-                    e.printStackTrace();
-                }
-                bullet.setYVelocity(-0.1f * delta);
-                LevelState.bullets.add(bullet);
-                ccc++;
-            }
+//            int ccc = 0;
+//            while ((ccc % 2000) == 0) {
+//                Bullet bullet = null;
+//                try {
+//                    bullet = new Bullet(player.getX(), player.getY());
+//                } catch (SlickException e) {
+//                    e.printStackTrace();
+//                }
+//                bullet.setYVelocity(-0.1f * delta);
+//                LevelState.bullets.add(bullet);
+//                ccc++;
+//            }
+        }
+        if (!(i.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))) {
+            shot = playerGun.getSemi();
         }
     }
 

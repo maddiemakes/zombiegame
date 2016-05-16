@@ -4,6 +4,8 @@
 - [x] Character moves
 - [x] World moves around character
 - [x] Collision detection
+- [ ] Game Over menu
+- [ ] Main menu
 - [ ] Water
 - [ ] Lava
 - [x] Zombies can spawn
@@ -11,7 +13,7 @@
 - [x] Zombies follow you
 - [ ] To make zombie types, just make more "zombie" classes that extend Zombie
 - [ ] Weapons
-- [ ] Health
+- [x] Health
 - [ ] Upgrades
 - [ ] Medpacks
 - [ ] Buildings
@@ -23,3 +25,5 @@
 - [ ] Game gets harder as you play
     - [ ] More zombies as you play
     - [ ] Stronger zombies as you play
+- [ ] Destroy bullets when they hit outer walls (probably just make strength of these like 1000000000)
+- [ ] Make outer walls

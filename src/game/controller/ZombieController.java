@@ -55,6 +55,11 @@ public class ZombieController {
             zombie.moveDown(delta);
         } else if (obj_y_location < y_location - 10) {
             zombie.moveUp(delta);
+        } else {
+            if (zombie.getBoundingShape().checkCollision(player.getBoundingShape())) {
+                player.damage(zombie.getAttack());
+                System.out.println(player.getHealth());
+            }
 //        } else {
 //            zombie.setXVelocity(0);
 //            zombie.setYVelocity(0);

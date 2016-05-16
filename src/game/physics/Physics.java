@@ -5,7 +5,6 @@ import game.level.Level;
 import game.level.LevelObject;
 import game.level.tile.Tile;
 import game.character.Character;
-import game.state.LevelState;
 
 import java.util.ArrayList;
 import java.util.List;
