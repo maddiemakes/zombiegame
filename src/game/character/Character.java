@@ -2,11 +2,13 @@ package game.character;
 
 import game.enums.Facing;
 import game.level.LevelObject;
+import game.state.LevelState;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 import java.util.HashMap;
+import java.util.function.UnaryOperator;
 
 public abstract class Character extends LevelObject {
 
@@ -110,56 +112,56 @@ public abstract class Character extends LevelObject {
         x_velocity = -maximumSpeed;
         y_velocity = 0;
         moving = true;
-        facing = Facing.LEFT;
+//        facing = Facing.LEFT;
     }
 
     public void moveRight(int delta){
         x_velocity = maximumSpeed;
         y_velocity = 0;
         moving = true;
-        facing = Facing.RIGHT;
+//        facing = Facing.RIGHT;
     }
 
     public void moveUp(int delta) {
         x_velocity = 0;
         y_velocity = -maximumSpeed;
         moving = true;
-        facing = Facing.UP;
+//        facing = Facing.UP;
     }
 
     public void moveDown(int delta) {
         x_velocity = 0;
         y_velocity = maximumSpeed;
         moving = true;
-        facing = Facing.DOWN;
+//        facing = Facing.DOWN;
     }
 
     public void moveUpLeft(int delta) {
         x_velocity = -diagonalSpeed;
         y_velocity = -diagonalSpeed;
         moving = true;
-        facing = Facing.UPLEFT;
+//        facing = Facing.UPLEFT;
     }
 
     public void moveUpRight(int delta) {
         x_velocity = diagonalSpeed;
         y_velocity = -diagonalSpeed;
         moving = true;
-        facing = Facing.UPRIGHT;
+//        facing = Facing.UPRIGHT;
     }
 
     public void moveDownLeft(int delta) {
         x_velocity = -diagonalSpeed;
         y_velocity = diagonalSpeed;
         moving = true;
-        facing = Facing.DOWNLEFT;
+//        facing = Facing.DOWNLEFT;
     }
 
     public void moveDownRight(int delta) {
         x_velocity = diagonalSpeed;
         y_velocity = diagonalSpeed;
         moving = true;
-        facing = Facing.DOWNRIGHT;
+//        facing = Facing.DOWNRIGHT;
     }
 
     public void damage(int damage) {
@@ -168,5 +170,29 @@ public abstract class Character extends LevelObject {
 
     public int getHealth() {
         return health;
+    }
+    public void setMouseQuadrant()
+    {
+        double xPos = LevelState.getMousePos().getX();
+        double yPos = LevelState.getMousePos().getY();
+        double line1 = 0.5625*xPos;
+        double line2 = -0.5625*xPos + 720;
+
+        if(yPos >= line1 && yPos > line2)
+        {
+            facing = Facing.UP;
+        }
+        else if(yPos <= line1 && yPos < line2)
+        {
+            facing = Facing.DOWN;
+        }
+        else if(yPos < line1 && yPos >= line2)
+        {
+            facing = Facing.LEFT;
+        }
+        else
+        {
+            facing = Facing.RIGHT;
+        }
     }
 }
