@@ -9,6 +9,7 @@ import game.controller.ZombieController;
 import game.level.Level;
 import game.physics.Physics;
 
+import game.weapons.Bullet;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -24,13 +25,16 @@ public class LevelState extends BasicGameState {
 
     public static Level  level;
     private String startinglevel;
-    private Player player;
+    public static Player player;
     public static int containerHeight;
     public static int containerWidth;
     private PlayerController playerController;
     public static List<Zombie> zombies = new ArrayList<>();
     public static List<ZombieController> zombieControllers = new ArrayList<>();
+    public static List<Bullet> bullets = new ArrayList<>();
     private Physics physics = new Physics();
+    public static boolean spawnNew = false;
+    public static boolean attackMe = false;
 
 
     public LevelState(String startingLevel){
@@ -41,12 +45,7 @@ public class LevelState extends BasicGameState {
 
         //at the start of the game we don't have a player yet
         player = new Player(228,150);
-//        zombie = new Zombie(532,184);
-//        for (int k=0; k < 5; k++) {
-//            Random rand = new Random();
-//            zombies.add(new Zombie(rand.nextInt(container.getHeight()), rand.nextInt(container.getWidth())));
-//            zombieControllers.add(new ZombieController(zombies.get(k)));
-//        }
+
         containerHeight = container.getHeight();
         containerWidth = container.getWidth();
 
@@ -59,11 +58,59 @@ public class LevelState extends BasicGameState {
 
     public void update(GameContainer container, StateBasedGame sbg, int delta) throws SlickException {
         //every update we have to handle the input from the player
+        if (spawnNew) {
+            Random rand = new Random();
+            try {
+                int x;
+                int y;
+                do {
+                    x = rand.nextInt(LevelState.containerWidth);
+                } while (x > player.offsetx - 640 && x < player.offsetx + 640);
+                do {
+                    y = rand.nextInt(LevelState.containerHeight);
+                } while (y > player.offsety - 360 && y < player.offsety + 360);
+//                zombies.add(new Zombie(rand.nextInt(LevelState.containerHeight), rand.nextInt(LevelState.containerWidth)));
+                zombies.add(new Zombie(x,y));
+            } catch (SlickException e) {
+                e.printStackTrace();
+            }
+            LevelState.level.addCharacter(zombies.get(zombies.size() - 1));
+            zombieControllers.add(new ZombieController(zombies.get(zombies.size() - 1)));
+            System.out.println("Zombie spawned.");
+        }
+
         playerController.handleInput(container.getInput(), delta);
         for (ZombieController controller: zombieControllers) {
-            controller.handleWalk(player, level, delta);
+            if (attackMe) {
+                controller.handleWalk(player, level, delta);
+            }
+            else {
+                controller.handleWalk(zombies.get(zombies.size() - 1), level, delta);
+            }
         }
         physics.handlePhysics(level, delta);
+
+        //make arraylist of bullets
+        //every time a bullet reaches x or y of 0, we delete it
+        int k = 0;
+        List<Integer> gone = new ArrayList<>();
+        for (Bullet bullet: bullets) {
+            bullet.render(player.getX(), player.getY());
+            for (Zombie zombie: zombies) {
+                if (bullet.getX() >= zombie.getX() && bullet.getX() <= zombie.getX() + 10 && bullet.getY() >= zombie.getY() && bullet.getY() <= zombie.getY() +10) {
+                    zombie.damage(1);
+                    System.out.println("Health: " + zombie.getHealth());
+                }
+            }
+            if (bullet.getX() < 16 || bullet.getY() < 16) {
+                gone.add(k);
+            }
+            k++;
+        }
+        for (Integer i: gone) {
+            bullets.set(i, bullets.get(bullets.size() - 1));
+            bullets.remove(bullets.size() - 1);
+        }
     }
 
     public void render(GameContainer container, StateBasedGame sbg, Graphics g) throws SlickException {

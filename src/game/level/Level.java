@@ -8,11 +8,14 @@ import game.character.Zombie;
 import game.level.tile.AirTile;
 import game.level.tile.SolidTile;
 import game.level.tile.Tile;
+import game.weapons.Bullet;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static game.state.LevelState.bullets;
 
 public class Level {
 
@@ -80,7 +83,7 @@ public class Level {
         return tiles;
     }
 
-    public void render(){
+    public void render() throws SlickException {
 
         int offset_x = getXOffset();
         int offset_y = getYOffset();
@@ -91,6 +94,10 @@ public class Level {
         //and then render the characters on top of the map
         for(Character c : characters){
             c.render(offset_x,offset_y);
+        }
+
+        for(Bullet b : bullets) {
+            b.render(offset_x, offset_y);
         }
     }
 

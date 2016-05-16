@@ -1,11 +1,17 @@
 package game.physics;
 
+import game.character.Zombie;
 import game.level.Level;
 import game.level.LevelObject;
 import game.level.tile.Tile;
 import game.character.Character;
+import game.state.LevelState;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import static game.state.LevelState.zombieControllers;
+import static game.state.LevelState.zombies;
 
 public class Physics {
 
@@ -30,6 +36,28 @@ public class Physics {
     private void handleCharacters(Level level, int delta){
         for(Character c : level.getCharacters()){
             handleGameObject(c,level,delta);
+            handleHealthCheck(c);
+        }
+    }
+
+    private void handleHealthCheck(Character c) {
+        if (c.getHealth() <= 0) {
+            if (!(c.type.equals("player"))) {
+                Integer k = 0;
+                List<Integer> dead = new ArrayList<>();
+                for (Zombie zombie: zombies) {
+                    if (zombie.getHealth() <= 0) {
+                        dead.add(k);
+                    }
+                    k++;
+                }
+                for (Integer i: dead) {
+                    zombies.set(i, zombies.get(zombies.size() - 1));
+                    zombies.remove(zombies.size() - 1);
+                    zombieControllers.set(i, zombieControllers.get(zombieControllers.size() - 1));
+                    zombieControllers.remove(zombieControllers.size() - 1);
+                }
+            }
         }
     }
 
@@ -100,4 +128,5 @@ public class Physics {
             }
         }
     }
+
 }

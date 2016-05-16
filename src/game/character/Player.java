@@ -15,6 +15,8 @@ public class Player extends Character {
 
         maximumSpeed = 0.15f;
         diagonalSpeed = 0.1f;
+        health = 100;
+        type = "player";
     }
 
     public void updateBoundingShape(){

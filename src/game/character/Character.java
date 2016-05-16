@@ -16,6 +16,10 @@ public abstract class Character extends LevelObject {
     protected boolean moving = false;
     protected float maximumSpeed = 1;
     protected float diagonalSpeed = 1;
+    protected int health = 10;
+    public String type;
+    public float offsetx;
+    public float offsety;
 
     public Character(float x, float y) throws SlickException {
         super(x,y);
@@ -32,13 +36,21 @@ public abstract class Character extends LevelObject {
         return y;
     }
 
-    public void render(float offset_x, float offset_y){
+    public void render(float offset_x, float offset_y) throws SlickException {
 
-        //draw a moving animation if we have one and we moved within the last 150 miliseconds
-        if(movingAnimations != null && moving){
-            movingAnimations.get(facing).draw(x-2-offset_x,y-2-offset_y);
-        }else{
-            sprites.get(facing).draw(x-2-offset_x, y-2-offset_y);
+        offsetx = offset_x;
+        offsety = offset_y;
+
+        //draw a moving animation if we have one and we moved within the last 150 milliseconds
+        if (health > 0) {
+            if (movingAnimations != null && moving) {
+                movingAnimations.get(facing).draw(x - 2 - offset_x, y - 2 - offset_y);
+            } else {
+                sprites.get(facing).draw(x - 2 - offset_x, y - 2 - offset_y);
+            }
+        } else {
+            movingAnimations.get(facing).stop();
+            sprites.get(facing).destroy();
         }
     }
 
@@ -150,4 +162,11 @@ public abstract class Character extends LevelObject {
         facing = Facing.DOWNRIGHT;
     }
 
+    public void damage(int damage) {
+        health = health-damage;
+    }
+
+    public int getHealth() {
+        return health;
+    }
 }
