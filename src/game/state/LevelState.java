@@ -8,6 +8,7 @@ import game.controller.PlayerController;
 import game.controller.ZombieController;
 import game.enums.Facing;
 import game.level.Level;
+import game.level.tile.Tile;
 import game.physics.Physics;
 
 import game.weapons.Bullet;
@@ -119,25 +120,19 @@ public class LevelState extends BasicGameState {
         List<Integer> gone = new ArrayList<>();
         for (Bullet bullet: bullets) {
 //            bullet.render(player.getX(), player.getY());
+            Physics.checkBulletCollision(bullet,level.getTiles());
             for (Zombie zombie: zombies) {
                 if (bullet.getBoundingShape().checkCollision(zombie.getBoundingShape())) {
                     zombie.damage(playerGun.getDamage());
                     bullet.damage(1);
-                    if (bullet.getHealth() < 1) {
-                        if (bullets.size() > k ) {
-                            gone.add(k);
-                        }
-                        bullet.kill();
-                    }
                 }
-//                if (bullet.getX() >= zombie.getX() && bullet.getX() <= zombie.getX() + 10 && bullet.getY() >= zombie.getY() && bullet.getY() <= zombie.getY() +10) {
-//                    zombie.damage(1);
-//                    System.out.println("Health: " + zombie.getHealth());
-//                }
             }
-            //TODO destroy bullets when they hit the outer walls
-            if (bullet.getX() < 0 || bullet.getY() < 0) {
-                gone.add(k);
+
+            if (bullet.getHealth() < 1) {
+                if (bullets.size() > k ) {
+                    gone.add(k);
+                }
+                bullet.kill();
             }
             k++;
         }

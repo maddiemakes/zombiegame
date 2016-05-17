@@ -7,6 +7,7 @@ import game.character.Player;
 import game.character.Zombie;
 import game.enums.Facing;
 import game.level.tile.AirTile;
+import game.level.tile.BorderTile;
 import game.level.tile.SolidTile;
 import game.level.tile.Tile;
 import game.weapons.Bullet;
@@ -66,6 +67,9 @@ public class Level {
                 switch(map.getTileProperty(tileID, "tileType", "solid")){
                     case "air":
                         tile = new AirTile(x,y);
+                        break;
+                    case "borderWall":
+                        tile = new BorderTile(x,y);
                         break;
                     default:
                         tile = new SolidTile(x,y);

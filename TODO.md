@@ -20,7 +20,7 @@
     - [x] Text health number bar thing first
 - [ ] To make zombie types, just make more "zombie" classes that extend Zombie
 - [ ] Weapons
-    - [ ] Guns shoot in direction of cursor (need help with the math here) Gun.shoot()
+    - [x] Guns shoot in direction of cursor (need help with the math here) Gun.shoot()
 - [x] Health
 - [ ] Upgrades
 - [ ] Medpacks
@@ -33,8 +33,8 @@
 - [ ] Game gets harder as you play
     - [ ] More zombies as you play
     - [ ] Stronger zombies as you play
-- [ ] Destroy bullets when they hit outer walls (probably just make strength of these like 1000000000)
-- [ ] Make outer walls
+- [x] Destroy bullets when they hit outer walls (probably just make strength of these like 1000000000)
+- [x] Make outer walls
 
 ##Bugfixes
 - [x] Game crashes when you shoot wall

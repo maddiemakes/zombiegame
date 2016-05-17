@@ -6,6 +6,7 @@ import game.level.LevelObject;
 import game.level.tile.Tile;
 import game.character.Character;
 import game.state.LevelState;
+import game.weapons.Bullet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,18 @@ public class Physics {
             }
         }
         return false;
+    }
+
+    public static void checkBulletCollision(Bullet bullet, Tile[][] mapTiles){
+        //get only the tiles that matter
+        ArrayList<Tile> tiles = bullet.getBoundingShape().getTilesOccupying(mapTiles);
+        for(Tile t : tiles){
+            //if this tile has a bounding shape
+            System.out.println(t.getClass().toString());
+            if (t.getClass().toString().equals("class game.level.tile.BorderTile")) {
+                bullet.setHealth(0);
+            }
+        }
     }
 
     private boolean checkZombieCollision(LevelObject obj, List<Zombie> list) {

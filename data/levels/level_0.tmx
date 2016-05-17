@@ -2,6 +2,11 @@
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" nextobjectid="1">
  <tileset firstgid="1" name="cave" tilewidth="16" tileheight="16" tilecount="336" columns="16">
   <image source="../../tileSets/cave.png" width="256" height="336"/>
+  <tile id="8">
+   <properties>
+    <property name="tileType" value="borderWall"/>
+   </properties>
+  </tile>
   <tile id="17">
    <properties>
     <property name="tileType" value="air"/>
@@ -48,7 +53,7 @@
  </layer>
  <layer name="CollisionLayer" width="100" height="100">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3Yu26DMABAURj7OUCaPc3j6zJ0qNShUp8/2lhyFJQhISHC1+YOV3SqjE9sMPuqqvaG6s8QXfLoAOObW9c8NGF4dJUeFI+u0oPkcW6Seoxzasj60Ca9xyWX1GMuuVvWR9/KpvPom5wb6JHGw/QwPWjpwUoPVnqw0oOVHqz0YKUHKz1Y6cFKD1Z6sNKDlR6s9GClBys9WOnBSg9WerDSg5UerPRgVZpHU1fVc51+HHqcag8ei0ObDG1K9OgXTLYZmZTuEVoW7PE64N7eJrr/oXvRqmCP9wH39gHzaAv2GLI+pvDYxGd26vnLwWOK/SrsQS96VJ+HOfjp9R07/v116HeieQoewSWn5/WjPUg10SLsXbt4TT2mOXt08bwXrs2FdeL5YxqLbbQI+9ald6i1HpO0jB7tlTN4p8dDa0bO56oe/z/0OLUbOZdtRu/GuXiM+X138f0rnB/pz5IcPEL3fjdv4trYxLPKGm6Si8c930ba3prYxef+8Ur9xpiLRzvivNf11kbq+yjFI7SIe8+t89rWp7WS+h5K8ui75PBbn4sHde+fq0fJ6cFKD1Z6sNKDlR6s9GClBys9WD3VepDSg5X7FSs9WOnBSg9WerDSg5UerPRgpQcrPVjpwUoPVnqw0oOVHqz0YKUHKz1Y6cFKD1Z6sNKDlR6s9GClBys9WOnBSg9WerDSg9XecP0DEUlgbECcAAA=
+   H4sIAAAAAAAAC+3Yu26DMABAURjzOUCbPc3j+zpU6lCpzx9tLDkKykBIiPC1ucMVnSrjExvMqqqqlaH6M0RDHh1gfEvrmocmDI+u0oPi0VV6kDwuTVKPcUmNWR/apPcYckk95pK7ZX30rWw+j77JpYEeaTxMD9ODlh6s9GClBys9WOnBSg9WerDSg5UerPRgpQcrPVjpwUoPVnqw0oOVHqz0YKUHKz1Y6cFKD1aleTR1VT3X6cehx7n26PF0bJehTYke/YLJPiOT0j1C64I9Xkfc29tM9z92L9oU7PE+4t4+YB5twR5j1sccHrv4zE49fzl4zLFfhT3oRY/q8zgHP72+Y6e/v479zjRPwSO45PS8frQHqSZahL3rEK+px7Rkjy6e98K1GVgnnj/msdhHi7BvDb1DbfWYpXX0aK+cwTs9HlozcT439fT/oce5w8S5bDN6N87FY8rvu4vvX+H8SH+W5OARuve7eRPXxi6eVbZwk1w87vk20vbWxCE+909X6jfGXDzaCee9rrc2Ut9HKR6hp7j33DqvbX1eK6nvoSSPvksOv/WleFD3/qV6lJwerPRgpQcrPVjpwUoPVnqw0oPVqtaDlB6s3K9Y6cFKD1Z6sNKDlR6s9GClBys9WOnBSg9WerDSg5UerPRgpQcrPVjpwUoPVnqw0oOVHqz0YKUHKz1Y6cFKD1Z6sNKDlR6sVobrHysMP7VAnAAA
   </data>
  </layer>
 </map>

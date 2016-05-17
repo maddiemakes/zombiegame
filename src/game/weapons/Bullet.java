@@ -59,4 +59,8 @@ public class Bullet extends LevelObject {
         setYVelocity(0);
         sprite.destroy();
     }
+
+    public void setHealth(int i) {
+        health = i;
+    }
 }
