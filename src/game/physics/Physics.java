@@ -64,7 +64,6 @@ public class Physics {
         ArrayList<Tile> tiles = bullet.getBoundingShape().getTilesOccupying(mapTiles);
         for(Tile t : tiles){
             //if this tile has a bounding shape
-            System.out.println(t.getClass().toString());
             if (t.getClass().toString().equals("class game.level.tile.BorderTile")) {
                 bullet.setHealth(0);
             }
