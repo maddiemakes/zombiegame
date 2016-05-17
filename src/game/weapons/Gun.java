@@ -1,5 +1,7 @@
 package game.weapons;
 
+import game.Game;
+import game.level.Level;
 import game.state.LevelState;
 import org.newdawn.slick.SlickException;
 
@@ -35,19 +37,20 @@ public abstract class Gun {
         } catch (SlickException e) {
             e.printStackTrace();
         }
-        bullet.setYVelocity(-bulletSpeed*delta);
         LevelState.bullets.add(bullet);
         currentAmmo--;
 
         //TODO all this below
-//        double mouseX = LevelState.getMousePos().getX();
-//        double mouseY = LevelState.getMousePos().getY();
-//
-//        double angle = Math.toDegrees(Math.atan2(mouseX - player.getX(), mouseY - player.getY()));
-////        double xVelocity = (bulletSpeed) * Math.cos(angle);
-////        double yVelocity = (bulletSpeed) * Math.sin(angle);
-//        bullet.setXVelocity((float) ((bulletSpeed*delta*01) * (Math.cos(angle))));
-//        bullet.setYVelocity((float) ((bulletSpeed*delta*01) * (Math.sin(angle))));
+        double mouseX = LevelState.getMousePos().getX()/Game.SCALE;
+        double mouseY = LevelState.getMousePos().getY()/Game.SCALE;
+
+        double offsetX = player.offsetx;
+        double offsetY = player.offsety;
+
+        double angle = (Math.atan2((LevelState.containerHeight/Game.SCALE - mouseY) + offsetY - 8 - player.getY() - 16, mouseX + offsetX + 2 - player.getX() - 16));
+
+        bullet.setXVelocity((float) ((bulletSpeed*delta) * (Math.cos(angle))));
+        bullet.setYVelocity((float) ((bulletSpeed*delta) * (Math.sin(angle))));
     }
 
     public int getDamage() {

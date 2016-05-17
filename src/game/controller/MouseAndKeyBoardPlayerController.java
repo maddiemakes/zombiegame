@@ -79,39 +79,13 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
             LevelState.attackMe = !LevelState.attackMe;
         }
 
-        //zombie killer
-//        if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-//            double mx = (player.getX() - ((640-i.getMouseX())/(2.5)));
-//            double my = (player.getY() - ((360-i.getMouseY())/(2.5)));
-//            for (Zombie zombie: zombies) {
-//                if (mx >= zombie.getX() - 0 && mx <= zombie.getX() + 20 && my >= zombie.getY() - 10 && mx <= zombie.getY() + 10) {
-//                    zombie.damage(1);
-//                    System.out.println("Health: " + zombie.getHealth());
-//                }
-//            }
-//        }
         if (i.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
             if (shot > 0) {
                 playerGun.shoot(delta);
                 shot--;
             }
-            //make a new bullet at the location of the player
-            //point bullet at direction of cursor
-            //when zombie gets hit by bullet they take damage
-            //bullet disappears when it hits a zombie
-//            int ccc = 0;
-//            while ((ccc % 2000) == 0) {
-//                Bullet bullet = null;
-//                try {
-//                    bullet = new Bullet(player.getX(), player.getY());
-//                } catch (SlickException e) {
-//                    e.printStackTrace();
-//                }
-//                bullet.setYVelocity(-0.1f * delta);
-//                LevelState.bullets.add(bullet);
-//                ccc++;
-//            }
         }
+
         if (!(i.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))) {
             shot = playerGun.getSemi();
         }
