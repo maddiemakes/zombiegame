@@ -41,6 +41,8 @@ public class LevelState extends BasicGameState {
     public static boolean spawnNew = false;
     public static boolean attackMe = false;
     public static int zombiesSpawned;
+    private Font font = new Font("Verdana", Font.BOLD, 10);
+    private TrueTypeFont ttf = new TrueTypeFont(font, true);
 
 
     public LevelState(String startingLevel){
@@ -143,8 +145,6 @@ public class LevelState extends BasicGameState {
         g.scale(Game.SCALE, Game.SCALE);
         //render the level
         level.render();
-        Font font = new Font("Verdana", Font.BOLD, 10);
-        TrueTypeFont ttf = new TrueTypeFont(font, true);
         g.setFont(ttf);
         g.drawString("Health: " + player.getHealth(), 5, 15);
         g.drawString("Kills: " + killCount, 5, 27);
