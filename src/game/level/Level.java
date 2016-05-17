@@ -6,10 +6,7 @@ import game.character.Character;
 import game.character.Player;
 import game.character.Zombie;
 import game.enums.Facing;
-import game.level.tile.AirTile;
-import game.level.tile.BorderTile;
-import game.level.tile.SolidTile;
-import game.level.tile.Tile;
+import game.level.tile.*;
 import game.weapons.Bullet;
 import javafx.util.Pair;
 import org.newdawn.slick.Animation;
@@ -70,6 +67,12 @@ public class Level {
                         break;
                     case "borderWall":
                         tile = new BorderTile(x,y);
+                        break;
+                    case "lava":
+                        tile = new LavaTile(x,y);
+                        break;
+                    case "water":
+                        tile = new WaterTile(x,y);
                         break;
                     default:
                         tile = new SolidTile(x,y);

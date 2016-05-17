@@ -67,4 +67,5 @@ public abstract class LevelObject {
     public String getType() {
         return type;
     }
+
 }

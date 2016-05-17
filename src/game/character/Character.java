@@ -1,7 +1,6 @@
 package game.character;
 
 import game.enums.Facing;
-import game.level.Level;
 import game.level.LevelObject;
 import game.state.LevelState;
 import javafx.util.Pair;
@@ -9,9 +8,7 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public abstract class Character extends LevelObject {
 
@@ -19,6 +16,8 @@ public abstract class Character extends LevelObject {
     public HashMap<Facing,Image> sprites;
     public HashMap<Facing,Animation> movingAnimations;
     protected boolean moving = false;
+    protected float originalMaxSpeed = 1;
+    protected float originalDiagonalSpeed = 1;
     protected float maximumSpeed = 1;
     protected float diagonalSpeed = 1;
     protected int health = 10;
@@ -199,11 +198,15 @@ public abstract class Character extends LevelObject {
     }
 
     public void damage(int damage) {
-        health = health-damage;
+        health -= damage;
     }
 
-    public int getHealth() {
+    public float getHealth() {
         return health;
     }
 
+    public void setSpeed(int divisor) {
+        maximumSpeed = originalMaxSpeed / divisor;
+        diagonalSpeed = originalDiagonalSpeed / divisor;
+    }
 }

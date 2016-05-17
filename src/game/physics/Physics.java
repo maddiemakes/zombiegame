@@ -27,11 +27,36 @@ public class Physics {
             //if this tile has a bounding shape
             if(t.getBoundingShape() != null){
                 if(t.getBoundingShape().checkCollision(obj.getBoundingShape())){
+                    if (obj.getClass().toString().startsWith("class game.character.")) {
+                        if (t.getClass().toString().equals("class game.level.tile.LavaTile")
+                                || t.getClass().toString().equals("class game.level.tile.WaterTile")) {
+                            return false;
+                        }
+                    }
                     return true;
                 }
             }
         }
         return false;
+    }
+
+    public static String checkTerrainCollision(Character obj, Tile[][] mapTiles) {
+        //get only the tiles that matter
+        ArrayList<Tile> tiles = obj.getBoundingShape().getTilesOccupying(mapTiles);
+        for(Tile t : tiles){
+            //if this tile has a bounding shape then it's not air
+            if(t.getBoundingShape() != null){
+                if(t.getBoundingShape().checkCollision(obj.getBoundingShape())){
+                    if (t.getClass().toString().equals("class game.level.tile.LavaTile")) {
+                        return "lava";
+                    }
+                    if (t.getClass().toString().equals("class game.level.tile.WaterTile")) {
+                        return "water";
+                    }
+                }
+            }
+        }
+        return "false";
     }
 
     public static void checkBulletCollision(Bullet bullet, Tile[][] mapTiles){

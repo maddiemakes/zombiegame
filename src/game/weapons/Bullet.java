@@ -50,14 +50,14 @@ public class Bullet extends LevelObject {
         health -= thickness;
     }
 
-    public int getHealth() {
+    public float getHealth() {
         return health;
     }
 
     public void kill() throws SlickException {
         setXVelocity(0);
         setYVelocity(0);
-        sprite.destroy();
+//        sprite.destroy();
     }
 
     public void setHealth(int i) {

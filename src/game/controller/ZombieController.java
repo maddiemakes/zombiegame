@@ -1,6 +1,5 @@
 package game.controller;
 
-import game.character.Character;
 import game.character.Zombie;
 import game.level.Level;
 import game.level.LevelObject;

@@ -78,6 +78,9 @@ public class LevelState extends BasicGameState {
 
     public void update(GameContainer container, StateBasedGame sbg, int delta) throws SlickException {
         //every update we have to handle the input from the player
+        playerController.handleInput(container.getInput(), delta);
+
+        //press P to spawn zombies
         if (spawnNew) {
             Random rand = new Random();
             try {
@@ -90,7 +93,8 @@ public class LevelState extends BasicGameState {
                     y = rand.nextInt(LevelState.containerHeight);
                 } while (y > player.offsety - 360 && y < player.offsety + 360);
                 zombies.add(new Zombie(x, y));
-                if (Physics.checkCollision(zombies.get(zombies.size() - 1), level.getTiles())) {
+                if (Physics.checkCollision(zombies.get(zombies.size() - 1), level.getTiles())
+                        || Physics.checkTerrainCollision(zombies.get(zombies.size() - 1), level.getTiles()).equals("false")) {
                     zombies.remove(zombies.size() - 1);
                 } else {
                     zombiesSpawned++;
@@ -102,7 +106,7 @@ public class LevelState extends BasicGameState {
             }
         }
 
-        playerController.handleInput(container.getInput(), delta);
+        //this gets zombies off your case
         for (ZombieController controller: zombieControllers) {
             if (attackMe) {
                 controller.handleWalk(player, level, delta);
@@ -111,11 +115,43 @@ public class LevelState extends BasicGameState {
                 controller.handleWalk(zombies.get(zombies.size() - 1), level, delta);
             }
         }
+
         physics.handlePhysics(level, delta);
+
+        switch (Physics.checkTerrainCollision(player, level.getTiles())) {
+            case "lava":
+                player.damage(1);
+                break;
+            case "water":
+//                player.setXVelocity(player.getXVelocity()/3);
+//                player.setYVelocity(player.getYVelocity()/3);
+                player.setSpeed(3);
+                break;
+            default:
+                player.setSpeed(1);
+                break;
+        }
+
+        for (Zombie zombie: zombies) {
+            switch (Physics.checkTerrainCollision(zombie, level.getTiles())) {
+                case "lava":
+                    zombie.damage(1);
+                    break;
+                case "water":
+//                    zombie.setXVelocity(zombie.getXVelocity()/3);
+//                    zombie.setYVelocity(zombie.getYVelocity()/3);
+                    zombie.setSpeed(3);
+                    break;
+                default:
+                    zombie.setSpeed(1);
+                    break;
+            }
+        }
 
 
         //make arraylist of bullets
-        //every time a bullet reaches x or y of 0, we delete it
+        //every time bullet hits stuff, we hurt it
+        //when bullet is dead, we kill it
         int k = 0;
         List<Integer> gone = new ArrayList<>();
         for (Bullet bullet: bullets) {

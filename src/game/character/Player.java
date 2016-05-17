@@ -16,8 +16,10 @@ public class Player extends Character {
         setMovingAnimation("data/images/player/player", 3, 100);
 
         //TODO move these around to fix the box to fit to the character sprite
-        boundingShape = new AABoundingRect(x+6, y+6, 18, 26);
+        boundingShape = new AABoundingRect(x+6, y+21, 18, 10);
 
+        originalMaxSpeed = 0.15f;
+        originalDiagonalSpeed = 0.1f;
         maximumSpeed = 0.15f;
         diagonalSpeed = 0.1f;
         health = 100;
@@ -25,7 +27,7 @@ public class Player extends Character {
     }
 
     public void updateBoundingShape(){
-        boundingShape.updatePosition(x+6,y+6);
+        boundingShape.updatePosition(x+6,y+21);
     }
 
     //TODO

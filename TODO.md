@@ -39,4 +39,4 @@
 ##Bugfixes
 - [x] Game crashes when you shoot wall
 - [x] Game crashes when you kill zombies too quickly
-- [ ] Bullets turn into white boxes (.png is destroyed before bullet is removed)
+- [x] Bullets turn into white boxes (.png is destroyed before bullet is removed)
