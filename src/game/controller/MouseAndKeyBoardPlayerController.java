@@ -79,8 +79,12 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
             LevelState.attackMe = !LevelState.attackMe;
         }
 
+        if (i.isKeyPressed(Input.KEY_R)) {
+            playerGun.reload();
+        }
+
         if (i.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
-            if (shot > 0) {
+            if ((shot > 0 || playerGun.getSemi() == 0) && playerGun.getClip() > 0) {
                 playerGun.shoot(delta);
                 shot--;
             }

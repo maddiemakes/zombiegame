@@ -14,6 +14,7 @@ public abstract class Gun {
     protected float bulletSpeed;
     protected int maxAmmo;
     protected int clipSize;
+    protected int clipAmmo;
     protected int currentAmmo;
     protected int reloadSpeed;
 
@@ -47,7 +48,7 @@ public abstract class Gun {
             e.printStackTrace();
         }
         LevelState.bullets.add(bullet);
-        currentAmmo--;
+        clipAmmo--;
 
         //TODO all this below
 
@@ -63,4 +64,23 @@ public abstract class Gun {
         return semi;
     }
 
+    public int getCurrentAmmo() {
+        return currentAmmo;
+    }
+
+    public int getClip() {
+        return clipAmmo;
+    }
+
+    public void reload() {
+        currentAmmo -= clipSize - clipAmmo;
+        if ((currentAmmo + (clipSize-clipAmmo)) >= clipSize) {
+            clipAmmo = clipSize;
+        } else {
+            clipAmmo = (currentAmmo + (clipSize-clipAmmo))%clipSize;
+        }
+        if (currentAmmo < 0) {
+            currentAmmo = 0;
+        }
+    }
 }

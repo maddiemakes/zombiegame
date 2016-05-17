@@ -14,6 +14,7 @@ import game.physics.Physics;
 import game.weapons.Bullet;
 import game.weapons.Gun;
 import game.weapons.Pistol;
+import game.weapons.Rifle;
 import javafx.util.Pair;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
@@ -63,7 +64,9 @@ public class LevelState extends BasicGameState {
         //at the start of the game we don't have a player yet
         player = new Player(228,150);
         Pistol pistol = new Pistol();
-        playerGun = pistol;
+        Rifle rifle = new Rifle();
+//        playerGun = pistol;
+        playerGun = rifle;
 
 
         containerHeight = container.getHeight();
@@ -94,7 +97,7 @@ public class LevelState extends BasicGameState {
                 } while (y > player.offsety - 360 && y < player.offsety + 360);
                 zombies.add(new Zombie(x, y));
                 if (Physics.checkCollision(zombies.get(zombies.size() - 1), level.getTiles())
-                        || Physics.checkTerrainCollision(zombies.get(zombies.size() - 1), level.getTiles()).equals("false")) {
+                        && Physics.checkTerrainCollision(zombies.get(zombies.size() - 1), level.getTiles()).equals("false")) {
                     zombies.remove(zombies.size() - 1);
                 } else {
                     zombiesSpawned++;
@@ -190,6 +193,8 @@ public class LevelState extends BasicGameState {
         g.drawString("Zombies remaining: " + (zombiesSpawned - killCount), 5, 39);
         g.drawString("Zombies spawn: " + spawnNew, 5, 51);
         g.drawString("Attack me: " + attackMe, 5, 63);
+        g.drawString("Ammo: " + playerGun.getCurrentAmmo(), 5, 75);
+        g.drawString("Clip: " + playerGun.getClip(), 5, 87);
     }
 
     //this method is overriden from basicgamestate and will trigger once you press any key on your keyboard
