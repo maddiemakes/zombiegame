@@ -52,9 +52,6 @@ public abstract class Character extends LevelObject {
             } else {
                 sprites.get(facing).draw(x - 2 - offset_x, y - 2 - offset_y);
             }
-        } else {
-            movingAnimations.get(facing).stop();
-            sprites.get(facing).destroy();
         }
     }
 
@@ -97,7 +94,6 @@ public abstract class Character extends LevelObject {
     }
 
     protected void setMovingAnimation(String url, int images, int frameDuration) throws SlickException {
-
         boolean exists = false;
         for (String name: LevelState.animationList) {
             if (name.equals(url)) {
@@ -111,30 +107,18 @@ public abstract class Character extends LevelObject {
             movingAnimations = new HashMap<>();
 
             Animation facingDownAnimation = new Animation();
-//            Animation facingDownLeftAnimation = new Animation();
-//            Animation facingDownRightAnimation = new Animation();
             Animation facingUpAnimation = new Animation();
-//            Animation facingUpLeftAnimation = new Animation();
-//            Animation facingUpRightAnimation = new Animation();
             Animation facingRightAnimation = new Animation();
             Animation facingLeftAnimation = new Animation();
             for (int k = 2; k < images + 1; k++) {
                 facingDownAnimation.addFrame(new Image(url + "_down_" + k + ".png"), frameDuration);
-//                facingDownLeftAnimation.addFrame(new Image(url + "_down_" + k + ".png"), frameDuration);
-//                facingDownRightAnimation.addFrame(new Image(url + "_down_" + k + ".png"), frameDuration);
                 facingUpAnimation.addFrame(new Image(url + "_up_" + k + ".png"), frameDuration);
-//                facingUpLeftAnimation.addFrame(new Image(url + "_up_" + k + ".png"), frameDuration);
-//                facingUpRightAnimation.addFrame(new Image(url + "_up_" + k + ".png"), frameDuration);
                 facingRightAnimation.addFrame(new Image(url + "_right_" + k + ".png"), frameDuration);
                 facingLeftAnimation.addFrame(new Image(url + "_left_" + k + ".png"), frameDuration);
             }
 
             movingAnimations.put(Facing.DOWN, facingDownAnimation);
-//            movingAnimations.put(Facing.DOWNLEFT, facingDownLeftAnimation);
-//            movingAnimations.put(Facing.DOWNRIGHT, facingDownRightAnimation);
             movingAnimations.put(Facing.UP, facingUpAnimation);
-//            movingAnimations.put(Facing.UPLEFT, facingUpLeftAnimation);
-//            movingAnimations.put(Facing.UPRIGHT, facingUpRightAnimation);
             movingAnimations.put(Facing.RIGHT, facingRightAnimation);
             movingAnimations.put(Facing.LEFT, facingLeftAnimation);
             LevelState.animationMaps.add(new Pair<>(url, movingAnimations));
