@@ -8,6 +8,8 @@ import org.newdawn.slick.SlickException;
 
 public class Player extends Character {
 
+    public static double rotate;
+
     public Player(float x, float y) throws SlickException {
         super(x, y);
         setSprite("data/images/player/player");

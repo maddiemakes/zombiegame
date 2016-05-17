@@ -12,7 +12,7 @@ import static game.state.LevelState.playerGun;
 public class Bullet extends LevelObject {
 
     protected int damage;
-    protected Image sprite;
+    public Image sprite;
     protected int health; //this is for collaterals
     public static int bbb;
 
@@ -27,6 +27,7 @@ public class Bullet extends LevelObject {
         sprite = new Image("data/images/bullet.png");
         damage = 1;
         bbb = 0;
+//        sprite.rotate((float) Math.toDegrees(player.rotate));
     }
 
     public void render(float offset_x, float offset_y) {

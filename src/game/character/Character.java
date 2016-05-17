@@ -1,18 +1,23 @@
 package game.character;
 
 import game.enums.Facing;
+import game.level.Level;
 import game.level.LevelObject;
+import game.state.LevelState;
+import javafx.util.Pair;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public abstract class Character extends LevelObject {
 
     protected Facing facing;
-    protected HashMap<Facing,Image> sprites;
-    protected HashMap<Facing,Animation> movingAnimations;
+    public HashMap<Facing,Image> sprites;
+    public HashMap<Facing,Animation> movingAnimations;
     protected boolean moving = false;
     protected float maximumSpeed = 1;
     protected float diagonalSpeed = 1;
@@ -54,47 +59,95 @@ public abstract class Character extends LevelObject {
     }
 
     protected void setSprite(String i) throws SlickException {
-        sprites = new HashMap<Facing,Image>();
-        sprites.put(Facing.DOWN, new Image(i + "_down_1.png"));
-        sprites.put(Facing.DOWNLEFT, new Image(i + "_down_1.png"));
-        sprites.put(Facing.DOWNRIGHT, new Image(i + "_down_1.png"));
-        sprites.put(Facing.UP, new Image(i + "_up_1.png"));
-        sprites.put(Facing.UPLEFT, new Image(i + "_up_1.png"));
-        sprites.put(Facing.UPRIGHT, new Image(i + "_up_1.png"));
-        sprites.put(Facing.LEFT , new Image(i + "_left_1.png"));
-        sprites.put(Facing.RIGHT , new Image(i + "_right_1.png"));
+
+        //checks to see if we've already made these images before
+        // this is useful in the case of zombies,
+        // where we don't need to make new images for every zombie
+        boolean exists = false;
+        for (String name: LevelState.spriteList) {
+            if (name.equals(i)) {
+                exists = true;
+            }
+        }
+
+        //if it's new, let's make it
+        if (!exists) {
+            LevelState.spriteList.add(i);
+            sprites = new HashMap<Facing, Image>();
+            sprites.put(Facing.DOWN, new Image(i + "_down_1.png"));
+//            sprites.put(Facing.DOWNLEFT, new Image(i + "_down_1.png"));
+//            sprites.put(Facing.DOWNRIGHT, new Image(i + "_down_1.png"));
+            sprites.put(Facing.UP, new Image(i + "_up_1.png"));
+//            sprites.put(Facing.UPLEFT, new Image(i + "_up_1.png"));
+//            sprites.put(Facing.UPRIGHT, new Image(i + "_up_1.png"));
+            sprites.put(Facing.LEFT, new Image(i + "_left_1.png"));
+            sprites.put(Facing.RIGHT, new Image(i + "_right_1.png"));
+            LevelState.spritesMaps.add(new Pair<>(i,sprites));
+            System.out.println("Added " + i);
+        }
+
+        //if it's not new, let's find the old one
+        else {
+            for (Pair<String, HashMap<Facing,Image>> pair: LevelState.spritesMaps) {
+                if (pair.getKey().equals(i)) {
+                    sprites = pair.getValue();
+                }
+            }
+        }
     }
 
     protected void setMovingAnimation(String url, int images, int frameDuration) throws SlickException {
-        movingAnimations = new HashMap<>();
 
-        Animation facingDownAnimation = new Animation();
-        Animation facingDownLeftAnimation = new Animation();
-        Animation facingDownRightAnimation = new Animation();
-        Animation facingUpAnimation = new Animation();
-        Animation facingUpLeftAnimation = new Animation();
-        Animation facingUpRightAnimation = new Animation();
-        Animation facingRightAnimation = new Animation();
-        Animation facingLeftAnimation = new Animation();
-        for (int k = 2; k < images + 1; k++) {
-            facingDownAnimation.addFrame(new Image(url + "_down_" + k + ".png"), frameDuration);
-            facingDownLeftAnimation.addFrame(new Image(url + "_down_" + k + ".png"), frameDuration);
-            facingDownRightAnimation.addFrame(new Image(url + "_down_" + k + ".png"), frameDuration);
-            facingUpAnimation.addFrame(new Image(url + "_up_" + k + ".png"), frameDuration);
-            facingUpLeftAnimation.addFrame(new Image(url + "_up_" + k + ".png"), frameDuration);
-            facingUpRightAnimation.addFrame(new Image(url + "_up_" + k + ".png"), frameDuration);
-            facingRightAnimation.addFrame(new Image(url + "_right_" + k + ".png"), frameDuration);
-            facingLeftAnimation.addFrame(new Image(url + "_left_" + k + ".png"), frameDuration);
+        boolean exists = false;
+        for (String name: LevelState.animationList) {
+            if (name.equals(url)) {
+                exists = true;
+            }
         }
 
-        movingAnimations.put(Facing.DOWN, facingDownAnimation);
-        movingAnimations.put(Facing.DOWNLEFT, facingDownLeftAnimation);
-        movingAnimations.put(Facing.DOWNRIGHT, facingDownRightAnimation);
-        movingAnimations.put(Facing.UP, facingUpAnimation);
-        movingAnimations.put(Facing.UPLEFT, facingUpLeftAnimation);
-        movingAnimations.put(Facing.UPRIGHT, facingUpRightAnimation);
-        movingAnimations.put(Facing.RIGHT, facingRightAnimation);
-        movingAnimations.put(Facing.LEFT, facingLeftAnimation);
+        if (!exists) {
+            LevelState.animationList.add(url);
+
+            movingAnimations = new HashMap<>();
+
+            Animation facingDownAnimation = new Animation();
+//            Animation facingDownLeftAnimation = new Animation();
+//            Animation facingDownRightAnimation = new Animation();
+            Animation facingUpAnimation = new Animation();
+//            Animation facingUpLeftAnimation = new Animation();
+//            Animation facingUpRightAnimation = new Animation();
+            Animation facingRightAnimation = new Animation();
+            Animation facingLeftAnimation = new Animation();
+            for (int k = 2; k < images + 1; k++) {
+                facingDownAnimation.addFrame(new Image(url + "_down_" + k + ".png"), frameDuration);
+//                facingDownLeftAnimation.addFrame(new Image(url + "_down_" + k + ".png"), frameDuration);
+//                facingDownRightAnimation.addFrame(new Image(url + "_down_" + k + ".png"), frameDuration);
+                facingUpAnimation.addFrame(new Image(url + "_up_" + k + ".png"), frameDuration);
+//                facingUpLeftAnimation.addFrame(new Image(url + "_up_" + k + ".png"), frameDuration);
+//                facingUpRightAnimation.addFrame(new Image(url + "_up_" + k + ".png"), frameDuration);
+                facingRightAnimation.addFrame(new Image(url + "_right_" + k + ".png"), frameDuration);
+                facingLeftAnimation.addFrame(new Image(url + "_left_" + k + ".png"), frameDuration);
+            }
+
+            movingAnimations.put(Facing.DOWN, facingDownAnimation);
+//            movingAnimations.put(Facing.DOWNLEFT, facingDownLeftAnimation);
+//            movingAnimations.put(Facing.DOWNRIGHT, facingDownRightAnimation);
+            movingAnimations.put(Facing.UP, facingUpAnimation);
+//            movingAnimations.put(Facing.UPLEFT, facingUpLeftAnimation);
+//            movingAnimations.put(Facing.UPRIGHT, facingUpRightAnimation);
+            movingAnimations.put(Facing.RIGHT, facingRightAnimation);
+            movingAnimations.put(Facing.LEFT, facingLeftAnimation);
+            LevelState.animationMaps.add(new Pair<>(url, movingAnimations));
+            System.out.println("Added " + url);
+        }
+
+        else {
+            for (Pair<String, HashMap<Facing,Animation>> pair: LevelState.animationMaps) {
+                if (pair.getKey().equals(url)) {
+                    movingAnimations = pair.getValue();
+                }
+            }
+        }
     }
 
     public boolean isMoving(){
@@ -137,28 +190,28 @@ public abstract class Character extends LevelObject {
         x_velocity = -diagonalSpeed;
         y_velocity = -diagonalSpeed;
         moving = true;
-        facing = Facing.UPLEFT;
+        facing = Facing.UP;
     }
 
     public void moveUpRight(int delta) {
         x_velocity = diagonalSpeed;
         y_velocity = -diagonalSpeed;
         moving = true;
-        facing = Facing.UPRIGHT;
+        facing = Facing.UP;
     }
 
     public void moveDownLeft(int delta) {
         x_velocity = -diagonalSpeed;
         y_velocity = diagonalSpeed;
         moving = true;
-        facing = Facing.DOWNLEFT;
+        facing = Facing.DOWN;
     }
 
     public void moveDownRight(int delta) {
         x_velocity = diagonalSpeed;
         y_velocity = diagonalSpeed;
         moving = true;
-        facing = Facing.DOWNRIGHT;
+        facing = Facing.DOWN;
     }
 
     public void damage(int damage) {

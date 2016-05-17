@@ -6,21 +6,25 @@ import game.character.Zombie;
 import game.controller.MouseAndKeyBoardPlayerController;
 import game.controller.PlayerController;
 import game.controller.ZombieController;
+import game.enums.Facing;
 import game.level.Level;
 import game.physics.Physics;
 
 import game.weapons.Bullet;
 import game.weapons.Gun;
 import game.weapons.Pistol;
+import javafx.util.Pair;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.awt.*;
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -43,6 +47,10 @@ public class LevelState extends BasicGameState {
     public static int zombiesSpawned;
     private Font font = new Font("Verdana", Font.BOLD, 10);
     private TrueTypeFont ttf = new TrueTypeFont(font, true);
+    public static List<String> spriteList = new ArrayList<>();
+    public static List<Pair<String, HashMap<Facing,Image>>> spritesMaps = new ArrayList<>();
+    public static List<String> animationList = new ArrayList<>();
+    public static List<Pair<String, HashMap<Facing,Animation>>> animationMaps = new ArrayList<>();
 
 
     public LevelState(String startingLevel){

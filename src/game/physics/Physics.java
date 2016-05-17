@@ -64,13 +64,14 @@ public class Physics {
                 }
                 for (Integer i: dead) {
                     if (zombies.size() > i && zombieControllers.size() > i) {
-                        LevelState.killCount++;
+                       LevelState.killCount++;
                         zombies.set(i, zombies.get(zombies.size() - 1));
                         zombies.remove(zombies.size() - 1);
                         zombieControllers.set(i, zombieControllers.get(zombieControllers.size() - 1));
                         zombieControllers.remove(zombieControllers.size() - 1);
                     }
                 }
+                dead.clear();
             }
         }
     }

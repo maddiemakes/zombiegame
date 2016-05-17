@@ -5,14 +5,19 @@ import game.character.Character;
 
 import game.character.Player;
 import game.character.Zombie;
+import game.enums.Facing;
 import game.level.tile.AirTile;
 import game.level.tile.SolidTile;
 import game.level.tile.Tile;
 import game.weapons.Bullet;
+import javafx.util.Pair;
+import org.newdawn.slick.Animation;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static game.state.LevelState.bullets;

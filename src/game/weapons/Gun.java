@@ -31,9 +31,18 @@ public abstract class Gun {
     }
 
     public void shoot(int delta) {
+        double mouseX = LevelState.getMousePos().getX()/Game.SCALE;
+        double mouseY = LevelState.getMousePos().getY()/Game.SCALE;
+
+        double offsetX = player.offsetx;
+        double offsetY = player.offsety;
+
+        player.rotate = (Math.atan2((LevelState.containerHeight/Game.SCALE - mouseY) + offsetY - 8 - player.getY() - 16, mouseX + offsetX + 2 - player.getX() - 16));
+
         Bullet bullet = null;
         try {
             bullet = new Bullet(player.getX(), player.getY());
+            bullet.sprite.rotate((float) Math.toDegrees(player.rotate) - 90);
         } catch (SlickException e) {
             e.printStackTrace();
         }
@@ -41,16 +50,9 @@ public abstract class Gun {
         currentAmmo--;
 
         //TODO all this below
-        double mouseX = LevelState.getMousePos().getX()/Game.SCALE;
-        double mouseY = LevelState.getMousePos().getY()/Game.SCALE;
 
-        double offsetX = player.offsetx;
-        double offsetY = player.offsety;
-
-        double angle = (Math.atan2((LevelState.containerHeight/Game.SCALE - mouseY) + offsetY - 8 - player.getY() - 16, mouseX + offsetX + 2 - player.getX() - 16));
-
-        bullet.setXVelocity((float) ((bulletSpeed*delta) * (Math.cos(angle))));
-        bullet.setYVelocity((float) ((bulletSpeed*delta) * (Math.sin(angle))));
+        bullet.setXVelocity((float) ((bulletSpeed*delta) * (Math.cos(player.rotate))));
+        bullet.setYVelocity((float) ((bulletSpeed*delta) * (Math.sin(player.rotate))));
     }
 
     public int getDamage() {
