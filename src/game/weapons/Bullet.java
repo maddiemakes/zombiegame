@@ -2,8 +2,12 @@ package game.weapons;
 
 import game.level.LevelObject;
 import game.physics.AABoundingRect;
+import game.state.LevelState;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+
+import static game.state.LevelState.player;
+import static game.state.LevelState.playerGun;
 
 public class Bullet extends LevelObject {
 
@@ -27,6 +31,7 @@ public class Bullet extends LevelObject {
 
     public void render(float offset_x, float offset_y) {
         if (health > 0) {
+//            sprite.rotate((float) Math.toDegrees(Math.atan2(Math.asin(y_velocity/playerGun.bulletSpeed), Math.acos(x_velocity/playerGun.bulletSpeed))));
             sprite.draw(x - offset_x, y - offset_y);
             setX(x + x_velocity);
             setY(y + y_velocity);

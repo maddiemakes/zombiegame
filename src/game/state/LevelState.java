@@ -44,9 +44,6 @@ public class LevelState extends BasicGameState {
     private Font font = new Font("Verdana", Font.BOLD, 10);
     private TrueTypeFont ttf = new TrueTypeFont(font, true);
 
-    private Font font = new Font("Verdana", Font.BOLD, 10);
-    private TrueTypeFont ttf = new TrueTypeFont(font, true);
-
 
     public LevelState(String startingLevel){
         this.startinglevel = startingLevel;

@@ -1,5 +1,6 @@
 package game.character;
 
+import game.Game;
 import game.enums.Facing;
 import game.physics.AABoundingRect;
 import game.state.LevelState;
@@ -28,25 +29,22 @@ public class Player extends Character {
     //TODO
     public void setMouseQuadrant()
     {
-        double xPos = LevelState.getMousePos().getX();
-        double yPos = LevelState.getMousePos().getY();
-        double line1 = 0.5625*xPos;
-        double line2 = -0.5625*xPos + 720;
+        double mouseX = LevelState.getMousePos().getX()/Game.SCALE;
+        double mouseY = LevelState.getMousePos().getY()/Game.SCALE;
 
-        if(yPos >= line1 && yPos > line2)
-        {
-            facing = Facing.UP;
-        }
-        else if(yPos <= line1 && yPos < line2)
-        {
+        double xPos = mouseX + offsetx - x - 14;
+        double yPos = (LevelState.containerHeight/Game.SCALE - mouseY) + offsety - y - 24;
+
+        double line1 = (0.5625)*xPos;//*Game.SCALE;
+        double line2 = (-0.5625)*xPos+yPos/Game.SCALE;//+720;//*Game.SCALE + LevelState.containerHeight;
+
+        if(yPos >= line1 && yPos > line2) {
             facing = Facing.DOWN;
-        }
-        else if(yPos < line1 && yPos >= line2)
-        {
+        } else if(yPos <= line1 && yPos < line2) {
+            facing = Facing.UP;
+        } else if(yPos < line1 && yPos >= line2) {
             facing = Facing.RIGHT;
-        }
-        else
-        {
+        } else {
             facing = Facing.LEFT;
         }
     }
