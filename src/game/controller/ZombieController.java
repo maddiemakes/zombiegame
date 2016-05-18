@@ -57,7 +57,6 @@ public class ZombieController {
         } else {
             if (zombie.getBoundingShape().checkCollision(player.getBoundingShape())) {
                 player.damage(zombie.getAttack());
-                System.out.println(player.getHealth());
             }
 //        } else {
 //            zombie.setXVelocity(0);

@@ -85,6 +85,10 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
                     playerGun = playerGuns[0];
                 }
             }
+
+            if (i.isKeyPressed(Input.KEY_I)) {
+                player.invincible = !player.invincible;
+            }
         }
         //else if we're dead, stop us from moving
         else {

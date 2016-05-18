@@ -9,6 +9,7 @@ import org.newdawn.slick.SlickException;
 public class Player extends Character {
 
     public static double rotate;
+    public static boolean invincible = false;
 
     public Player(float x, float y) throws SlickException {
         super(x, y);
@@ -50,6 +51,12 @@ public class Player extends Character {
             facing = Facing.RIGHT;
         } else {
             facing = Facing.LEFT;
+        }
+    }
+
+    public void damage(int damage) {
+        if (!invincible) {
+            health -= damage;
         }
     }
 

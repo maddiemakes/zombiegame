@@ -59,11 +59,13 @@ public class LevelState extends BasicGameState {
     public static Gun[] playerGuns = new Gun[2];
     public static boolean paused = false;
     public static boolean gameOver = false;
-    private static int currentWave = 100;
-    int zombieSpawnDelay = 5000 - (currentWave*50);
-    int zombieWaveDelay = 20000;
-    int zombiesSpawnedThisWave = 0;
-    int zombieWaveTimer = zombieWaveDelay;
+    private static int startingWave = 100;
+    private static int currentWave = startingWave;
+    private int zombiesBeforeThisWave = 0;
+    private int zombieSpawnDelay = 5000 - (currentWave*50);
+    private int zombieWaveDelay = 20000;
+    private int zombiesSpawnedThisWave = 0;
+    private int zombieWaveTimer = zombieWaveDelay;
 
     public static Music music;
     public static Music openingMenuMusic;// = new Music("data/audio/music/menu_theme_by_dubwolfer.ogg");
@@ -83,7 +85,6 @@ public class LevelState extends BasicGameState {
         Rifle rifle = new Rifle();
         playerGuns[0] = pistol;
         playerGuns[1] = rifle;
-//        playerGun = pistol;
         playerGun = playerGuns[0];
 
 
@@ -96,17 +97,10 @@ public class LevelState extends BasicGameState {
         //and we create a controller, for now we use the MouseAndKeyBoardPlayerController
         playerController = new MouseAndKeyBoardPlayerController(player);
 
-//        music.add(new Pair<>("MenuTheme",new Music("data/audio/music/menu_theme_by_dubwolfer.ogg")));
-//        for (Pair<String,Music> pair: music) {
-//            if (pair.getKey().equals("MenuTheme")) {
-//                openingMenuMusic = pair.getValue();
-//            }
-//        }
         openingMenuMusic = new Music("data/audio/music/menu_theme_by_dubwolfer.ogg");
         gameOverMusic = new Music("data/audio/music/game_over_theme_by_dubwolfer.ogg");
         music = openingMenuMusic;
         music.loop();
-//        openingMenuMusic.loop();
     }
 
     public void update(GameContainer container, StateBasedGame sbg, int delta) throws SlickException {
@@ -259,20 +253,16 @@ public class LevelState extends BasicGameState {
     private void zombieWave(int delta) {
         int zombiesPerWave = 10;
         if (zombiesSpawnedThisWave < (currentWave * zombiesPerWave - 1) && zombieSpawnTimer <= 0) {
-            int j = 0;
-            for (int k = 0; k <= currentWave; k++) {
-                j += k;
-            }
-            zombiesSpawnedThisWave = zombiesSpawned % (j*zombiesPerWave);
+            zombiesSpawnedThisWave = zombiesSpawned - zombiesBeforeThisWave;
             spawnZombie();
             zombieSpawnTimer = zombieSpawnDelay;
-            System.out.println("Spawned this wave: " + zombiesSpawnedThisWave);
         }
         else if (zombiesSpawned - killCount == 0) {
             zombieWaveTimer -= delta;
             if (zombieWaveTimer <= 0) {
                 currentWave++;
                 zombiesSpawnedThisWave = 0;
+                zombiesBeforeThisWave = zombiesSpawned;
                 if(zombieSpawnDelay >= 200) {
                     zombieSpawnDelay -= currentWave * 50;
                 }
