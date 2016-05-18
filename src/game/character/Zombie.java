@@ -13,7 +13,8 @@ public class Zombie extends Character {
         setMovingAnimation("data/images/zombie/zombie", 3, 100);
 
         //TODO move these around to fix the box to fit to the character sprite
-        boundingShape = new AABoundingRect(x, y, 32, 32);
+//        boundingShape = new AABoundingRect(x, y, 32, 32);
+        boundingShape = new AABoundingRect(x+6, y+19, 18, 12);
 
         originalMaxSpeed = 0.06f;
         originalDiagonalSpeed = 0.04f;
@@ -29,7 +30,7 @@ public class Zombie extends Character {
     }
 
     public void updateBoundingShape(){
-        boundingShape.updatePosition(x,y);
+        boundingShape.updatePosition(x+6,y+19);
     }
 
 
