@@ -54,7 +54,16 @@ public class LevelState extends BasicGameState {
     public static List<String> animationList = new ArrayList<>();
     public static List<Pair<String, HashMap<Facing,Animation>>> animationMaps = new ArrayList<>();
     public static int gunShootTime = 0;
+    public static int gamePlayTime = 0;
+    private static int zombieSpawnTimer = 0;
     public static Gun[] playerGuns = new Gun[2];
+    public static boolean paused = false;
+    private static int currentWave = 200;
+    int zombieSpawnDelay = 5000 - (currentWave*50);
+    int zombieWaveDelay = 20000;
+    int zombiesSpawnedThisWave = 0;
+    int zombieWaveTimer = zombieWaveDelay;
+//    private int maxInWave;
 
 
     public LevelState(String startingLevel){
@@ -90,6 +99,12 @@ public class LevelState extends BasicGameState {
         //every update we have to handle the input from the player
         playerController.handleInput(container.getInput(), delta);
         gunShootTime -= delta;
+
+        if (!paused) {
+            gamePlayTime += delta;
+            zombieSpawnTimer -= delta;
+            zombieWave(delta);
+        }
 
         //press P to spawn zombies
         if (spawnNew) {
@@ -182,6 +197,7 @@ public class LevelState extends BasicGameState {
         g.drawString("Attack me: " + attackMe, 5, 63);
         g.drawString("Ammo: " + playerGun.getCurrentAmmo(), 5, 75);
         g.drawString("Clip: " + playerGun.getClip(), 5, 87);
+        g.drawString("Wave: " + currentWave, 5, 99);
     }
 
     //this method is overriden from basicgamestate and will trigger once you press any key on your keyboard
@@ -224,5 +240,31 @@ public class LevelState extends BasicGameState {
         } catch (SlickException e) {
             e.printStackTrace();
         }
+    }
+
+    private void zombieWave(int delta) {
+        int zombiesPerWave = 10;
+        if (zombiesSpawnedThisWave < currentWave * zombiesPerWave - 1 && zombieSpawnTimer <= 0) {
+            int j = 0;
+            for (int k = 1; k <= currentWave; k++) {
+                j += k;
+            }
+            zombiesSpawnedThisWave = zombiesSpawned % (j*zombiesPerWave);
+            spawnZombie();
+            zombieSpawnTimer = zombieSpawnDelay;
+            System.out.println("Spawned this wave: " + zombiesSpawnedThisWave);
+        }
+        else if (zombiesSpawned - killCount == 0) {
+            zombieWaveTimer -= delta;
+            if (zombieWaveTimer <= 0) {
+                currentWave++;
+                zombiesSpawnedThisWave = 0;
+                if(zombieSpawnDelay >= 200) {
+                    zombieSpawnDelay -= currentWave * 5;
+                }
+                zombieWaveTimer = zombieWaveDelay;
+            }
+        }
+
     }
 }
