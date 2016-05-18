@@ -88,7 +88,7 @@ public abstract class Gun {
             }
             gunShootTime = this.reloadSpeed;
         }
-        if (currentAmmo <= 0) {
+        if (currentAmmo <= 0 && clipAmmo <= 0) {
             if (LevelState.playerGun == LevelState.playerGuns[0]) {
                 LevelState.playerGun = LevelState.playerGuns[1];
             } else {
