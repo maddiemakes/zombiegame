@@ -17,6 +17,7 @@ import game.weapons.Rifle;
 import javafx.util.Pair;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.state.BasicGameState;
@@ -80,6 +81,9 @@ public class LevelState extends BasicGameState {
 
         //and we create a controller, for now we use the MouseAndKeyBoardPlayerController
         playerController = new MouseAndKeyBoardPlayerController(player);
+
+        Music openingMenuMusic = new Music("data/audio/music/menu_theme_by_dubwolfer.ogg");
+        openingMenuMusic.loop();
     }
 
     public void update(GameContainer container, StateBasedGame sbg, int delta) throws SlickException {
