@@ -7,12 +7,13 @@ import game.level.tile.Tile;
 import game.character.Character;
 import game.state.LevelState;
 import game.weapons.Bullet;
+import javafx.util.Pair;
+import org.newdawn.slick.Music;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static game.state.LevelState.zombieControllers;
-import static game.state.LevelState.zombies;
+import static game.state.LevelState.*;
 
 public class Physics {
 
@@ -111,6 +112,16 @@ public class Physics {
                     }
                 }
                 dead.clear();
+            }
+            else if (c.type.equals("player") && !gameOver) {
+//                for (Pair<String,Music> pair: LevelState.music) {
+//                    if (pair.getKey().equals("MenuTheme")) {
+//                        LevelState.openingMenuMusic = pair.getValue();
+//                    }
+//                }
+                music = gameOverMusic;
+                music.loop();
+                gameOver = true;
             }
         }
     }

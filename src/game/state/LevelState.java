@@ -58,11 +58,16 @@ public class LevelState extends BasicGameState {
     private static int zombieSpawnTimer = 0;
     public static Gun[] playerGuns = new Gun[2];
     public static boolean paused = false;
-    private static int currentWave = 200;
+    public static boolean gameOver = false;
+    private static int currentWave = 100;
     int zombieSpawnDelay = 5000 - (currentWave*50);
     int zombieWaveDelay = 20000;
     int zombiesSpawnedThisWave = 0;
     int zombieWaveTimer = zombieWaveDelay;
+
+    public static Music music;
+    public static Music openingMenuMusic;// = new Music("data/audio/music/menu_theme_by_dubwolfer.ogg");
+    public static Music gameOverMusic;
 //    private int maxInWave;
 
 
@@ -91,8 +96,17 @@ public class LevelState extends BasicGameState {
         //and we create a controller, for now we use the MouseAndKeyBoardPlayerController
         playerController = new MouseAndKeyBoardPlayerController(player);
 
-        Music openingMenuMusic = new Music("data/audio/music/menu_theme_by_dubwolfer.ogg");
-        openingMenuMusic.loop();
+//        music.add(new Pair<>("MenuTheme",new Music("data/audio/music/menu_theme_by_dubwolfer.ogg")));
+//        for (Pair<String,Music> pair: music) {
+//            if (pair.getKey().equals("MenuTheme")) {
+//                openingMenuMusic = pair.getValue();
+//            }
+//        }
+        openingMenuMusic = new Music("data/audio/music/menu_theme_by_dubwolfer.ogg");
+        gameOverMusic = new Music("data/audio/music/game_over_theme_by_dubwolfer.ogg");
+        music = openingMenuMusic;
+        music.loop();
+//        openingMenuMusic.loop();
     }
 
     public void update(GameContainer container, StateBasedGame sbg, int delta) throws SlickException {
@@ -100,7 +114,7 @@ public class LevelState extends BasicGameState {
         playerController.handleInput(container.getInput(), delta);
         gunShootTime -= delta;
 
-        if (!paused) {
+        if (!paused && !gameOver) {
             gamePlayTime += delta;
             zombieSpawnTimer -= delta;
             zombieWave(delta);
@@ -244,9 +258,9 @@ public class LevelState extends BasicGameState {
 
     private void zombieWave(int delta) {
         int zombiesPerWave = 10;
-        if (zombiesSpawnedThisWave < currentWave * zombiesPerWave - 1 && zombieSpawnTimer <= 0) {
+        if (zombiesSpawnedThisWave < (currentWave * zombiesPerWave - 1) && zombieSpawnTimer <= 0) {
             int j = 0;
-            for (int k = 1; k <= currentWave; k++) {
+            for (int k = 0; k <= currentWave; k++) {
                 j += k;
             }
             zombiesSpawnedThisWave = zombiesSpawned % (j*zombiesPerWave);
@@ -260,7 +274,7 @@ public class LevelState extends BasicGameState {
                 currentWave++;
                 zombiesSpawnedThisWave = 0;
                 if(zombieSpawnDelay >= 200) {
-                    zombieSpawnDelay -= currentWave * 5;
+                    zombieSpawnDelay -= currentWave * 50;
                 }
                 zombieWaveTimer = zombieWaveDelay;
             }
