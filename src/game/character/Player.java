@@ -60,4 +60,13 @@ public class Player extends Character {
         }
     }
 
+    public void reset() {
+        invincible = false;
+        originalMaxSpeed = 0.15f;
+        originalDiagonalSpeed = 0.1f;
+        maximumSpeed = 0.15f;
+        diagonalSpeed = 0.1f;
+        health = 1000;
+    }
+
 }

@@ -71,13 +71,16 @@ public class Physics {
         }
     }
 
-    private boolean checkZombieCollision(LevelObject obj, List<Zombie> list) {
-        if (obj.getType().equals("zombie")) {
-            for (Zombie zombie : list) {
-                if (zombie.getBoundingShape().checkCollision(obj.getBoundingShape())) {
-                    return true;
-                }
+    public static boolean checkZombieCollision(Character zombie, Character zombie2) {
+        if (zombie.getType().equals("zombie") && zombie2.getType().equals("zombie")) {
+            if (zombie.getBoundingShape().checkCollision(zombie2.getBoundingShape())) {
+                return true;
             }
+//            for (Zombie zombie : list) {
+//                if (zombie.getBoundingShape().checkCollision(obj.getBoundingShape())) {
+//                    return true;
+//                }
+//            }
         }
         return false;
     }

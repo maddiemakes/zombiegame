@@ -205,6 +205,10 @@ public abstract class Character extends LevelObject {
         return health;
     }
 
+    public void setHealth(int i) {
+        health = i;
+    }
+
     public void setSpeed(int divisor) {
         maximumSpeed = originalMaxSpeed / divisor;
         diagonalSpeed = originalDiagonalSpeed / divisor;

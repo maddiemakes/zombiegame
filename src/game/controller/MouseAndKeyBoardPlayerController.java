@@ -65,6 +65,8 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
             }
 
             if (i.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
+                System.out.println("X: " + LevelState.getMousePos().getX());
+                System.out.println("Y: " + LevelState.getMousePos().getY());
                 if ((shot > 0 || playerGun.getSemi() == 0) && playerGun.getClip() > 0) {
                     playerGun.shoot(delta);
                     shot--;
@@ -79,11 +81,7 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
             }
 
             if (i.isKeyPressed(Input.KEY_Q)) {
-                if (playerGun == playerGuns[0]) {
-                    playerGun = playerGuns[1];
-                } else {
-                    playerGun = playerGuns[0];
-                }
+                playerGun.swapGuns();
             }
 
             if (i.isKeyPressed(Input.KEY_I)) {
@@ -96,6 +94,21 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
             player.setMoving(false);
             player.setXVelocity(0);
             player.setYVelocity(0);
+            if (gameOver) {
+                if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+                    double mouseX = LevelState.getMousePos().getX();
+                    double mouseY = LevelState.getMousePos().getY();
+
+                    if (mouseX >= 555 && mouseX <= 680 && mouseY >= 441 && mouseY <= 465) {
+                        LevelState.restart();
+                    }
+
+                }
+            }
+        }
+
+        if (i.isKeyPressed(Input.KEY_G)) {
+            LevelState.restart();
         }
 
         //everything below here is a menu key

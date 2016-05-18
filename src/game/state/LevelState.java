@@ -36,6 +36,8 @@ public class LevelState extends BasicGameState {
     public static int killCount = 0;
     private String startinglevel;
     public static Player player;
+    private static int playerX = 228;
+    private static int playerY = 150;
     public static Gun playerGun;
     public static int containerHeight;
     public static int containerWidth;
@@ -61,15 +63,16 @@ public class LevelState extends BasicGameState {
     public static boolean gameOver = false;
     private static int startingWave = 100;
     private static int currentWave = startingWave;
-    private int zombiesBeforeThisWave = 0;
-    private int zombieSpawnDelay = 5000 - (currentWave*50);
-    private int zombieWaveDelay = 20000;
-    private int zombiesSpawnedThisWave = 0;
-    private int zombieWaveTimer = zombieWaveDelay;
+    private static int zombiesBeforeThisWave = 0;
+    private static int zombieSpawnDelay = 5000 - (currentWave*50);
+    private static int zombieWaveDelay = 20000;
+    private static int zombiesSpawnedThisWave = 0;
+    private static int zombieWaveTimer = zombieWaveDelay;
 
     public static Music music;
     public static Music openingMenuMusic;// = new Music("data/audio/music/menu_theme_by_dubwolfer.ogg");
     public static Music gameOverMusic;
+
 //    private int maxInWave;
 
 
@@ -80,7 +83,7 @@ public class LevelState extends BasicGameState {
     public void init(GameContainer container, StateBasedGame sbg) throws SlickException {
 
         //at the start of the game we don't have a player yet
-        player = new Player(228,150);
+        player = new Player(playerX,playerY);
         Pistol pistol = new Pistol();
         Rifle rifle = new Rifle();
         playerGuns[0] = pistol;
@@ -100,6 +103,7 @@ public class LevelState extends BasicGameState {
         openingMenuMusic = new Music("data/audio/music/menu_theme_by_dubwolfer.ogg");
         gameOverMusic = new Music("data/audio/music/game_over_theme_by_dubwolfer.ogg");
         music = openingMenuMusic;
+        music.setVolume(30);
         music.loop();
     }
 
@@ -206,6 +210,10 @@ public class LevelState extends BasicGameState {
         g.drawString("Ammo: " + playerGun.getCurrentAmmo(), 5, 75);
         g.drawString("Clip: " + playerGun.getClip(), 5, 87);
         g.drawString("Wave: " + currentWave, 5, 99);
+        if (gameOver) {
+            g.drawString("GAME OVER", containerWidth / 6, 20);
+            g.drawString("Restart?", containerWidth / 6 + 10, 100);
+        }
     }
 
     //this method is overriden from basicgamestate and will trigger once you press any key on your keyboard
@@ -232,10 +240,10 @@ public class LevelState extends BasicGameState {
             int y;
             do {
                 x = rand.nextInt(LevelState.containerWidth);
-            } while (x > player.offsetx - 640 && x < player.offsetx + 640);
+            } while (x > player.offsetx - containerWidth/2 && x < player.offsetx + containerWidth/2);
             do {
                 y = rand.nextInt(LevelState.containerHeight);
-            } while (y > player.offsety - 360 && y < player.offsety + 360);
+            } while (y > player.offsety - containerHeight/2 && y < player.offsety + containerHeight/2);
             zombies.add(new Zombie(x, y));
             if (Physics.checkCollision(zombies.get(zombies.size() - 1), level.getTiles())
                     && Physics.checkTerrainCollision(zombies.get(zombies.size() - 1), level.getTiles()).equals("false")) {
@@ -270,5 +278,38 @@ public class LevelState extends BasicGameState {
             }
         }
 
+    }
+
+    public static void restart() {
+        paused = false;
+        gameOver = false;
+        killCount = 0;
+        for (Zombie zombie: zombies) {
+            zombie.setHealth(0);
+        }
+        zombieControllers.clear();
+        zombies.clear();
+        bullets.clear();
+        spawnNew = false;
+        attackMe = true;
+        zombiesSpawned = 0;
+        gunShootTime = 0;
+        gamePlayTime = 0;
+        zombieSpawnTimer = 0;
+        currentWave = startingWave;
+        zombiesBeforeThisWave = 0;
+        zombieSpawnDelay = 5000 - (currentWave*50);
+        zombiesSpawnedThisWave = 0;
+        zombieWaveTimer = zombieWaveDelay;
+        player.reset();
+        player.setX(playerX);
+        player.setY(playerY);
+        Pistol pistol = new Pistol();
+        Rifle rifle = new Rifle();
+        playerGuns[0] = pistol;
+        playerGuns[1] = rifle;
+        playerGun = playerGuns[0];
+        music = openingMenuMusic;
+        music.loop();
     }
 }
