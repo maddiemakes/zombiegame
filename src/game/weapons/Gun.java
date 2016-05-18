@@ -76,7 +76,7 @@ public abstract class Gun {
     }
 
     public void reload() {
-        if (LevelState.gunShootTime <= 0) {
+        if (LevelState.gunShootTime <= 0 && currentAmmo > 0) {
             currentAmmo -= (clipSize - clipAmmo);
             if ((currentAmmo + (clipSize - clipAmmo)) + clipAmmo >= clipSize) {
                 clipAmmo = clipSize;
