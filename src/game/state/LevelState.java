@@ -352,7 +352,7 @@ public class LevelState extends BasicGameState {
         spawnNew = false;
         attackMe = true;
         zombiesSpawned = 0;
-        gunShootTime = 0;
+        gunShootTime = 100;
         gamePlayTime = 0;
         currentWave = startingWave;
         zombiesBeforeThisWave = 0;
