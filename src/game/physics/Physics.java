@@ -28,9 +28,11 @@ public class Physics {
             //if this tile has a bounding shape
             if(t.getBoundingShape() != null){
                 if(t.getBoundingShape().checkCollision(obj.getBoundingShape())){
+                    //if it's a special terrain tile, let us go through it
                     if (obj.getClass().toString().startsWith("class game.character.")) {
                         if (t.getClass().toString().equals("class game.level.tile.LavaTile")
-                                || t.getClass().toString().equals("class game.level.tile.WaterTile")) {
+                                || t.getClass().toString().equals("class game.level.tile.WaterTile")
+                                || t.getClass().toString().equals("class game.level.tile.AmmoTile")) {
                             return false;
                         }
                     }
@@ -48,11 +50,15 @@ public class Physics {
             //if this tile has a bounding shape then it's not air
             if(t.getBoundingShape() != null){
                 if(t.getBoundingShape().checkCollision(obj.getBoundingShape())){
+                    //return names of special tiles
                     if (t.getClass().toString().equals("class game.level.tile.LavaTile")) {
                         return "lava";
                     }
                     if (t.getClass().toString().equals("class game.level.tile.WaterTile")) {
                         return "water";
+                    }
+                    if (t.getClass().toString().equals("class game.level.tile.AmmoTile")) {
+                        return "ammo";
                     }
                 }
             }
@@ -60,17 +66,20 @@ public class Physics {
         return "false";
     }
 
+    //checks if bullets hit things
     public static void checkBulletCollision(Bullet bullet, Tile[][] mapTiles){
         //get only the tiles that matter
         ArrayList<Tile> tiles = bullet.getBoundingShape().getTilesOccupying(mapTiles);
         for(Tile t : tiles){
             //if this tile has a bounding shape
+            //stops bullets from going offscreen
             if (t.getClass().toString().equals("class game.level.tile.BorderTile")) {
                 bullet.setHealth(0);
             }
         }
     }
 
+    //not used yet
     public static boolean checkZombieCollision(Character zombie, Character zombie2) {
         if (zombie.getType().equals("zombie") && zombie2.getType().equals("zombie")) {
             if (zombie.getBoundingShape().checkCollision(zombie2.getBoundingShape())) {
@@ -92,8 +101,10 @@ public class Physics {
         }
     }
 
+    //kills things that are dead
     private void handleHealthCheck(Character c) {
         if (c.getHealth() <= 0) {
+            //kills zombies
             if (c.type.equals("zombie")) {
                 Integer k = 0;
                 List<Integer> dead = new ArrayList<>();
@@ -116,6 +127,7 @@ public class Physics {
                 }
                 dead.clear();
             }
+            //kills player and triggers game over
             else if (c.type.equals("player") && !gameOver) {
                 music = gameOverMusic;
                 music.loop();

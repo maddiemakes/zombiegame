@@ -16,7 +16,6 @@ public class Player extends Character {
         setSprite("data/images/player/player");
         setMovingAnimation("data/images/player/player", 3, 100);
 
-        //TODO move these around to fix the box to fit to the character sprite
         boundingShape = new AABoundingRect(x+6, y+21, 18, 10);
 
         originalMaxSpeed = 0.15f;
@@ -60,6 +59,7 @@ public class Player extends Character {
         }
     }
 
+    //this is used for new game
     public void reset() {
         invincible = false;
         originalMaxSpeed = 0.15f;

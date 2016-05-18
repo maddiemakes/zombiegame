@@ -28,7 +28,6 @@ public abstract class Gun {
     protected int semi; //0 = fully automatic;  1 = semi automatic;  3 = 3 round burst
 
     public Gun () {
-        //TODO
         fireRate = 1;
         damage = 1;
         bulletSpeed = 0.4f;
@@ -46,6 +45,7 @@ public abstract class Gun {
     }
 
     public void shoot(int delta) {
+        //doesn't shoot if firerate
         if (LevelState.gunShootTime <= 0) {
             double mouseX = LevelState.getMousePos().getX() / Game.SCALE;
             double mouseY = LevelState.getMousePos().getY() / Game.SCALE;
@@ -53,8 +53,10 @@ public abstract class Gun {
             double offsetX = player.offsetx;
             double offsetY = player.offsety;
 
+            //rotates bullet picture
             player.rotate = (Math.atan2((LevelState.containerHeight / Game.SCALE - mouseY) + offsetY - 8 - player.getY() - 16, mouseX + offsetX + 2 - player.getX() - 16));
 
+            //creates the bullet and plays the sound
             Bullet bullet = null;
             try {
                 shootSound.play(1,70);
@@ -67,8 +69,7 @@ public abstract class Gun {
             LevelState.bullets.add(bullet);
             clipAmmo--;
 
-            //TODO all this below
-
+            //shoots the bullet
             bullet.setXVelocity((float) ((bulletSpeed * delta) * (Math.cos(player.rotate))));
             bullet.setYVelocity((float) ((bulletSpeed * delta) * (Math.sin(player.rotate))));
             LevelState.gunShootTime = this.fireRate;
@@ -122,4 +123,9 @@ public abstract class Gun {
             gunShootTime = swapSpeed;
         }
     }
+
+    public void maxAmmo() {
+        currentAmmo = maxAmmo;
+    }
+
 }

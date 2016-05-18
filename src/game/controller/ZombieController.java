@@ -22,18 +22,10 @@ public class ZombieController {
         float obj_x_location = obj.getX();
         float obj_y_location = obj.getY();
 
-        float x_movement = zombie.getXVelocity()*delta;
-        float y_movement = zombie.getYVelocity()*delta;
         float x_location = zombie.getX();
         float y_location = zombie.getY();
 
-        //if y location isn't within X
-        //  if y location < move up
-        //  else move down
-        //if x location isn't within X
-        //  if x location > move right
-        //  else move left
-
+        //moves object towards the other
         if (obj_x_location > (x_location + 10)) {
             if (obj_y_location > y_location+10) {
                 zombie.moveDownRight(delta);

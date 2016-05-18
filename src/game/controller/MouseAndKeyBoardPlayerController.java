@@ -33,6 +33,8 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
         //we can both use the WASD or arrow keys to move around, obviously we can't move both left and right simultaneously
         //controls when not dead
         if (player.getHealth() > 0) {
+
+            //move player around
             if (i.isKeyDown(Input.KEY_A) || i.isKeyDown(Input.KEY_LEFT)) {
                 if (i.isKeyDown(Input.KEY_W) || i.isKeyDown(Input.KEY_UP)) {
                     player.moveUpLeft(delta);
@@ -60,13 +62,13 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
                 player.setYVelocity(0);
             }
 
+            //reload
             if (i.isKeyPressed(Input.KEY_R)) {
                 playerGun.reload();
             }
 
+            //shoot when we click
             if (i.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
-                System.out.println("X: " + LevelState.getMousePos().getX());
-                System.out.println("Y: " + LevelState.getMousePos().getY());
                 if ((shot > 0 || playerGun.getSemi() == 0) && playerGun.getClip() > 0) {
                     playerGun.shoot(delta);
                     shot--;
@@ -76,14 +78,17 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
                 }
             }
 
+            //this is for controlling weapon fire (semi/automatic/burst)
             if (!(i.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))) {
                 shot = playerGun.getSemi();
             }
 
+            //swap weapons
             if (i.isKeyPressed(Input.KEY_Q)) {
                 playerGun.swapGuns();
             }
 
+            //invincibility!
             if (i.isKeyPressed(Input.KEY_I)) {
                 player.invincible = !player.invincible;
             }
@@ -94,6 +99,8 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
             player.setMoving(false);
             player.setXVelocity(0);
             player.setYVelocity(0);
+
+            //restart the game when we click restart
             if (gameOver) {
                 if (i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
                     double mouseX = LevelState.getMousePos().getX();
@@ -107,19 +114,22 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
             }
         }
 
+        //restart the game
         if (i.isKeyPressed(Input.KEY_G)) {
             LevelState.restart();
         }
 
-        //everything below here is a menu key
+        //spawn a zombie
         if(i.isKeyPressed(Input.KEY_Z)) {
             LevelState.spawnZombie();
         }
 
+        //toggle zombies spawning as fast as they can
         if (i.isKeyPressed(Input.KEY_P)) {
             LevelState.spawnNew = !LevelState.spawnNew;
         }
 
+        //toggle zombies attacking you
         if (i.isKeyPressed(Input.KEY_O)) {
             LevelState.attackMe = !LevelState.attackMe;
         }

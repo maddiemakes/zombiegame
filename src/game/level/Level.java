@@ -74,6 +74,9 @@ public class Level {
                     case "water":
                         tile = new WaterTile(x,y);
                         break;
+                    case "ammo":
+                        tile = new AmmoTile(x,y);
+                        break;
                     default:
                         tile = new SolidTile(x,y);
                         break;
