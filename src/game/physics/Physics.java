@@ -114,11 +114,6 @@ public class Physics {
                 dead.clear();
             }
             else if (c.type.equals("player") && !gameOver) {
-//                for (Pair<String,Music> pair: LevelState.music) {
-//                    if (pair.getKey().equals("MenuTheme")) {
-//                        LevelState.openingMenuMusic = pair.getValue();
-//                    }
-//                }
                 music = gameOverMusic;
                 music.loop();
                 gameOver = true;
