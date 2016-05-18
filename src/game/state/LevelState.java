@@ -45,7 +45,7 @@ public class LevelState extends BasicGameState {
     public static List<Bullet> bullets = new ArrayList<>();
     private Physics physics = new Physics();
     public static boolean spawnNew = false;
-    public static boolean attackMe = false;
+    public static boolean attackMe = true;
     public static int zombiesSpawned;
     private Font font = new Font("Verdana", Font.BOLD, 10);
     private TrueTypeFont ttf = new TrueTypeFont(font, true);

@@ -7,8 +7,8 @@
 - [ ] Player knockback when zombie hits you so they don't just rek u
 - [ ] Game Over menu
 - [ ] Main menu
-- [ ] Water
-- [ ] Lava
+- [x] Water
+- [x] Lava
 - [x] Zombies can spawn
 - [x] Zombies can move
 - [x] Zombies follow you
@@ -27,8 +27,8 @@
 - [ ] Buildings
 - [ ] Items are random
 - [ ] Points (upgrade system)
-- [ ] Character sprites
-- [ ] Zombie sprites
+- [x] Character sprites
+- [x] Zombie sprites
     - [ ] Multiple zombie types
 - [ ] Game gets harder as you play
     - [ ] More zombies as you play
