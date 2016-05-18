@@ -24,7 +24,7 @@ public interface Game {
 	 * though it won't do any harm. 
 	 * 
 	 * @param container The container holing this game
-	 * @param delta The amount of time thats passed since last update in milliseconds
+	 * @param delta The amount of gunShootTime thats passed since last update in milliseconds
 	 * @throws SlickException Throw to indicate an internal error
 	 */
 	public void update(GameContainer container, int delta) throws SlickException;

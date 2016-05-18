@@ -8,7 +8,6 @@ import game.controller.PlayerController;
 import game.controller.ZombieController;
 import game.enums.Facing;
 import game.level.Level;
-import game.level.tile.Tile;
 import game.physics.Physics;
 
 import game.weapons.Bullet;
@@ -53,6 +52,8 @@ public class LevelState extends BasicGameState {
     public static List<Pair<String, HashMap<Facing,Image>>> spritesMaps = new ArrayList<>();
     public static List<String> animationList = new ArrayList<>();
     public static List<Pair<String, HashMap<Facing,Animation>>> animationMaps = new ArrayList<>();
+    public static int gunShootTime = 0;
+    public static Gun[] playerGuns = new Gun[2];
 
 
     public LevelState(String startingLevel){
@@ -65,8 +66,10 @@ public class LevelState extends BasicGameState {
         player = new Player(228,150);
         Pistol pistol = new Pistol();
         Rifle rifle = new Rifle();
+        playerGuns[0] = pistol;
+        playerGuns[1] = rifle;
 //        playerGun = pistol;
-        playerGun = rifle;
+        playerGun = playerGuns[0];
 
 
         containerHeight = container.getHeight();
@@ -82,31 +85,11 @@ public class LevelState extends BasicGameState {
     public void update(GameContainer container, StateBasedGame sbg, int delta) throws SlickException {
         //every update we have to handle the input from the player
         playerController.handleInput(container.getInput(), delta);
+        gunShootTime -= delta;
 
         //press P to spawn zombies
         if (spawnNew) {
-            Random rand = new Random();
-            try {
-                int x;
-                int y;
-                do {
-                    x = rand.nextInt(LevelState.containerWidth);
-                } while (x > player.offsetx - 640 && x < player.offsetx + 640);
-                do {
-                    y = rand.nextInt(LevelState.containerHeight);
-                } while (y > player.offsety - 360 && y < player.offsety + 360);
-                zombies.add(new Zombie(x, y));
-                if (Physics.checkCollision(zombies.get(zombies.size() - 1), level.getTiles())
-                        && Physics.checkTerrainCollision(zombies.get(zombies.size() - 1), level.getTiles()).equals("false")) {
-                    zombies.remove(zombies.size() - 1);
-                } else {
-                    zombiesSpawned++;
-                    LevelState.level.addCharacter(zombies.get(zombies.size() - 1));
-                    zombieControllers.add(new ZombieController(zombies.get(zombies.size() - 1)));
-                }
-            } catch (SlickException e) {
-                e.printStackTrace();
-            }
+            spawnZombie();
         }
 
         //this gets zombies off your case
@@ -153,7 +136,7 @@ public class LevelState extends BasicGameState {
 
 
         //make arraylist of bullets
-        //every time bullet hits stuff, we hurt it
+        //every gunShootTime bullet hits stuff, we hurt it
         //when bullet is dead, we kill it
         int k = 0;
         List<Integer> gone = new ArrayList<>();
@@ -212,5 +195,30 @@ public class LevelState extends BasicGameState {
 
     public static Point getMousePos() {
         return new Point(Mouse.getX(), Mouse.getY());
+    }
+
+    public static void spawnZombie() {
+        Random rand = new Random();
+        try {
+            int x;
+            int y;
+            do {
+                x = rand.nextInt(LevelState.containerWidth);
+            } while (x > player.offsetx - 640 && x < player.offsetx + 640);
+            do {
+                y = rand.nextInt(LevelState.containerHeight);
+            } while (y > player.offsety - 360 && y < player.offsety + 360);
+            zombies.add(new Zombie(x, y));
+            if (Physics.checkCollision(zombies.get(zombies.size() - 1), level.getTiles())
+                    && Physics.checkTerrainCollision(zombies.get(zombies.size() - 1), level.getTiles()).equals("false")) {
+                zombies.remove(zombies.size() - 1);
+            } else {
+                zombiesSpawned++;
+                LevelState.level.addCharacter(zombies.get(zombies.size() - 1));
+                zombieControllers.add(new ZombieController(zombies.get(zombies.size() - 1)));
+            }
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
     }
 }

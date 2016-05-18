@@ -22,7 +22,7 @@ public class Player extends Character {
         originalDiagonalSpeed = 0.1f;
         maximumSpeed = 0.15f;
         diagonalSpeed = 0.1f;
-        health = 100;
+        health = 1000;
         type = "player";
     }
 

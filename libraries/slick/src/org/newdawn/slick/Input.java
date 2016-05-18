@@ -335,7 +335,7 @@ public class Input {
 	protected char[] keys = new char[1024];
 	/** True if the key has been pressed since last queries */
 	protected boolean[] pressed = new boolean[1024];
-	/** The time since the next key repeat to be fired for the key */
+	/** The gunShootTime since the next key repeat to be fired for the key */
 	protected long[] nextRepeat = new long[1024];
 	
 	/** The control states from the controllers */
@@ -419,7 +419,7 @@ public class Input {
 	}
 	
 	/**
-	 * Set the double click interval, the time between the first
+	 * Set the double click interval, the gunShootTime between the first
 	 * and second clicks that should be interpreted as a 
 	 * double click.
 	 * 
@@ -690,10 +690,10 @@ public class Input {
 	
 	/**
 	 * Check if a controller button has been pressed since last 
-	 * time
+	 * gunShootTime
 	 * 
 	 * @param button The button to check for (note that this includes directional controls first)
-	 * @return True if the button has been pressed since last time
+	 * @return True if the button has been pressed since last gunShootTime
 	 */
 	public boolean isControlPressed(int button) {
 		return isControlPressed(button, 0);
@@ -701,11 +701,11 @@ public class Input {
 
 	/**
 	 * Check if a controller button has been pressed since last 
-	 * time
+	 * gunShootTime
 	 * 
 	 * @param controller The index of the controller to check
 	 * @param button The button to check for (note that this includes directional controls first)
-	 * @return True if the button has been pressed since last time
+	 * @return True if the button has been pressed since last gunShootTime
 	 */
 	public boolean isControlPressed(int button, int controller) {
 		if (controllerPressed[controller][button]) {
@@ -845,7 +845,7 @@ public class Input {
 	 *  
 	 * @param controller The index of the controller to check
 	 * @param axis The index of the axis to read
-	 * @return The axis value at time of reading
+	 * @return The axis value at gunShootTime of reading
 	 */ 
 	public float getAxisValue(int controller, int axis) {
 		return ((Controller) controllers.get(controller)).getAxisValue(axis);
@@ -1142,7 +1142,7 @@ public class Input {
 			clearMousePressedRecord();
 		}
 		
-		// add any listeners requested since last time
+		// add any listeners requested since last gunShootTime
 		for (int i=0;i<keyListenersToAdd.size();i++) {
 			addKeyListenerImpl((KeyListener) keyListenersToAdd.get(i));
 		}

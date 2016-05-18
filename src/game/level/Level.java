@@ -104,13 +104,14 @@ public class Level {
         map.render(-(offset_x%16), -(offset_y%16), offset_x/16, offset_y/16, 33, 19);
 
         //and then render the characters on top of the map
+        for(Bullet b : bullets) {
+            b.render(offset_x, offset_y);
+        }
+
         for(Character c : characters){
             c.render(offset_x,offset_y);
         }
 
-        for(Bullet b : bullets) {
-            b.render(offset_x, offset_y);
-        }
     }
 
     public int getXOffset(){

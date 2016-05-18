@@ -3,6 +3,7 @@ package game.controller;
 import game.character.Player;
 
 import game.character.Zombie;
+import game.level.Level;
 import game.state.LevelState;
 import game.weapons.Bullet;
 import org.newdawn.slick.Input;
@@ -11,9 +12,7 @@ import org.newdawn.slick.SpriteSheet;
 
 import java.util.Random;
 
-import static game.state.LevelState.playerGun;
-import static game.state.LevelState.zombies;
-import static game.state.LevelState.zombieControllers;
+import static game.state.LevelState.*;
 
 public class MouseAndKeyBoardPlayerController extends PlayerController {
 
@@ -32,43 +31,72 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
 
     private void handleKeyboardInput(Input i, int delta){
         //we can both use the WASD or arrow keys to move around, obviously we can't move both left and right simultaneously
-        if(i.isKeyDown(Input.KEY_A) || i.isKeyDown(Input.KEY_LEFT)){
-            if(i.isKeyDown(Input.KEY_W) || i.isKeyDown(Input.KEY_UP)) {
-                player.moveUpLeft(delta);
+        //controls when not dead
+        if (player.getHealth() > 0) {
+            if (i.isKeyDown(Input.KEY_A) || i.isKeyDown(Input.KEY_LEFT)) {
+                if (i.isKeyDown(Input.KEY_W) || i.isKeyDown(Input.KEY_UP)) {
+                    player.moveUpLeft(delta);
+                } else if (i.isKeyDown(Input.KEY_S) || i.isKeyDown(Input.KEY_DOWN)) {
+                    player.moveDownLeft(delta);
+                } else {
+                    player.moveLeft(delta);
+                }
+            } else if (i.isKeyDown(Input.KEY_D) || i.isKeyDown(Input.KEY_RIGHT)) {
+                if (i.isKeyDown(Input.KEY_W) || i.isKeyDown(Input.KEY_UP)) {
+                    player.moveUpRight(delta);
+                } else if (i.isKeyDown(Input.KEY_S) || i.isKeyDown(Input.KEY_DOWN)) {
+                    player.moveDownRight(delta);
+                } else {
+                    player.moveRight(delta);
+                }
+            } else if (i.isKeyDown(Input.KEY_W) || i.isKeyDown(Input.KEY_UP)) {
+                player.moveUp(delta);
             } else if (i.isKeyDown(Input.KEY_S) || i.isKeyDown(Input.KEY_DOWN)) {
-                player.moveDownLeft(delta);
+                player.moveDown(delta);
             } else {
-                player.moveLeft(delta);
+                //we don't move if we don't press left or right, this will have the effect that our player decelerates
+                player.setMoving(false);
+                player.setXVelocity(0);
+                player.setYVelocity(0);
             }
-        }else if(i.isKeyDown(Input.KEY_D) || i.isKeyDown(Input.KEY_RIGHT)){
-            if(i.isKeyDown(Input.KEY_W) || i.isKeyDown(Input.KEY_UP)) {
-                player.moveUpRight(delta);
-            } else if (i.isKeyDown(Input.KEY_S) || i.isKeyDown(Input.KEY_DOWN)) {
-                player.moveDownRight(delta);
-            } else {
-                player.moveRight(delta);
+
+            if (i.isKeyPressed(Input.KEY_R)) {
+                playerGun.reload();
             }
-        } else if (i.isKeyDown(Input.KEY_W) || i.isKeyDown(Input.KEY_UP)) {
-            player.moveUp(delta);
-        } else if (i.isKeyDown(Input.KEY_S) || i.isKeyDown(Input.KEY_DOWN)) {
-            player.moveDown(delta);
-        }else{
+
+            if (i.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
+                if ((shot > 0 || playerGun.getSemi() == 0) && playerGun.getClip() > 0) {
+                    playerGun.shoot(delta);
+                    shot--;
+                }
+                else if (playerGun.getClip() <= 0 ) {
+                    playerGun.reload();
+                }
+            }
+
+            if (!(i.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))) {
+                shot = playerGun.getSemi();
+            }
+
+            if (i.isKeyPressed(Input.KEY_Q)) {
+                if (playerGun == playerGuns[0]) {
+                    playerGun = playerGuns[1];
+                } else {
+                    playerGun = playerGuns[0];
+                }
+            }
+        }
+        //else if we're dead, stop us from moving
+        else {
             //we don't move if we don't press left or right, this will have the effect that our player decelerates
             player.setMoving(false);
             player.setXVelocity(0);
             player.setYVelocity(0);
         }
 
+        //everything below here is a menu key
         if(i.isKeyPressed(Input.KEY_Z)) {
-            Random rand = new Random();
-            try {
-                zombies.add(new Zombie(rand.nextInt(LevelState.containerHeight), rand.nextInt(LevelState.containerWidth)));
-            } catch (SlickException e) {
-                e.printStackTrace();
-            }
-            LevelState.level.addCharacter(zombies.get(zombies.size()-1));
-            zombieControllers.add(new ZombieController(zombies.get(zombies.size()-1)));
-            System.out.println("Zombie spawned.");
+            LevelState.spawnZombie();
         }
 
         if (i.isKeyPressed(Input.KEY_P)) {
@@ -79,20 +107,6 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
             LevelState.attackMe = !LevelState.attackMe;
         }
 
-        if (i.isKeyPressed(Input.KEY_R)) {
-            playerGun.reload();
-        }
-
-        if (i.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
-            if ((shot > 0 || playerGun.getSemi() == 0) && playerGun.getClip() > 0) {
-                playerGun.shoot(delta);
-                shot--;
-            }
-        }
-
-        if (!(i.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))) {
-            shot = playerGun.getSemi();
-        }
     }
 
 }

@@ -1,10 +1,10 @@
 package game.weapons;
 
 import game.Game;
-import game.level.Level;
 import game.state.LevelState;
 import org.newdawn.slick.SlickException;
 
+import static game.state.LevelState.gunShootTime;
 import static game.state.LevelState.player;
 
 public abstract class Gun {
@@ -32,28 +32,31 @@ public abstract class Gun {
     }
 
     public void shoot(int delta) {
-        double mouseX = LevelState.getMousePos().getX()/Game.SCALE;
-        double mouseY = LevelState.getMousePos().getY()/Game.SCALE;
+        if (LevelState.gunShootTime <= 0) {
+            double mouseX = LevelState.getMousePos().getX() / Game.SCALE;
+            double mouseY = LevelState.getMousePos().getY() / Game.SCALE;
 
-        double offsetX = player.offsetx;
-        double offsetY = player.offsety;
+            double offsetX = player.offsetx;
+            double offsetY = player.offsety;
 
-        player.rotate = (Math.atan2((LevelState.containerHeight/Game.SCALE - mouseY) + offsetY - 8 - player.getY() - 16, mouseX + offsetX + 2 - player.getX() - 16));
+            player.rotate = (Math.atan2((LevelState.containerHeight / Game.SCALE - mouseY) + offsetY - 8 - player.getY() - 16, mouseX + offsetX + 2 - player.getX() - 16));
 
-        Bullet bullet = null;
-        try {
-            bullet = new Bullet(player.getX(), player.getY());
-            bullet.sprite.rotate((float) Math.toDegrees(player.rotate) - 90);
-        } catch (SlickException e) {
-            e.printStackTrace();
+            Bullet bullet = null;
+            try {
+                bullet = new Bullet(player.getX(), player.getY());
+                bullet.sprite.rotate((float) Math.toDegrees(player.rotate) - 90);
+            } catch (SlickException e) {
+                e.printStackTrace();
+            }
+            LevelState.bullets.add(bullet);
+            clipAmmo--;
+
+            //TODO all this below
+
+            bullet.setXVelocity((float) ((bulletSpeed * delta) * (Math.cos(player.rotate))));
+            bullet.setYVelocity((float) ((bulletSpeed * delta) * (Math.sin(player.rotate))));
+            LevelState.gunShootTime = this.fireRate;
         }
-        LevelState.bullets.add(bullet);
-        clipAmmo--;
-
-        //TODO all this below
-
-        bullet.setXVelocity((float) ((bulletSpeed*delta) * (Math.cos(player.rotate))));
-        bullet.setYVelocity((float) ((bulletSpeed*delta) * (Math.sin(player.rotate))));
     }
 
     public int getDamage() {
@@ -73,14 +76,24 @@ public abstract class Gun {
     }
 
     public void reload() {
-        currentAmmo -= clipSize - clipAmmo;
-        if ((currentAmmo + (clipSize-clipAmmo)) >= clipSize) {
-            clipAmmo = clipSize;
-        } else {
-            clipAmmo = (currentAmmo + (clipSize-clipAmmo))%clipSize;
+        if (LevelState.gunShootTime <= 0) {
+            currentAmmo -= (clipSize - clipAmmo);
+            if ((currentAmmo + (clipSize - clipAmmo)) + clipAmmo >= clipSize) {
+                clipAmmo = clipSize;
+            } else {
+                clipAmmo += (currentAmmo + (clipSize - clipAmmo)) % clipSize;
+            }
+            if (currentAmmo < 0) {
+                currentAmmo = 0;
+            }
+            gunShootTime = this.reloadSpeed;
         }
-        if (currentAmmo < 0) {
-            currentAmmo = 0;
+        if (currentAmmo <= 0) {
+            if (LevelState.playerGun == LevelState.playerGuns[0]) {
+                LevelState.playerGun = LevelState.playerGuns[1];
+            } else {
+                LevelState.playerGun = LevelState.playerGuns[0];
+            }
         }
     }
 }

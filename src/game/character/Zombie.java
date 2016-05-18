@@ -19,7 +19,7 @@ public class Zombie extends Character {
         originalDiagonalSpeed = 0.04f;
         maximumSpeed = 0.06f;
         diagonalSpeed = 0.04f;
-        health = 10;
+        health = 100;
         type = "zombie";
         attack = 5;
     }

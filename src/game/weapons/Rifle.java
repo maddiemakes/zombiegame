@@ -3,9 +3,12 @@ package game.weapons;
 public class Rifle extends Gun {
     public Rifle() {
         semi = 0;
-        damage = 7;
+        damage = 70;
         clipSize = 32;
-        maxAmmo = 96;
-        currentAmmo = 96;
+        clipAmmo = clipSize;
+        maxAmmo = clipSize*3;
+        currentAmmo = maxAmmo;
+        fireRate = 100;
+        reloadSpeed = 2000;
     }
 }
