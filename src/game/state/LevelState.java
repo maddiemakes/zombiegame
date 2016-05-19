@@ -66,7 +66,7 @@ public class LevelState extends BasicGameState {
     public  static int zombiesSpawned           = 0;
     public  static int gunShootTime             = 0;
     public  static int gamePlayTime             = 0;
-    private static int startingWave             = 1;
+    private static int startingWave             = 100;
     private static int currentWave              = startingWave;
     private static int zombiesBeforeThisWave    = 0;
     private static int zombieSpawnDelay         = 5000 - (currentWave*50);
@@ -80,6 +80,9 @@ public class LevelState extends BasicGameState {
     public  static Music openingMenuMusic;
     public  static Music gameOverMusic;
     public  static Sound zombieAlarm;
+    public  static Sound[] zombieHurt = new Sound[6];
+    public  static Sound[] zombieDeath = new Sound[5];
+    public  static Sound[] playerHurt = new Sound[7];
 
 
     public LevelState(String startingLevel){
@@ -108,6 +111,28 @@ public class LevelState extends BasicGameState {
 
         //this sets all of our music and sounds
         zombieAlarm = new Sound("data/audio/sounds/alerts/missile_alarm.ogg");
+        zombieHurt  = new Sound[]{
+                      new Sound("data/audio/sounds/zombies/zombie-3.ogg"),
+                      new Sound("data/audio/sounds/zombies/zombie-5.ogg"),
+                      new Sound("data/audio/sounds/zombies/zombie-6.ogg"),
+                      new Sound("data/audio/sounds/zombies/zombie-7.ogg"),
+                      new Sound("data/audio/sounds/zombies/zombie-10.ogg"),
+                      new Sound("data/audio/sounds/zombies/zombie-12.ogg"),};
+        zombieDeath = new Sound[]{
+                      new Sound("data/audio/sounds/zombies/zombie-4.ogg"),
+                      new Sound("data/audio/sounds/zombies/zombie-9.ogg"),
+                      new Sound("data/audio/sounds/zombies/zombie-10.ogg"),
+                      new Sound("data/audio/sounds/zombies/zombie-16.ogg"),
+                      new Sound("data/audio/sounds/zombies/zombie-20.ogg"),};
+        playerHurt  = new Sound[]{
+                      new Sound("data/audio/sounds/player/mrk_breathing_hurt10.ogg"),
+                      new Sound("data/audio/sounds/player/mrk_breathing_hurt11.ogg"),
+                      new Sound("data/audio/sounds/player/mrk_breathing_hurt12.ogg"),
+                      new Sound("data/audio/sounds/player/mrk_breathing_hurt13.ogg"),
+                      new Sound("data/audio/sounds/player/mrk_breathing_hurt14.ogg"),
+                      new Sound("data/audio/sounds/player/mrk_breathing_hurt15.ogg"),
+                      new Sound("data/audio/sounds/player/mrk_breathing_hurt16.ogg"),};
+
         openingMenuMusic = new Music("data/audio/music/menu_theme_by_dubwolfer.ogg");
         gameOverMusic = new Music("data/audio/music/game_over_theme_by_dubwolfer.ogg");
         music = openingMenuMusic;
@@ -121,17 +146,19 @@ public class LevelState extends BasicGameState {
         if (zombieAlarm.playing() || gamePlayTime < 10000) {
             music.pause();
         } else if (!music.playing()) {
+            zombieAlarm.stop();
             music.resume();
         }
 
         //every update we have to handle the input from the player
         playerController.handleInput(container.getInput(), delta);
-        gunShootTime -= delta;
 
         //Pause timers when we pause the game or die
         if (!paused && !gameOver) {
             gamePlayTime += delta;
+            gunShootTime -= delta;
             zombieSpawnTimer -= delta;
+            player.hurtTimer -= delta;
             zombieWave(delta);
         }
 

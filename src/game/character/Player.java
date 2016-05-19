@@ -5,11 +5,15 @@ import game.enums.Facing;
 import game.physics.AABoundingRect;
 import game.state.LevelState;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
+
+import java.util.Random;
 
 public class Player extends Character {
 
     public static double rotate;
     public static boolean invincible = false;
+    public static int hurtTimer = 800;
 
     public Player(float x, float y) throws SlickException {
         super(x, y);
@@ -55,6 +59,7 @@ public class Player extends Character {
 
     public void damage(int damage) {
         if (!invincible) {
+            playSound(LevelState.playerHurt);
             health -= damage;
         }
     }
@@ -67,6 +72,22 @@ public class Player extends Character {
         maximumSpeed = 0.15f;
         diagonalSpeed = 0.1f;
         health = 1000;
+    }
+
+    public void playSound(Sound[] soundThing) {
+        Random rand = new Random();
+        boolean isPlaying = false;
+        for (Sound sound: soundThing) {
+            if (sound.playing()) {
+                isPlaying = true;
+            }
+        }
+        if (!isPlaying) {
+            if (hurtTimer <= 0) {
+                soundThing[rand.nextInt(soundThing.length)].play(1, .5f);
+                hurtTimer = 800;
+            }
+        }
     }
 
 }

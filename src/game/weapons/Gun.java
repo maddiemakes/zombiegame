@@ -59,7 +59,7 @@ public abstract class Gun {
             //creates the bullet and plays the sound
             Bullet bullet = null;
             try {
-                shootSound.play(1,70);
+                shootSound.play(1,.2f);
 //                shootSound.play();
                 bullet = new Bullet(player.getX(), player.getY());
                 bullet.sprite.rotate((float) Math.toDegrees(player.rotate) - 90);

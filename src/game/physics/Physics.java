@@ -12,6 +12,7 @@ import org.newdawn.slick.Music;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static game.state.LevelState.*;
 
@@ -116,6 +117,8 @@ public class Physics {
                 }
                 for (Integer i: dead) {
                     if (zombies.size() > i && zombieControllers.size() > i) {
+                        zombies.get(zombies.size()-1).playSound(LevelState.zombieDeath);
+
                         LevelState.killCount++;
 
                         zombies.set(i, zombies.get(zombies.size() - 1));

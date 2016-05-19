@@ -1,7 +1,11 @@
 package game.character;
 
 import game.physics.AABoundingRect;
+import game.state.LevelState;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
+
+import java.util.Random;
 
 public class Zombie extends Character {
 
@@ -32,5 +36,24 @@ public class Zombie extends Character {
         boundingShape.updatePosition(x+6,y+6);
     }
 
+    public void damage(int damage) {
+        playSound(LevelState.zombieHurt);
+        health -= damage;
+    }
+
+    public void playSound(Sound[] soundThing) {
+        Random rand = new Random();
+        boolean isPlaying = false;
+        for (Sound sound: soundThing) {
+            if (sound.playing()) {
+                isPlaying = true;
+            }
+        }
+        if (!isPlaying) {
+            if (rand.nextInt(100) < 8) {
+                soundThing[rand.nextInt(soundThing.length)].play(1, .5f);
+            }
+        }
+    }
 
 }

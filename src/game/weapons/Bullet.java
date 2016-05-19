@@ -32,17 +32,14 @@ public class Bullet extends LevelObject {
 
     public void render(float offset_x, float offset_y) {
         if (health > 0) {
-//            sprite.rotate((float) Math.toDegrees(Math.atan2(Math.asin(y_velocity/playerGun.bulletSpeed), Math.acos(x_velocity/playerGun.bulletSpeed))));
             sprite.draw(x - offset_x, y - offset_y);
             setX(x + x_velocity);
             setY(y + y_velocity);
-//        } else {
-//            setXVelocity(0f);
-//            setYVelocity(0f);
-//            setX(x);
-//            setY(y);
-//            sprite.destroy();
         }
+    }
+
+    public void updateBoundingShape(){
+        boundingShape.updatePosition(x+7,y+4);
     }
 
     public void damage(int thickness) {
@@ -57,7 +54,6 @@ public class Bullet extends LevelObject {
     public void kill() throws SlickException {
         setXVelocity(0);
         setYVelocity(0);
-//        sprite.destroy();
     }
 
     public void setHealth(int i) {

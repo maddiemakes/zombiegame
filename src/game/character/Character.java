@@ -71,11 +71,7 @@ public abstract class Character extends LevelObject {
             LevelState.spriteList.add(i);
             sprites = new HashMap<Facing, Image>();
             sprites.put(Facing.DOWN, new Image(i + "_down_1.png"));
-//            sprites.put(Facing.DOWNLEFT, new Image(i + "_down_1.png"));
-//            sprites.put(Facing.DOWNRIGHT, new Image(i + "_down_1.png"));
             sprites.put(Facing.UP, new Image(i + "_up_1.png"));
-//            sprites.put(Facing.UPLEFT, new Image(i + "_up_1.png"));
-//            sprites.put(Facing.UPRIGHT, new Image(i + "_up_1.png"));
             sprites.put(Facing.LEFT, new Image(i + "_left_1.png"));
             sprites.put(Facing.RIGHT, new Image(i + "_right_1.png"));
             LevelState.spritesMaps.add(new Pair<>(i,sprites));
