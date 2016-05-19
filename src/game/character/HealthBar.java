@@ -14,6 +14,7 @@ public class HealthBar extends Rectangle {
         super(x, y, w, h);
         this.maxWidth = w;
     }
+
     public void setHealthBar(Player player)
     {
         if(player.getHealth() >= 0) {
@@ -22,9 +23,11 @@ public class HealthBar extends Rectangle {
         else
             setWidth(0);
     }
+
     public void reset() {
         setWidth(maxWidth);
     }
+
     public void draw(Graphics g, Player player) {
 //        if(player.getHealth() <= player.getMaxHealth() * 0.33)
 //            g.setColor(Color.red);
