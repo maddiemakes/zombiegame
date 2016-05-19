@@ -25,13 +25,13 @@ public class SettingsGame {
 
     public static Color   healthBarColor              = new Color(52, 166, 163);
 
-    public static int     musicVolume                 = 30;
-    public static int     zombieAlarmVolume           = 1;
+    public static float   musicVolume                 = 1;
+    public static float   zombieAlarmVolume           = 1;
     public static float   playerVolume                = .5f;
     public static float   zombieVolume                = .5f;
-    public static float   gunShootVolume              = .2f;
-    public static int     gunReloadVolume             = 300;
-    public static int     gunSwapVolume               = 1;
+    public static float   gunShootVolume              = .12f;
+    public static float   gunReloadVolume             = .5f;
+    public static float   gunSwapVolume               = 1;
 
     public static int     zombiesPerWave              = 10;
     public static int     minimumZombieSpawnDelay     = 200;

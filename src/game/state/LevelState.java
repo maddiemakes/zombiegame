@@ -155,19 +155,63 @@ public class LevelState extends BasicGameState {
         //every update we have to handle the input from the player
         playerController.handleInput(container.getInput(), delta);
 
-        //Pause timers when we pause the game or die
-        if (!paused && !gameOver) {
-            gamePlayTime += delta;
-            gunShootTime -= delta;
-            zombieSpawnTimer -= delta;
-            player.hurtTimer -= delta;
-            zombieWave(delta);
+        //only do these things when we're playing
+        if (!paused) {
+            if (!gameOver) {
+                //Pause timers when we pause the game or die
+                gamePlayTime += delta;
+                gunShootTime -= delta;
+                zombieSpawnTimer -= delta;
+                player.hurtTimer -= delta;
+                zombieWave(delta);
+
+                //press P to spawn zombies
+                if (spawnNew) {
+                    spawnZombie();
+                }
+            }
+
+            //handle our physics
+            physics.handlePhysics(level, delta);
+
+            //handle our special terrains
+            switch (Physics.checkTerrainCollision(player, level.getTiles())) {
+                case "waste":
+                    player.damage(1);
+                    break;
+                case "water":
+                    player.setSpeed(3);
+                    break;
+                case "ammo":
+                    playerGuns[0].maxAmmo();
+                    playerGuns[1].maxAmmo();
+                    break;
+                default:
+                    player.setSpeed(1);
+                    break;
+            }
+
+            //special terrain for zombies too
+            for (Zombie zombie: zombies) {
+                switch (Physics.checkTerrainCollision(zombie, level.getTiles())) {
+//                case "waste":
+//                    zombie.damage(1);
+//                    break;
+                    case "water":
+                        zombie.setSpeed(2);
+                        break;
+                    default:
+                        zombie.setSpeed(1);
+                        break;
+                }
+            }
+
+            //this checks to see if bullets hit things
+            //and removes them if they're "dead"
+            bulletCheck();
+
         }
 
-        //press P to spawn zombies
-        if (spawnNew) {
-            spawnZombie();
-        }
 
         //this gets zombies off your case
         for (ZombieController controller: zombieControllers) {
@@ -179,74 +223,6 @@ public class LevelState extends BasicGameState {
             }
         }
 
-        //handle our physics
-        physics.handlePhysics(level, delta);
-
-        //handle our special terrains
-        switch (Physics.checkTerrainCollision(player, level.getTiles())) {
-            case "waste":
-                player.damage(1);
-                break;
-            case "water":
-                player.setSpeed(3);
-                break;
-            case "ammo":
-                playerGuns[0].maxAmmo();
-                playerGuns[1].maxAmmo();
-                break;
-            default:
-                player.setSpeed(1);
-                break;
-        }
-
-        //special terrain for zombies too
-        for (Zombie zombie: zombies) {
-            switch (Physics.checkTerrainCollision(zombie, level.getTiles())) {
-//                case "waste":
-//                    zombie.damage(1);
-//                    break;
-                case "water":
-                    zombie.setSpeed(2);
-                    break;
-                default:
-                    zombie.setSpeed(1);
-                    break;
-            }
-        }
-
-
-        //take care of our bullets
-        int k = 0;
-        List<Integer> gone = new ArrayList<>();
-        for (Bullet bullet: bullets) {
-
-            //see if our bullets hit a zombie, and if so, hurt them
-            Physics.checkBulletCollision(bullet,level.getTiles());
-            for (Zombie zombie: zombies) {
-                if (bullet.getBoundingShape().checkCollision(zombie.getBoundingShape())) {
-                    zombie.damage(playerGun.getDamage());
-                    bullet.damage(1);
-                }
-            }
-
-            //kill the bullet if it's dead
-            if (bullet.getHealth() < 1) {
-                if (bullets.size() > k ) {
-                    gone.add(k);
-                }
-                bullet.kill();
-            }
-            k++;
-
-        }
-
-        //remove bullets that hit stuff
-        for (Integer i: gone) {
-            if (bullets.size() > i) {
-                bullets.set(i, bullets.get(bullets.size() - 1));
-                bullets.remove(bullets.size() - 1);
-            }
-        }
     }
 
     public void render(GameContainer container, StateBasedGame sbg, Graphics g) throws SlickException {
@@ -369,6 +345,48 @@ public class LevelState extends BasicGameState {
                     zombieSpawnDelay -= SettingsGame.zombieSpawnDelayDecrement;
                 }
                 zombieWaveTimer = SettingsGame.zombieWaveDelay;
+            }
+        }
+
+    }
+
+    //checks if bullets hit things
+    private void bulletCheck() throws SlickException {
+        //take care of our bullets
+        int k = 0;
+        List<Integer> gone = new ArrayList<>();
+        for (Bullet bullet: bullets) {
+
+            //see if our bullets hit a zombie, and if so, hurt them
+            if (bullet.getX() > 0 && bullet.getY() > 0 && bullet.getX() < level.getTiles().length*16 && bullet.getY() < level.getTiles().length*16) {
+                Physics.checkBulletCollision(bullet, level.getTiles());
+            }
+            else {
+                bullet.setHealth(0);
+            }
+            for (Zombie zombie: zombies) {
+                if (bullet.getBoundingShape().checkCollision(zombie.getBoundingShape())) {
+                    zombie.damage(playerGun.getDamage());
+                    bullet.damage(1);
+                }
+            }
+
+            //kill the bullet if it's dead
+            if (bullet.getHealth() < 1) {
+                if (bullets.size() > k ) {
+                    gone.add(k);
+                }
+                bullet.kill();
+            }
+            k++;
+
+        }
+
+        //remove bullets that hit stuff
+        for (Integer i: gone) {
+            if (bullets.size() > i) {
+                bullets.set(i, bullets.get(bullets.size() - 1));
+                bullets.remove(bullets.size() - 1);
             }
         }
 

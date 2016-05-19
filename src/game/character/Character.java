@@ -75,7 +75,6 @@ public abstract class Character extends LevelObject {
             sprites.put(Facing.LEFT, new Image(i + "_left_1.png"));
             sprites.put(Facing.RIGHT, new Image(i + "_right_1.png"));
             LevelState.spritesMaps.add(new Pair<>(i,sprites));
-            System.out.println("Added " + i);
         }
 
         //if it's not new, let's find the old one
@@ -117,7 +116,6 @@ public abstract class Character extends LevelObject {
             movingAnimations.put(Facing.RIGHT, facingRightAnimation);
             movingAnimations.put(Facing.LEFT, facingLeftAnimation);
             LevelState.animationMaps.add(new Pair<>(url, movingAnimations));
-            System.out.println("Added " + url);
         }
 
         else {
