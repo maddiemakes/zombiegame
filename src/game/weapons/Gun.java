@@ -1,9 +1,12 @@
 package game.weapons;
 
 import game.Game;
+import game.settings.SettingsGame;
 import game.state.LevelState;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
+
+import java.util.Set;
 
 import static game.state.LevelState.gunShootTime;
 import static game.state.LevelState.player;
@@ -59,7 +62,7 @@ public abstract class Gun {
             //creates the bullet and plays the sound
             Bullet bullet = null;
             try {
-                shootSound.play(1,.2f);
+                shootSound.play(1, SettingsGame.gunShootVolume);
 //                shootSound.play();
                 bullet = new Bullet(player.getX(), player.getY());
                 bullet.sprite.rotate((float) Math.toDegrees(player.rotate) - 90);
@@ -94,8 +97,7 @@ public abstract class Gun {
 
     public void reload() {
         if (LevelState.gunShootTime <= 0 && currentAmmo > 0 && clipAmmo < clipSize) {
-            reloadSound.play(1,300);
-//            reloadSound.play();
+            reloadSound.play(1, SettingsGame.gunReloadVolume);
             currentAmmo -= (clipSize - clipAmmo);
             if ((currentAmmo + (clipSize - clipAmmo)) + clipAmmo >= clipSize) {
                 clipAmmo = clipSize;
@@ -113,7 +115,7 @@ public abstract class Gun {
     }
 
     public void swapGuns() {
-        swapSound.play();
+        swapSound.play(1,SettingsGame.gunSwapVolume);
         if (LevelState.playerGun == LevelState.playerGuns[0]) {
             LevelState.playerGun = LevelState.playerGuns[1];
         } else {

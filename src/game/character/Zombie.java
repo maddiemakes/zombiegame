@@ -1,6 +1,7 @@
 package game.character;
 
 import game.physics.AABoundingRect;
+import game.settings.SettingsGame;
 import game.state.LevelState;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
@@ -51,7 +52,7 @@ public class Zombie extends Character {
         }
         if (!isPlaying) {
             if (rand.nextInt(100) < 8) {
-                soundThing[rand.nextInt(soundThing.length)].play(1, .5f);
+                soundThing[rand.nextInt(soundThing.length)].play(1, SettingsGame.zombieVolume);
             }
         }
     }

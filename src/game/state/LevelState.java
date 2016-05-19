@@ -65,20 +65,16 @@ public class LevelState extends BasicGameState {
     public  static boolean paused   = false;
     public  static boolean gameOver = false;
 
-    public  static int killCount                = 0;
-    public  static int zombiesSpawned           = 0;
-    public  static int gunShootTime             = 0;
-    public  static int gamePlayTime             = 0;
-    public static int startingWave             = 2000;
-    public static int currentWave              = startingWave;
-    private static int zombiesBeforeThisWave    = 0;
-    public static int zombieSpawnDelay         = 5000 - (currentWave*50);
-    public static int zombieWaveDelay          = 40000;
-    public static int zombieWaveAlarm          = 12000;
-    private static int zombiesSpawnedThisWave   = 0;
-    public static int zombieWaveTimer          = 18000;
-    public static int delayBeforeFirstWave = 10000;
-    private static int zombieSpawnTimer         = zombieWaveTimer;
+    public  static int killCount                = SettingsGame.killCount;
+    public  static int zombiesSpawned           = SettingsGame.zombiesSpawned;
+    public  static int gunShootTime             = SettingsGame.gunShootTime;
+    public  static int gamePlayTime             = SettingsGame.gamePlayTime;
+    public  static int currentWave              = SettingsGame.startingWave;
+    private static int zombiesBeforeThisWave    = SettingsGame.zombiesBeforeThisWave;
+    public  static int zombieSpawnDelay         = SettingsGame.zombieSpawnDelay;
+    private static int zombiesSpawnedThisWave   = SettingsGame.zombiesSpawnedThisWave;
+    public  static int zombieWaveTimer          = SettingsGame.zombieWaveTimer;
+    private static int zombieSpawnTimer         = SettingsGame.zombieWaveTimer;
 
     public  static Music music;
     public  static Music openingMenuMusic;
@@ -278,7 +274,7 @@ public class LevelState extends BasicGameState {
         }
 
         //next wave screen
-        if (zombieAlarm.playing() && zombieWaveTimer > 2000 && zombieWaveTimer < zombieWaveAlarm) {
+        if (zombieAlarm.playing() && zombieWaveTimer > 2000 && zombieWaveTimer < SettingsGame.zombieWaveAlarm) {
             if (zombiesSpawned > 0) {
                 g.drawString("Wave " + (currentWave + 1), containerWidth / 6, 100);
             }
@@ -352,7 +348,7 @@ public class LevelState extends BasicGameState {
 
             //we need to reset these timers
             zombieSpawnTimer = zombieSpawnDelay;
-            zombieWaveTimer = zombieWaveDelay;
+            zombieWaveTimer = SettingsGame.zombieWaveDelay;
         }
 
         //if we're out of zombies to kill, prepare for next wave
@@ -360,8 +356,8 @@ public class LevelState extends BasicGameState {
             zombieWaveTimer -= delta;
 
             //this plays our alarm before a wave starts
-            if (zombieWaveTimer <= zombieWaveAlarm && !zombieAlarm.playing()) { //&& !waveStarted) {
-                zombieAlarm.play();
+            if (zombieWaveTimer <= SettingsGame.zombieWaveAlarm && !zombieAlarm.playing()) { //&& !waveStarted) {
+                zombieAlarm.play(1, SettingsGame.zombieAlarmVolume);
             }
 
             //start new wave
@@ -372,7 +368,7 @@ public class LevelState extends BasicGameState {
                 if (zombieSpawnDelay >= SettingsGame.minimumZombieSpawnDelay) {
                     zombieSpawnDelay -= SettingsGame.zombieSpawnDelayDecrement;
                 }
-                zombieWaveTimer = zombieWaveDelay;
+                zombieWaveTimer = SettingsGame.zombieWaveDelay;
             }
         }
 
@@ -380,35 +376,41 @@ public class LevelState extends BasicGameState {
 
     //restarts the game (@game over)
     public static void restart() {
-        paused = false;
-        gameOver = false;
-        killCount = 0;
+
         for (Zombie zombie: zombies) {
             zombie.setHealth(0);
         }
         zombieControllers.clear();
         zombies.clear();
         bullets.clear();
-        spawnNew = false;
-        attackMe = true;
-        zombiesSpawned = 0;
-        gunShootTime = 100;
-        gamePlayTime = 0;
-        currentWave = SettingsGame.startingWave;
-        zombiesBeforeThisWave = 0;
-        zombieSpawnDelay = SettingsGame.zombieSpawnDelay;
-        zombiesSpawnedThisWave = 0;
-        zombieWaveTimer = SettingsGame.zombieWaveTimer;
-        zombieSpawnTimer = SettingsGame.zombieWaveTimer;
+
+        paused                      = false;
+        gameOver                    = false;
+        spawnNew                    = false;
+        attackMe                    = true;
+
+        killCount                   = SettingsGame.killCount;
+        zombiesSpawned              = SettingsGame.zombiesSpawned;
+        gunShootTime                = SettingsGame.gunShootTime;
+        gamePlayTime                = SettingsGame.gamePlayTime;
+        currentWave                 = SettingsGame.currentWave;
+        zombiesBeforeThisWave       = SettingsGame.zombiesBeforeThisWave;
+        zombieSpawnDelay            = SettingsGame.zombieSpawnDelay;
+        zombiesSpawnedThisWave      = SettingsGame.zombiesSpawnedThisWave;
+        zombieWaveTimer             = SettingsGame.zombieWaveTimer;
+        zombieSpawnTimer            = SettingsGame.zombieSpawnTimer;
+
         player.reset();
         player.setX(SettingsGame.playerX);
         player.setY(SettingsGame.playerY);
-        Pistol pistol = new Pistol();
-        Rifle rifle = new Rifle();
-        playerGuns[0] = pistol;
-        playerGuns[1] = rifle;
-        playerGun = playerGuns[0];
-        music = openingMenuMusic;
+
+        Pistol pistol               = new Pistol();
+        Rifle  rifle                = new Rifle();
+        playerGuns[0]               = pistol;
+        playerGuns[1]               = rifle;
+        playerGun                   = playerGuns[0];
+
+        music                       = openingMenuMusic;
         music.loop();
     }
 }

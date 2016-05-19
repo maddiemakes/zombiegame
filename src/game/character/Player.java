@@ -3,6 +3,7 @@ package game.character;
 import game.Game;
 import game.enums.Facing;
 import game.physics.AABoundingRect;
+import game.settings.SettingsGame;
 import game.state.LevelState;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
@@ -111,7 +112,7 @@ public class Player extends Character {
         }
         if (!isPlaying) {
             if (hurtTimer <= 0) {
-                soundThing[rand.nextInt(soundThing.length)].play(1, .5f);
+                soundThing[rand.nextInt(soundThing.length)].play(1, SettingsGame.playerVolume);
                 hurtTimer = 800;
             }
         }
