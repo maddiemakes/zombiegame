@@ -3,6 +3,7 @@ package game;
 import game.state.LevelState;
 
 import game.state.MenuState;
+import game.state.PauseMenuState;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -29,6 +30,7 @@ public class Game extends StateBasedGame {
         //create a level state, this state will do the whole logic and rendering for individual levels
         this.addState(new MenuState());
         this.addState(new LevelState("level_0"));
+        this.addState(new PauseMenuState());
         this.enterState(0);
 
     }
