@@ -2,6 +2,7 @@ package game;
 
 import game.state.LevelState;
 
+import game.state.MenuState;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -26,14 +27,14 @@ public class Game extends StateBasedGame {
     public void initStatesList(GameContainer gc) throws SlickException {
 
         //create a level state, this state will do the whole logic and rendering for individual levels
-        addState(new LevelState("level_0"));
+        this.addState(new MenuState());
+        this.addState(new LevelState("level_0"));
         this.enterState(0);
 
     }
 
     public static void main(String[] args) throws SlickException {
         AppGameContainer app = new AppGameContainer(new Game());
-
         //set the size of the display to the width and height and fullscreen or not
         app.setDisplayMode(WINDOW_WIDTH, WINDOW_HEIGTH, FULLSCREEN);
         //this will attempt to create a framerate of approximately 60 frames per second

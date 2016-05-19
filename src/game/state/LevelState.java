@@ -38,8 +38,8 @@ public class LevelState extends BasicGameState {
     public  static  int     containerWidth;
     private         Physics physics = new Physics();
 
-    private Font            font = new Font("Verdana", Font.BOLD, 10);
-    private TrueTypeFont    ttf = new TrueTypeFont(font, true);
+    private Font font;
+    private TrueTypeFont ttf;
     public  static  List<String> spriteList = new ArrayList<>();
     public  static  List<Pair<String, HashMap<Facing,Image>>> spritesMaps = new ArrayList<>();
     public  static  List<String> animationList = new ArrayList<>();
@@ -90,9 +90,10 @@ public class LevelState extends BasicGameState {
     }
 
     public void init(GameContainer container, StateBasedGame sbg) throws SlickException {
-
+        font = new Font("Verdana", Font.BOLD, 10);
+        ttf = new TrueTypeFont(font, true);
         //at the start of the game we don't have a player yet
-        player = new Player(playerX,playerY);
+        player = new Player(playerX, playerY);
         Pistol pistol = new Pistol();
         Rifle rifle = new Rifle();
         playerGuns[0] = pistol;
@@ -111,27 +112,27 @@ public class LevelState extends BasicGameState {
 
         //this sets all of our music and sounds
         zombieAlarm = new Sound("data/audio/sounds/alerts/missile_alarm.ogg");
-        zombieHurt  = new Sound[]{
-                      new Sound("data/audio/sounds/zombies/zombie-3.ogg"),
-                      new Sound("data/audio/sounds/zombies/zombie-5.ogg"),
-                      new Sound("data/audio/sounds/zombies/zombie-6.ogg"),
-                      new Sound("data/audio/sounds/zombies/zombie-7.ogg"),
-                      new Sound("data/audio/sounds/zombies/zombie-10.ogg"),
-                      new Sound("data/audio/sounds/zombies/zombie-12.ogg"),};
+        zombieHurt = new Sound[]{
+                new Sound("data/audio/sounds/zombies/zombie-3.ogg"),
+                new Sound("data/audio/sounds/zombies/zombie-5.ogg"),
+                new Sound("data/audio/sounds/zombies/zombie-6.ogg"),
+                new Sound("data/audio/sounds/zombies/zombie-7.ogg"),
+                new Sound("data/audio/sounds/zombies/zombie-10.ogg"),
+                new Sound("data/audio/sounds/zombies/zombie-12.ogg"),};
         zombieDeath = new Sound[]{
-                      new Sound("data/audio/sounds/zombies/zombie-4.ogg"),
-                      new Sound("data/audio/sounds/zombies/zombie-9.ogg"),
-                      new Sound("data/audio/sounds/zombies/zombie-10.ogg"),
-                      new Sound("data/audio/sounds/zombies/zombie-16.ogg"),
-                      new Sound("data/audio/sounds/zombies/zombie-20.ogg"),};
-        playerHurt  = new Sound[]{
-                      new Sound("data/audio/sounds/player/mrk_breathing_hurt10.ogg"),
-                      new Sound("data/audio/sounds/player/mrk_breathing_hurt11.ogg"),
-                      new Sound("data/audio/sounds/player/mrk_breathing_hurt12.ogg"),
-                      new Sound("data/audio/sounds/player/mrk_breathing_hurt13.ogg"),
-                      new Sound("data/audio/sounds/player/mrk_breathing_hurt14.ogg"),
-                      new Sound("data/audio/sounds/player/mrk_breathing_hurt15.ogg"),
-                      new Sound("data/audio/sounds/player/mrk_breathing_hurt16.ogg"),};
+                new Sound("data/audio/sounds/zombies/zombie-4.ogg"),
+                new Sound("data/audio/sounds/zombies/zombie-9.ogg"),
+                new Sound("data/audio/sounds/zombies/zombie-10.ogg"),
+                new Sound("data/audio/sounds/zombies/zombie-16.ogg"),
+                new Sound("data/audio/sounds/zombies/zombie-20.ogg"),};
+        playerHurt = new Sound[]{
+                new Sound("data/audio/sounds/player/mrk_breathing_hurt10.ogg"),
+                new Sound("data/audio/sounds/player/mrk_breathing_hurt11.ogg"),
+                new Sound("data/audio/sounds/player/mrk_breathing_hurt12.ogg"),
+                new Sound("data/audio/sounds/player/mrk_breathing_hurt13.ogg"),
+                new Sound("data/audio/sounds/player/mrk_breathing_hurt14.ogg"),
+                new Sound("data/audio/sounds/player/mrk_breathing_hurt15.ogg"),
+                new Sound("data/audio/sounds/player/mrk_breathing_hurt16.ogg"),};
 
         openingMenuMusic = new Music("data/audio/music/menu_theme_by_dubwolfer.ogg");
         gameOverMusic = new Music("data/audio/music/game_over_theme_by_dubwolfer.ogg");
@@ -292,7 +293,7 @@ public class LevelState extends BasicGameState {
 
     public int getID() {
         //this is the id for changing states
-        return 0;
+        return 1;
     }
 
     public static Point getMousePos() {
