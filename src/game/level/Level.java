@@ -4,19 +4,12 @@ import game.Game;
 import game.character.Character;
 
 import game.character.Player;
-import game.character.Zombie;
-import game.enums.Facing;
 import game.level.tile.*;
 import game.weapons.Bullet;
-import javafx.util.Pair;
-import org.newdawn.slick.Animation;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import static game.state.LevelState.bullets;
 
@@ -67,8 +60,8 @@ public class Level {
                     case "borderWall":
                         tile = new BorderTile(x,y);
                         break;
-                    case "lava":
-                        tile = new LavaTile(x,y);
+                    case "waste":
+                        tile = new WasteTile(x,y);
                         break;
                     case "water":
                         tile = new WaterTile(x,y);

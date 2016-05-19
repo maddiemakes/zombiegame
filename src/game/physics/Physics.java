@@ -31,7 +31,7 @@ public class Physics {
                 if(t.getBoundingShape().checkCollision(obj.getBoundingShape())){
                     //if it's a special terrain tile, let us go through it
                     if (obj.getClass().toString().startsWith("class game.character.")) {
-                        if (t.getClass().toString().equals("class game.level.tile.LavaTile")
+                        if (t.getClass().toString().equals("class game.level.tile.WasteTile")
                                 || t.getClass().toString().equals("class game.level.tile.WaterTile")
                                 || t.getClass().toString().equals("class game.level.tile.AmmoTile")) {
                             return false;
@@ -52,8 +52,8 @@ public class Physics {
             if(t.getBoundingShape() != null){
                 if(t.getBoundingShape().checkCollision(obj.getBoundingShape())){
                     //return names of special tiles
-                    if (t.getClass().toString().equals("class game.level.tile.LavaTile")) {
-                        return "lava";
+                    if (t.getClass().toString().equals("class game.level.tile.WasteTile")) {
+                        return "waste";
                     }
                     if (t.getClass().toString().equals("class game.level.tile.WaterTile")) {
                         return "water";

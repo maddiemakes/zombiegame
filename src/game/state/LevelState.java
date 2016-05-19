@@ -187,7 +187,7 @@ public class LevelState extends BasicGameState {
 
         //handle our special terrains
         switch (Physics.checkTerrainCollision(player, level.getTiles())) {
-            case "lava":
+            case "waste":
                 player.damage(1);
                 break;
             case "water":
@@ -205,11 +205,11 @@ public class LevelState extends BasicGameState {
         //special terrain for zombies too
         for (Zombie zombie: zombies) {
             switch (Physics.checkTerrainCollision(zombie, level.getTiles())) {
-                case "lava":
-                    zombie.damage(1);
-                    break;
+//                case "waste":
+//                    zombie.damage(1);
+//                    break;
                 case "water":
-                    zombie.setSpeed(3);
+                    zombie.setSpeed(2);
                     break;
                 default:
                     zombie.setSpeed(1);
