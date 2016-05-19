@@ -35,7 +35,6 @@ public class Level {
 
         this.player = player;
         addCharacter(player);
-
         loadTileMap();
     }
 

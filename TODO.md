@@ -30,7 +30,7 @@
 - [x] Character sprites
 - [x] Zombie sprites
     - [ ] Multiple zombie types
-- [x] Game gets harder as you play
+- [ ] Game gets harder as you play
     - [x] More zombies as you play
     - [ ] Stronger zombies as you play
 - [x] Destroy bullets when they hit outer walls (probably just make strength of these like 1000000000)

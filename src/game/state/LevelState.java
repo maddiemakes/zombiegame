@@ -17,13 +17,14 @@ import game.weapons.Rifle;
 import javafx.util.Pair;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import java.awt.*;
+import java.awt.Point;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -281,6 +282,11 @@ public class LevelState extends BasicGameState {
                 g.drawString("Wave " + currentWave, containerWidth / 6, 100);
             }
         }
+        //KEEP THESE IN ORDER. HEALTH BAR COLORING DEPENDS ON IT
+        g.setColor(new Color(52, 166, 163));
+        g.draw(player.getHealthBaseRect());
+        player.getHealthBar().draw(g, player);
+        //COLOR IS WHITE BEYOND HERE
     }
 
     //this method is overriden from basicgamestate and will trigger once you press any key on your keyboard

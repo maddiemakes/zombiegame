@@ -8,11 +8,16 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
 import java.util.Random;
+import org.newdawn.slick.geom.Rectangle;
 
 public class Player extends Character {
 
     public static double rotate;
     public static boolean invincible = false;
+    protected static int maxHealth;
+    public HealthBar healthBar;
+    public Rectangle healthBaseRect;
+
     public static int hurtTimer = 800;
 
     public Player(float x, float y) throws SlickException {
@@ -26,8 +31,11 @@ public class Player extends Character {
         originalDiagonalSpeed = 0.1f;
         maximumSpeed = 0.15f;
         diagonalSpeed = 0.1f;
-        health = 1000;
+        maxHealth = 1000;
+        health = maxHealth;
         type = "player";
+        healthBaseRect = new Rectangle(20, ((Game.WINDOW_HEIGTH / Game.SCALE) - 12), ((Game.WINDOW_WIDTH/Game.SCALE) / 5),(((Game.WINDOW_HEIGTH)/Game.SCALE) / 20) - 7);
+        healthBar = new HealthBar(healthBaseRect.getX() + 1.5f, healthBaseRect.getY() + 1.5f, healthBaseRect.getWidth() - 3, healthBaseRect.getHeight() - 3);
     }
 
     public void updateBoundingShape(){
@@ -61,7 +69,23 @@ public class Player extends Character {
         if (!invincible) {
             playSound(LevelState.playerHurt);
             health -= damage;
+            updateHealthBar();
         }
+
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void updateHealthBar() {
+        healthBar.setHealthBar(this);
+    }
+    public HealthBar getHealthBar() {
+        return healthBar;
+    }
+    public Rectangle getHealthBaseRect() {
+        return healthBaseRect;
     }
 
     //this is used for new game
