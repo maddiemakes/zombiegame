@@ -2,16 +2,10 @@ package game.controller;
 
 import game.character.Player;
 
-import game.character.Zombie;
-import game.level.Level;
 import game.state.LevelState;
-import game.weapons.Bullet;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
 
-import java.util.Random;
-
+import static game.settings.SettingsControls.*;
 import static game.state.LevelState.*;
 
 public class MouseAndKeyBoardPlayerController extends PlayerController {
@@ -35,25 +29,25 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
         if (player.getHealth() > 0) {
 
             //move player around
-            if (i.isKeyDown(Input.KEY_A) || i.isKeyDown(Input.KEY_LEFT)) {
-                if (i.isKeyDown(Input.KEY_W) || i.isKeyDown(Input.KEY_UP)) {
+            if (i.isKeyDown(walkLeft1) || i.isKeyDown(walkLeft2)) {
+                if (i.isKeyDown(walkUp1) || i.isKeyDown(walkUp2)) {
                     player.moveUpLeft(delta);
-                } else if (i.isKeyDown(Input.KEY_S) || i.isKeyDown(Input.KEY_DOWN)) {
+                } else if (i.isKeyDown(walkDown1) || i.isKeyDown(walkDown2)) {
                     player.moveDownLeft(delta);
                 } else {
                     player.moveLeft(delta);
                 }
-            } else if (i.isKeyDown(Input.KEY_D) || i.isKeyDown(Input.KEY_RIGHT)) {
-                if (i.isKeyDown(Input.KEY_W) || i.isKeyDown(Input.KEY_UP)) {
+            } else if (i.isKeyDown(walkRight1) || i.isKeyDown(walkRight2)) {
+                if (i.isKeyDown(walkUp1) || i.isKeyDown(walkUp2)) {
                     player.moveUpRight(delta);
-                } else if (i.isKeyDown(Input.KEY_S) || i.isKeyDown(Input.KEY_DOWN)) {
+                } else if (i.isKeyDown(walkDown1) || i.isKeyDown(walkDown2)) {
                     player.moveDownRight(delta);
                 } else {
                     player.moveRight(delta);
                 }
-            } else if (i.isKeyDown(Input.KEY_W) || i.isKeyDown(Input.KEY_UP)) {
+            } else if (i.isKeyDown(walkUp1) || i.isKeyDown(walkUp2)) {
                 player.moveUp(delta);
-            } else if (i.isKeyDown(Input.KEY_S) || i.isKeyDown(Input.KEY_DOWN)) {
+            } else if (i.isKeyDown(walkDown1) || i.isKeyDown(walkDown2)) {
                 player.moveDown(delta);
             } else {
                 //we don't move if we don't press left or right, this will have the effect that our player decelerates
@@ -63,12 +57,12 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
             }
 
             //reload
-            if (i.isKeyPressed(Input.KEY_R)) {
+            if (i.isKeyPressed(reload)) {
                 playerGun.reload();
             }
 
             //shoot when we click
-            if (i.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
+            if (i.isMouseButtonDown(shoot)) {
                 if ((shot > 0 || playerGun.getSemi() == 0) && playerGun.getClip() > 0) {
                     playerGun.shoot(delta);
                     shot--;
@@ -79,17 +73,17 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
             }
 
             //this is for controlling weapon fire (semi/automatic/burst)
-            if (!(i.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))) {
+            if (!(i.isMouseButtonDown(shoot))) {
                 shot = playerGun.getSemi();
             }
 
             //swap weapons
-            if (i.isKeyPressed(Input.KEY_Q)) {
+            if (i.isKeyPressed(weaponSwap)) {
                 playerGun.swapGuns();
             }
 
             //invincibility!
-            if (i.isKeyPressed(Input.KEY_I)) {
+            if (i.isKeyPressed(invincibility)) {
                 player.invincible = !player.invincible;
             }
         }
@@ -115,22 +109,22 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
         }
 
         //restart the game
-        if (i.isKeyPressed(Input.KEY_G)) {
+        if (i.isKeyPressed(restart)) {
             LevelState.restart();
         }
 
         //spawn a zombie
-        if(i.isKeyPressed(Input.KEY_Z)) {
+        if(i.isKeyPressed(spawnZombie)) {
             LevelState.spawnZombie();
         }
 
         //toggle zombies spawning as fast as they can
-        if (i.isKeyPressed(Input.KEY_P)) {
+        if (i.isKeyPressed(apocalypse)) {
             LevelState.spawnNew = !LevelState.spawnNew;
         }
 
         //toggle zombies attacking you
-        if (i.isKeyPressed(Input.KEY_O)) {
+        if (i.isKeyPressed(invisibility)) {
             LevelState.attackMe = !LevelState.attackMe;
         }
 

@@ -5,14 +5,12 @@ import game.level.Level;
 import game.level.LevelObject;
 import game.level.tile.Tile;
 import game.character.Character;
+import game.settings.SettingsGame;
 import game.state.LevelState;
 import game.weapons.Bullet;
-import javafx.util.Pair;
-import org.newdawn.slick.Music;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static game.state.LevelState.*;
 

@@ -77,6 +77,7 @@ public class MenuState extends BasicGameState
            if(Mouse.getX() < 565 && Mouse.getX() > 520 && Mouse.getY() > 545 && Mouse.getY() < 565)
            {
                game.enterState(1, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+               LevelState.paused = false;
            }
             if(Mouse.getX() < 560 && Mouse.getX() > 520 && Mouse.getY() > 500 && Mouse.getY() < 515)
             {

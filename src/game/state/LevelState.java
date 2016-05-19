@@ -10,6 +10,7 @@ import game.enums.Facing;
 import game.level.Level;
 import game.physics.Physics;
 
+import game.settings.SettingsGame;
 import game.weapons.Bullet;
 import game.weapons.Gun;
 import game.weapons.Pistol;
@@ -34,7 +35,8 @@ import java.util.List;
 import java.util.Random;
 
 public class LevelState extends BasicGameState {
-    public StateBasedGame game;
+
+    public StateBasedGame   game;
     public  static  Level   level;
     private         String  startinglevel;
     public  static  int     containerHeight;
@@ -49,8 +51,6 @@ public class LevelState extends BasicGameState {
     public  static  List<Pair<String, HashMap<Facing,Animation>>> animationMaps = new ArrayList<>();
 
     public  static Player    player;
-    private static int       playerX = 228;
-    private static int       playerY = 150;
     public  static Gun       playerGun;
     public  static Gun[]     playerGuns = new Gun[2];
     private PlayerController playerController;
@@ -69,14 +69,15 @@ public class LevelState extends BasicGameState {
     public  static int zombiesSpawned           = 0;
     public  static int gunShootTime             = 0;
     public  static int gamePlayTime             = 0;
-    private static int startingWave             = 100;
-    private static int currentWave              = startingWave;
+    public static int startingWave             = 2000;
+    public static int currentWave              = startingWave;
     private static int zombiesBeforeThisWave    = 0;
-    private static int zombieSpawnDelay         = 5000 - (currentWave*50);
-    private static int zombieWaveDelay          = 40000;
-    private static int zombieWaveAlarm          = 12000;
+    public static int zombieSpawnDelay         = 5000 - (currentWave*50);
+    public static int zombieWaveDelay          = 40000;
+    public static int zombieWaveAlarm          = 12000;
     private static int zombiesSpawnedThisWave   = 0;
-    private static int zombieWaveTimer          = 18000;
+    public static int zombieWaveTimer          = 18000;
+    public static int delayBeforeFirstWave = 10000;
     private static int zombieSpawnTimer         = zombieWaveTimer;
 
     public  static Music music;
@@ -97,7 +98,7 @@ public class LevelState extends BasicGameState {
         font = new Font("Verdana", Font.BOLD, 10);
         ttf = new TrueTypeFont(font, true);
         //at the start of the game we don't have a player yet
-        player = new Player(playerX, playerY);
+        player = new Player(SettingsGame.playerX, SettingsGame.playerY);
         Pistol pistol = new Pistol();
         Rifle rifle = new Rifle();
         playerGuns[0] = pistol;
@@ -116,39 +117,39 @@ public class LevelState extends BasicGameState {
 
         //this sets all of our music and sounds
         zombieAlarm = new Sound("data/audio/sounds/alerts/missile_alarm.ogg");
-        zombieHurt = new Sound[]{
-                new Sound("data/audio/sounds/zombies/zombie-3.ogg"),
-                new Sound("data/audio/sounds/zombies/zombie-5.ogg"),
-                new Sound("data/audio/sounds/zombies/zombie-6.ogg"),
-                new Sound("data/audio/sounds/zombies/zombie-7.ogg"),
-                new Sound("data/audio/sounds/zombies/zombie-10.ogg"),
-                new Sound("data/audio/sounds/zombies/zombie-12.ogg"),};
+        zombieHurt  = new Sound[]{
+                      new Sound("data/audio/sounds/zombies/zombie-3.ogg"),
+                      new Sound("data/audio/sounds/zombies/zombie-5.ogg"),
+                      new Sound("data/audio/sounds/zombies/zombie-6.ogg"),
+                      new Sound("data/audio/sounds/zombies/zombie-7.ogg"),
+                      new Sound("data/audio/sounds/zombies/zombie-10.ogg"),
+                      new Sound("data/audio/sounds/zombies/zombie-12.ogg"),};
         zombieDeath = new Sound[]{
-                new Sound("data/audio/sounds/zombies/zombie-4.ogg"),
-                new Sound("data/audio/sounds/zombies/zombie-9.ogg"),
-                new Sound("data/audio/sounds/zombies/zombie-10.ogg"),
-                new Sound("data/audio/sounds/zombies/zombie-16.ogg"),
-                new Sound("data/audio/sounds/zombies/zombie-20.ogg"),};
-        playerHurt = new Sound[]{
-                new Sound("data/audio/sounds/player/mrk_breathing_hurt10.ogg"),
-                new Sound("data/audio/sounds/player/mrk_breathing_hurt11.ogg"),
-                new Sound("data/audio/sounds/player/mrk_breathing_hurt12.ogg"),
-                new Sound("data/audio/sounds/player/mrk_breathing_hurt13.ogg"),
-                new Sound("data/audio/sounds/player/mrk_breathing_hurt14.ogg"),
-                new Sound("data/audio/sounds/player/mrk_breathing_hurt15.ogg"),
-                new Sound("data/audio/sounds/player/mrk_breathing_hurt16.ogg"),};
+                      new Sound("data/audio/sounds/zombies/zombie-4.ogg"),
+                      new Sound("data/audio/sounds/zombies/zombie-9.ogg"),
+                      new Sound("data/audio/sounds/zombies/zombie-10.ogg"),
+                      new Sound("data/audio/sounds/zombies/zombie-16.ogg"),
+                      new Sound("data/audio/sounds/zombies/zombie-20.ogg"),};
+        playerHurt  = new Sound[]{
+                      new Sound("data/audio/sounds/player/mrk_breathing_hurt10.ogg"),
+                      new Sound("data/audio/sounds/player/mrk_breathing_hurt11.ogg"),
+                      new Sound("data/audio/sounds/player/mrk_breathing_hurt12.ogg"),
+                      new Sound("data/audio/sounds/player/mrk_breathing_hurt13.ogg"),
+                      new Sound("data/audio/sounds/player/mrk_breathing_hurt14.ogg"),
+                      new Sound("data/audio/sounds/player/mrk_breathing_hurt15.ogg"),
+                      new Sound("data/audio/sounds/player/mrk_breathing_hurt16.ogg"),};
 
         openingMenuMusic = new Music("data/audio/music/menu_theme_by_dubwolfer.ogg");
         gameOverMusic = new Music("data/audio/music/game_over_theme_by_dubwolfer.ogg");
         music = openingMenuMusic;
-        music.setVolume(30);
+        music.setVolume(SettingsGame.musicVolume);
         music.loop();
     }
 
     public void update(GameContainer container, StateBasedGame sbg, int delta) throws SlickException {
 
         //Pause the music if the alarm is playing and don't play before the first wave
-        if (zombieAlarm.playing() || gamePlayTime < 10000) {
+        if (zombieAlarm.playing() || gamePlayTime < SettingsGame.delayBeforeFirstWave) {
             music.pause();
         } else if (!music.playing()) {
             zombieAlarm.stop();
@@ -286,7 +287,7 @@ public class LevelState extends BasicGameState {
             }
         }
         //KEEP THESE IN ORDER. HEALTH BAR COLORING DEPENDS ON IT
-        g.setColor(new Color(52, 166, 163));
+        g.setColor(SettingsGame.healthBarColor);
         g.draw(player.getHealthBaseRect());
         player.getHealthBar().draw(g, player);
         //COLOR IS WHITE BEYOND HERE
@@ -342,9 +343,8 @@ public class LevelState extends BasicGameState {
 
     private void zombieWave(int delta) {
 
-        int zombiesPerWave = 10;
         //if we have more to spawn this wave, let's do it
-        if (zombiesSpawnedThisWave < (currentWave * zombiesPerWave - 1) && zombieSpawnTimer <= 0) {
+        if (zombiesSpawnedThisWave < (currentWave * SettingsGame.zombiesPerWave - 1) && zombieSpawnTimer <= 0) {
 
             //get the number of zombies spawned this wave and then spawn one
             zombiesSpawnedThisWave = zombiesSpawned - zombiesBeforeThisWave;
@@ -369,8 +369,8 @@ public class LevelState extends BasicGameState {
                 currentWave++;
                 zombiesSpawnedThisWave = 0;
                 zombiesBeforeThisWave = zombiesSpawned;
-                if (zombieSpawnDelay >= 200) {
-                    zombieSpawnDelay -= currentWave * 50;
+                if (zombieSpawnDelay >= SettingsGame.minimumZombieSpawnDelay) {
+                    zombieSpawnDelay -= SettingsGame.zombieSpawnDelayDecrement;
                 }
                 zombieWaveTimer = zombieWaveDelay;
             }
@@ -394,15 +394,15 @@ public class LevelState extends BasicGameState {
         zombiesSpawned = 0;
         gunShootTime = 100;
         gamePlayTime = 0;
-        currentWave = startingWave;
+        currentWave = SettingsGame.startingWave;
         zombiesBeforeThisWave = 0;
-        zombieSpawnDelay = 5000 - (currentWave*50);
+        zombieSpawnDelay = SettingsGame.zombieSpawnDelay;
         zombiesSpawnedThisWave = 0;
-        zombieWaveTimer = 18000;
-        zombieSpawnTimer = zombieWaveTimer;
+        zombieWaveTimer = SettingsGame.zombieWaveTimer;
+        zombieSpawnTimer = SettingsGame.zombieWaveTimer;
         player.reset();
-        player.setX(playerX);
-        player.setY(playerY);
+        player.setX(SettingsGame.playerX);
+        player.setY(SettingsGame.playerY);
         Pistol pistol = new Pistol();
         Rifle rifle = new Rifle();
         playerGuns[0] = pistol;

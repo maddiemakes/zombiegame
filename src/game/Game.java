@@ -1,5 +1,6 @@
 package game;
 
+import game.settings.SettingsGame;
 import game.state.LevelState;
 
 import game.state.MenuState;
@@ -40,7 +41,7 @@ public class Game extends StateBasedGame {
         //set the size of the display to the width and height and fullscreen or not
         app.setDisplayMode(WINDOW_WIDTH, WINDOW_HEIGTH, FULLSCREEN);
         //this will attempt to create a framerate of approximately 60 frames per second
-        app.setTargetFrameRate(60);
+        app.setTargetFrameRate(SettingsGame.targetFrameRate);
 
         app.start();
     }
