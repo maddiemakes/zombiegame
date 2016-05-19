@@ -23,6 +23,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import java.awt.Point;
 import java.awt.Font;
@@ -32,7 +34,7 @@ import java.util.List;
 import java.util.Random;
 
 public class LevelState extends BasicGameState {
-
+    public StateBasedGame game;
     public  static  Level   level;
     private         String  startinglevel;
     public  static  int     containerHeight;
@@ -91,6 +93,7 @@ public class LevelState extends BasicGameState {
     }
 
     public void init(GameContainer container, StateBasedGame sbg) throws SlickException {
+        game = sbg;
         font = new Font("Verdana", Font.BOLD, 10);
         ttf = new TrueTypeFont(font, true);
         //at the start of the game we don't have a player yet
@@ -293,7 +296,10 @@ public class LevelState extends BasicGameState {
     public void keyPressed(int key, char code){
         //if the key is escape, close our application
         if(key == Input.KEY_ESCAPE){
-            System.exit(0);
+            //System.exit(0);
+            game.enterState(2, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+
+
         }
     }
 
