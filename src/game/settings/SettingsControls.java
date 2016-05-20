@@ -17,6 +17,7 @@ public class SettingsControls {
     public static int shoot = Input.MOUSE_LEFT_BUTTON;
     public static int weaponSwap = Input.KEY_Q;
 
+    public static int mute = Input.KEY_M;
     public static int invincibility = Input.KEY_I; //toggles player invincibility
     public static int restart = Input.KEY_G; //starts a new game
     public static int spawnZombie = Input.KEY_Z; //spawns one zombie

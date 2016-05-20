@@ -2,6 +2,7 @@ package game.controller;
 
 import game.character.Player;
 
+import game.settings.SettingsGame;
 import game.state.LevelState;
 import org.newdawn.slick.Input;
 
@@ -106,6 +107,10 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
 
                 }
             }
+        }
+
+        if (i.isKeyPressed(mute)) {
+            SettingsGame.mute();
         }
 
         //restart the game
