@@ -2,15 +2,12 @@ package game.weapons;
 
 
 import game.Game;
-import game.character.Player;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Stack;
 
 import static game.state.LevelState.playerGun;
@@ -55,7 +52,7 @@ public class AmmoBar {
 //            for (int i = 0; i < ((int)maxBulletMarks)/((int)playerGun.clipSize); i++) {
 //                //dsjfodk
 //                bullets.pop();
-//                x += 3;
+//                x += 3;a
 //            }
 //        }
 //    }
