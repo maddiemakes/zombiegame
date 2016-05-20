@@ -13,19 +13,19 @@ public class SettingsGame {
     public  static int     zombiesSpawned              = 0;
     public  static int     gunShootTime                = 0;
     public  static int     gamePlayTime                = 0;
-    public  static int     startingWave                = 10;
+    public  static int     startingWave                = 100;
     public  static int     currentWave                 = startingWave;
     public  static int     zombiesBeforeThisWave       = 0;
-    public  static int     zombieSpawnDelay            = 5000 - (currentWave*50);
+    public  static int     zombieSpawnDelayDecrement   = currentWave * 30;
+    public  static int     zombieSpawnDelay            = 4000 - zombieSpawnDelayDecrement;
     public  static int     zombieWaveDelay             = 40000;
     public  static int     zombieWaveAlarm             = 12000;
     public  static int     zombiesSpawnedThisWave      = 0;
     public  static int     zombieWaveTimer             = 18000;
     public  static int     delayBeforeFirstWave        = 10000;
     public  static int     zombieSpawnTimer            = zombieWaveTimer;
-    public  static int     zombiesPerWave              = 100;
+    public  static int     zombiesPerWave              = 10;
     public  static int     minimumZombieSpawnDelay     = 200;
-    public  static int     zombieSpawnDelayDecrement   = currentWave * 50;
 
     //(these are for when the others get muted)
     private static boolean muted                       = false;
