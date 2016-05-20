@@ -259,8 +259,6 @@ public class LevelState extends BasicGameState {
             }
         }
         //KEEP THESE IN ORDER. HEALTH BAR COLORING DEPENDS ON IT
-        g.setColor(SettingsGame.healthBarColor);
-        g.draw(player.getHealthBaseRect());
         player.getHealthBar().draw(g, player);
         //COLOR IS WHITE BEYOND HERE
     }
@@ -430,5 +428,6 @@ public class LevelState extends BasicGameState {
 
         music                       = openingMenuMusic;
         music.loop();
+        player.healthBar.reset();
     }
 }

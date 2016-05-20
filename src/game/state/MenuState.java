@@ -54,14 +54,12 @@ public class MenuState extends BasicGameState {
         smallTtf.drawString(container.getWidth()-215, container.getHeight()-30, "Music by Dubwolfer", Color.white);
         //g.setFont(smallTtf);
         if(Mouse.getX() <= center-115 && Mouse.getX() >= center-160 && Mouse.getY() >= 545 && Mouse.getY() <= 565) {
-            g.setColor(Color.green);
             smallTtf.drawString(center-180, 150, "> Play", Color.green);
         }else{
 //            smallTtf.drawString(center-180, 150, "> Play", Color.white);
             smallTtf.drawString(center-160, 150, "Play", Color.white);
         }
         if(Mouse.getX() <= center-120 && Mouse.getX() >= center-160 && Mouse.getY() >= 500 && Mouse.getY() <= 515) {
-            g.setColor(Color.green);
             smallTtf.drawString(center-180, 200, "> Exit", Color.green);
         }else {
             smallTtf.drawString(center-160, 200, "Exit", Color.white);
