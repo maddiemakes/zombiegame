@@ -16,10 +16,11 @@
 - [ ] Zombies don't walk through each other
     - Kinda got this, but it's a bit glitchy and gets them stuck together. Check Physics.handleGameObject
 - [x] Kill counter
-- [ ] Health meter
+- [x] Health meter
     - [x] Text health number bar thing first
+- [x] Ammo bar
 - [ ] To make zombie types, just make more "zombie" classes that extend Zombie
-- [ ] Weapons
+- [x] Weapons
     - [x] Guns shoot in direction of cursor (need help with the math here) Gun.shoot()
 - [x] Health
 - [ ] Upgrades

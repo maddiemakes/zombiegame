@@ -1,10 +1,8 @@
 package game;
 
 import game.settings.SettingsGame;
-import game.state.LevelState;
+import game.state.*;
 
-import game.state.MenuState;
-import game.state.PauseMenuState;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -32,6 +30,9 @@ public class Game extends StateBasedGame {
         this.addState(new MenuState());
         this.addState(new LevelState("level_0"));
         this.addState(new PauseMenuState());
+        this.addState(new SettingsMenuState());
+        this.addState(new VolumeMenuState());
+        this.addState(new ControlsMenuState());
         this.enterState(0);
 
     }

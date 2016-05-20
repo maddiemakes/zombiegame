@@ -234,14 +234,16 @@ public class LevelState extends BasicGameState {
 
         //displays our dev stuff onscreen
         g.setFont(ttf);
-        g.drawString("Health: " + player.getHealth(), 5, 15);
-        g.drawString("Kills: " + killCount, 5, 27);
-        g.drawString("Zombies remaining: " + (zombiesSpawned - killCount), 5, 39);
-        g.drawString("Zombies spawn: " + spawnNew, 5, 51);
-        g.drawString("Attack me: " + attackMe, 5, 63);
-        g.drawString("Ammo: " + playerGun.getCurrentAmmo(), 5, 75);
-        g.drawString("Clip: " + playerGun.getClip(), 5, 87);
-        g.drawString("Wave: " + currentWave, 5, 99);
+        if(SettingsGame.devSettings) {
+            g.drawString("Health: " + player.getHealth(), 5, 15);
+            g.drawString("Kills: " + killCount, 5, 27);
+            g.drawString("Zombies remaining: " + (zombiesSpawned - killCount), 5, 39);
+            g.drawString("Zombies spawn: " + spawnNew, 5, 51);
+            g.drawString("Attack me: " + attackMe, 5, 63);
+            g.drawString("Ammo: " + playerGun.getCurrentAmmo(), 5, 75);
+            g.drawString("Clip: " + playerGun.getClip(), 5, 87);
+            g.drawString("Wave: " + currentWave, 5, 99);
+        }
 
         //game over screen
         if (gameOver) {
@@ -252,10 +254,10 @@ public class LevelState extends BasicGameState {
         //next wave screen
         if (zombieAlarm.playing() && zombieWaveTimer > 2000 && zombieWaveTimer < SettingsGame.zombieWaveAlarm) {
             if (zombiesSpawned > 0) {
-                g.drawString("Wave " + (currentWave + 1), containerWidth / 6, 100);
+                g.drawString("Wave " + (currentWave + 1), containerWidth/2 - 20, 100);
             }
             else {
-                g.drawString("Wave " + currentWave, containerWidth / 6, 100);
+                g.drawString("Wave " + currentWave, containerWidth/2 - 20, 100);
             }
         }
         //KEEP THESE IN ORDER. HEALTH BAR COLORING DEPENDS ON IT

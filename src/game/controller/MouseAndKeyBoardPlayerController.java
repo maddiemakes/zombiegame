@@ -6,6 +6,8 @@ import game.settings.SettingsGame;
 import game.state.LevelState;
 import org.newdawn.slick.Input;
 
+import java.util.Set;
+
 import static game.settings.SettingsControls.*;
 import static game.state.LevelState.*;
 
@@ -82,10 +84,12 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
                 playerGun.swapGuns();
             }
 
-            //invincibility!
-//            if (i.isKeyPressed(invincibility)) {
-//                player.invincible = !player.invincible;
-//            }
+            if (SettingsGame.devSettings) {
+                //invincibility!
+                if (i.isKeyPressed(invincibility)) {
+                    player.invincible = !player.invincible;
+                }
+            }
         }
         //else if we're dead, stop us from moving
         else {
@@ -112,25 +116,31 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
             SettingsGame.mute();
         }
 
-        //restart the game
-//        if (i.isKeyPressed(restart)) {
-//            LevelState.restart();
-//        }
-//
-//        //spawn a zombie
-//        if(i.isKeyPressed(spawnZombie)) {
-//            LevelState.spawnZombie();
-//        }
-//
-//        //toggle zombies spawning as fast as they can
-//        if (i.isKeyPressed(apocalypse)) {
-//            LevelState.spawnNew = !LevelState.spawnNew;
-//        }
-//
-//        //toggle zombies attacking you
-//        if (i.isKeyPressed(invisibility)) {
-//            LevelState.attackMe = !LevelState.attackMe;
-//        }
+        if (i.isKeyPressed(devSettings)) {
+            SettingsGame.devSettings = !SettingsGame.devSettings;
+        }
+
+        if (SettingsGame.devSettings) {
+            //restart the game
+            if (i.isKeyPressed(restart)) {
+                LevelState.restart();
+            }
+
+            //spawn a zombie
+            if (i.isKeyPressed(spawnZombie)) {
+                LevelState.spawnZombie();
+            }
+
+            //toggle zombies spawning as fast as they can
+            if (i.isKeyPressed(apocalypse)) {
+                LevelState.spawnNew = !LevelState.spawnNew;
+            }
+
+            //toggle zombies attacking you
+            if (i.isKeyPressed(invisibility)) {
+                LevelState.attackMe = !LevelState.attackMe;
+            }
+        }
 
     }
 

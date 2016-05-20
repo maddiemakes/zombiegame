@@ -16,9 +16,6 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.util.ResourceLoader;
 
-/**
- * Created by Samuel on 5/19/2016.
- */
 public class PauseMenuState extends BasicGameState
 {
     private Font font;
@@ -59,11 +56,19 @@ public class PauseMenuState extends BasicGameState
 //            smallTtf.drawString(center-180, 150, "> Play", Color.white);
             smallTtf.drawString(center-160, 150, "Play", Color.white);
         }
-        if(Mouse.getX() <= center-120 && Mouse.getX() >= center-160 && Mouse.getY() >= 500 && Mouse.getY() <= 515) {
+
+        if(Mouse.getX() <= center-75 && Mouse.getX() >= center-160 && Mouse.getY() >= 500 && Mouse.getY() <= 515) {
             g.setColor(Color.green);
-            smallTtf.drawString(center-180, 200, "> Quit", Color.green);
+            smallTtf.drawString(center-180, 200, "> Settings", Color.green);
         }else {
-            smallTtf.drawString(center-160, 200, "Quit", Color.white);
+            smallTtf.drawString(center-160, 200, "Settings", Color.white);
+        }
+
+        if(Mouse.getX() <= center-125 && Mouse.getX() >= center-160 && Mouse.getY() >= 455 && Mouse.getY() <= 475) {
+            g.setColor(Color.green);
+            smallTtf.drawString(center-180, 250, "> Quit", Color.green);
+        }else {
+            smallTtf.drawString(center-160, 250, "Quit", Color.white);
         }
     }
     public static Point getMousePos() {
@@ -77,11 +82,19 @@ public class PauseMenuState extends BasicGameState
 
         if(Mouse.isButtonDown(0))
         {
-            if(Mouse.getX() < center-115 && Mouse.getX() > center-160 && Mouse.getY() > 545 && Mouse.getY() < 565) {
+            //play
+            if(Mouse.getX() <= center-115 && Mouse.getX() >= center-160 && Mouse.getY() >= 545 && Mouse.getY() <= 565) {
                 game.enterState(1, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
                 LevelState.paused = false;
             }
-            if(Mouse.getX() < center-120 && Mouse.getX() > center-160 && Mouse.getY() > 500 && Mouse.getY() < 515) {
+
+            //settings
+            if(Mouse.getX() <= center-75 && Mouse.getX() >= center-160 && Mouse.getY() >= 500 && Mouse.getY() <= 515) {
+                game.enterState(3, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+            }
+
+            //quit
+            if(Mouse.getX() <= center-125 && Mouse.getX() >= center-160 && Mouse.getY() >= 455 && Mouse.getY() <= 475) {
                 game.enterState(0, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
                 LevelState.restart();
 

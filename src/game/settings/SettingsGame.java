@@ -38,16 +38,17 @@ public class SettingsGame {
     private static float   gunSwapVolumeMax            = 1;
 
     //actual volumes
-    public  static float   musicVolume       = musicVolumeMax;
-    public  static float   zombieAlarmVolume = zombieAlarmVolumeMax;
-    public  static float   playerVolume      = playerVolumeMax;
-    public  static float   zombieVolume      = zombieVolumeMax;
-    public  static float   gunShootVolume    = gunShootVolumeMax;
-    public  static float   gunReloadVolume   = gunReloadVolumeMax;
-    public  static float   gunSwapVolume     = gunSwapVolumeMax;
+    public  static float   musicVolume                 = musicVolumeMax;
+    public  static float   zombieAlarmVolume           = zombieAlarmVolumeMax;
+    public  static float   playerVolume                = playerVolumeMax;
+    public  static float   zombieVolume                = zombieVolumeMax;
+    public  static float   gunShootVolume              = gunShootVolumeMax;
+    public  static float   gunReloadVolume             = gunReloadVolumeMax;
+    public  static float   gunSwapVolume               = gunSwapVolumeMax;
 
     public  static int     targetFrameRate             = 60;
     public  static Color   healthBarColor              = new Color(52, 166, 163);
+    public  static boolean devSettings                 = false;
 
     public static void mute() {
         if (muted) {

@@ -23,5 +23,6 @@ public class SettingsControls {
     public static int spawnZombie = Input.KEY_Z; //spawns one zombie
     public static int apocalypse = Input.KEY_P; //toggles super zombie spawning
     public static int invisibility = Input.KEY_O; //toggles zombies attacking you
+    public static int devSettings = Input.KEY_SLASH; //toggles dev settings
 
 }
