@@ -39,7 +39,7 @@ public class HealthBar {
         healthBar.setWidth(maxWidth);
     }
 
-    public void draw(Graphics g, Player player) {
+    public void draw(Graphics g) {
 //        if(player.getHealth() <= player.getMaxHealth() * 0.33)
 //            g.setColor(Color.red);
 //        if(player.getHealth() <= player.getMaxHealth() * 0.67)
