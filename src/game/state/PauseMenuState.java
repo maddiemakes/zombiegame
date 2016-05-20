@@ -64,7 +64,7 @@ public class PauseMenuState extends BasicGameState
             smallTtf.drawString(center-160, 200, "Settings", Color.white);
         }
 
-        if(Mouse.getX() <= center-125 && Mouse.getX() >= center-160 && Mouse.getY() >= 455 && Mouse.getY() <= 475) {
+        if(Mouse.getX() <= center-115 && Mouse.getX() >= center-160 && Mouse.getY() >= 455 && Mouse.getY() <= 465) {
             g.setColor(Color.green);
             smallTtf.drawString(center-180, 250, "> Quit", Color.green);
         }else {
@@ -94,7 +94,7 @@ public class PauseMenuState extends BasicGameState
             }
 
             //quit
-            if(Mouse.getX() <= center-125 && Mouse.getX() >= center-160 && Mouse.getY() >= 455 && Mouse.getY() <= 475) {
+            if(Mouse.getX() <= center-115 && Mouse.getX() >= center-160 && Mouse.getY() >= 455 && Mouse.getY() <= 475) {
                 game.enterState(0, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
                 LevelState.restart();
 

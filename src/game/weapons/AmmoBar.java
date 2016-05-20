@@ -63,6 +63,11 @@ public class AmmoBar {
         g.drawImage(bulletImage, Game.WINDOW_WIDTH/Game.SCALE - 36, y - 18);
         g.drawImage(bulletImage, Game.WINDOW_WIDTH/Game.SCALE - 32, y - 18);
         g.drawImage(bulletImage, Game.WINDOW_WIDTH/Game.SCALE - 28, y - 18);
+        if (playerGun.getClip() < 10) {
+            g.drawString(playerGun.getClip() + "/" + playerGun.getCurrentAmmo(), Game.WINDOW_WIDTH / Game.SCALE - 33, y - 24);
+        } else {
+            g.drawString(playerGun.getClip() + "/" + playerGun.getCurrentAmmo(), Game.WINDOW_WIDTH / Game.SCALE - 40, y - 24);
+        }
         g.setColor(Color.yellow);
         for(Rectangle r: bullets) {
             g.fill(r);

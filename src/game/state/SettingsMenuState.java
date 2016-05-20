@@ -71,7 +71,7 @@ public class SettingsMenuState extends BasicGameState
             smallTtf.drawString(center-160, 200, "Controls", Color.white);
         }
 
-        if(Mouse.getX() <= center-125 && Mouse.getX() >= center-160 && Mouse.getY() >= 455 && Mouse.getY() <= 465) {
+        if(Mouse.getX() <= center-115 && Mouse.getX() >= center-160 && Mouse.getY() >= 455 && Mouse.getY() <= 465) {
             g.setColor(Color.green);
             smallTtf.drawString(center-180, 250, "> Back", Color.green);
         }else {
@@ -98,7 +98,7 @@ public class SettingsMenuState extends BasicGameState
 //                game.enterState(4);
             }
             //back
-            if(Mouse.getX() <= center-125 && Mouse.getX() >= center-160 && Mouse.getY() >= 455 && Mouse.getY() <= 465) {
+            if(Mouse.getX() <= center-115 && Mouse.getX() >= center-160 && Mouse.getY() >= 455 && Mouse.getY() <= 465) {
                 game.enterState(2);
 
             }

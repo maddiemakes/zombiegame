@@ -75,7 +75,7 @@ public class VolumeMenuState extends BasicGameState
             smallTtf.drawString(center-160, 200, "Music Volume:", Color.white);
         }
 
-        if(Mouse.getX() <= center-125 && Mouse.getX() >= center-160 && Mouse.getY() >= 455 && Mouse.getY() <= 475) {
+        if(Mouse.getX() <= center-115 && Mouse.getX() >= center-160 && Mouse.getY() >= 455 && Mouse.getY() <= 475) {
             g.setColor(Color.green);
             smallTtf.drawString(center-180, 250, "> Back", Color.green);
         }else {
@@ -100,7 +100,7 @@ public class VolumeMenuState extends BasicGameState
             if(Mouse.getX() <= center-60 && Mouse.getX() >= center-160 && Mouse.getY() >= 500 && Mouse.getY() <= 515) {
 //                game.enterState(3, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
             }
-            if(Mouse.getX() <= center-125 && Mouse.getX() >= center-160 && Mouse.getY() >= 455 && Mouse.getY() <= 475) {
+            if(Mouse.getX() <= center-115 && Mouse.getX() >= center-160 && Mouse.getY() >= 455 && Mouse.getY() <= 475) {
                 game.enterState(3);
 
             }
