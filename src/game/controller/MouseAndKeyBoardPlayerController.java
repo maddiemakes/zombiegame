@@ -20,7 +20,6 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
     public void handleInput(Input i, int delta) {
         //handle any input from the keyboard
         handleKeyboardInput(i,delta);
-        //TODO
         player.setMouseQuadrant();
     }
 
@@ -84,9 +83,9 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
             }
 
             //invincibility!
-            if (i.isKeyPressed(invincibility)) {
-                player.invincible = !player.invincible;
-            }
+//            if (i.isKeyPressed(invincibility)) {
+//                player.invincible = !player.invincible;
+//            }
         }
         //else if we're dead, stop us from moving
         else {
@@ -114,24 +113,24 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
         }
 
         //restart the game
-        if (i.isKeyPressed(restart)) {
-            LevelState.restart();
-        }
-
-        //spawn a zombie
-        if(i.isKeyPressed(spawnZombie)) {
-            LevelState.spawnZombie();
-        }
-
-        //toggle zombies spawning as fast as they can
-        if (i.isKeyPressed(apocalypse)) {
-            LevelState.spawnNew = !LevelState.spawnNew;
-        }
-
-        //toggle zombies attacking you
-        if (i.isKeyPressed(invisibility)) {
-            LevelState.attackMe = !LevelState.attackMe;
-        }
+//        if (i.isKeyPressed(restart)) {
+//            LevelState.restart();
+//        }
+//
+//        //spawn a zombie
+//        if(i.isKeyPressed(spawnZombie)) {
+//            LevelState.spawnZombie();
+//        }
+//
+//        //toggle zombies spawning as fast as they can
+//        if (i.isKeyPressed(apocalypse)) {
+//            LevelState.spawnNew = !LevelState.spawnNew;
+//        }
+//
+//        //toggle zombies attacking you
+//        if (i.isKeyPressed(invisibility)) {
+//            LevelState.attackMe = !LevelState.attackMe;
+//        }
 
     }
 
