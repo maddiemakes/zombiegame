@@ -5,6 +5,7 @@ import game.enums.Facing;
 import game.physics.AABoundingRect;
 import game.settings.SettingsGame;
 import game.state.LevelState;
+import game.weapons.AmmoBar;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
@@ -17,7 +18,7 @@ public class Player extends Character {
     public static boolean invincible = false;
     protected static int maxHealth;
     public HealthBar healthBar;
-    public Rectangle healthBaseRect;
+    public static AmmoBar ammoBar;
 
     public static int hurtTimer = 800;
 
@@ -35,8 +36,10 @@ public class Player extends Character {
         maxHealth = 1000;
         health = maxHealth;
         type = "player";
-        healthBaseRect = new Rectangle(20, ((Game.WINDOW_HEIGTH / Game.SCALE) - 12), ((Game.WINDOW_WIDTH/Game.SCALE) / 5),(((Game.WINDOW_HEIGTH)/Game.SCALE) / 20) - 7);
-        healthBar = new HealthBar(healthBaseRect.getX() + 1.1f, healthBaseRect.getY() + 1.5f, healthBaseRect.getWidth() - 2.5f, healthBaseRect.getHeight() - 3);
+        healthBar = new HealthBar(20, Game.WINDOW_HEIGTH/Game.SCALE-12);
+//        healthBaseRect = new Rectangle(20, ((Game.WINDOW_HEIGTH / Game.SCALE) - 12), ((Game.WINDOW_WIDTH/Game.SCALE) / 5),(((Game.WINDOW_HEIGTH)/Game.SCALE) / 20) - 7);
+//        healthBar = new HealthBar(healthBaseRect.getX() + 1.1f, healthBaseRect.getY() + 1.5f, healthBaseRect.getWidth() - 2.5f, healthBaseRect.getHeight() - 3);
+        ammoBar = new AmmoBar(Game.WINDOW_WIDTH/Game.SCALE - 20, Game.WINDOW_HEIGTH/Game.SCALE-12);
     }
 
     public void updateBoundingShape(){
@@ -86,9 +89,8 @@ public class Player extends Character {
     public HealthBar getHealthBar() {
         return healthBar;
     }
-
-    public Rectangle getHealthBaseRect() {
-        return healthBaseRect;
+    public AmmoBar getAmmoBar() {
+        return ammoBar;
     }
 
     //this is used for new game

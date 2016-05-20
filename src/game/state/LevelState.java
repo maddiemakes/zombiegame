@@ -94,12 +94,12 @@ public class LevelState extends BasicGameState {
         font = new Font("Verdana", Font.BOLD, 10);
         ttf = new TrueTypeFont(font, true);
         //at the start of the game we don't have a player yet
-        player = new Player(SettingsGame.playerX, SettingsGame.playerY);
         Pistol pistol = new Pistol();
         Rifle rifle = new Rifle();
         playerGuns[0] = pistol;
         playerGuns[1] = rifle;
         playerGun = playerGuns[0];
+        player = new Player(SettingsGame.playerX, SettingsGame.playerY);
 
         //gets size of the screen
         containerHeight = container.getHeight();
@@ -259,9 +259,8 @@ public class LevelState extends BasicGameState {
             }
         }
         //KEEP THESE IN ORDER. HEALTH BAR COLORING DEPENDS ON IT
-        g.setColor(SettingsGame.healthBarColor);
-        g.draw(player.getHealthBaseRect());
-        player.getHealthBar().draw(g, player);
+        player.getHealthBar().draw(g);
+        player.getAmmoBar().draw(g);
         //COLOR IS WHITE BEYOND HERE
     }
 
@@ -430,5 +429,6 @@ public class LevelState extends BasicGameState {
 
         music                       = openingMenuMusic;
         music.loop();
+        player.healthBar.reset();
     }
 }

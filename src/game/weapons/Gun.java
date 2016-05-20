@@ -1,6 +1,7 @@
 package game.weapons;
 
 import game.Game;
+import game.character.Player;
 import game.settings.SettingsGame;
 import game.state.LevelState;
 import org.newdawn.slick.SlickException;
@@ -76,6 +77,11 @@ public abstract class Gun {
             bullet.setXVelocity((float) ((bulletSpeed * delta) * (Math.cos(player.rotate))));
             bullet.setYVelocity((float) ((bulletSpeed * delta) * (Math.sin(player.rotate))));
             LevelState.gunShootTime = this.fireRate;
+
+//            if(clipAmmo > 1) {
+//                Player.ammoBar.bulletShot();
+            Player.ammoBar.setAmmoBar();
+//            }
         }
     }
 
@@ -95,6 +101,10 @@ public abstract class Gun {
         return clipAmmo;
     }
 
+    public int getClipSize() {
+        return clipSize;
+    }
+
     public void reload() {
         if (LevelState.gunShootTime <= 0 && currentAmmo > 0 && clipAmmo < clipSize) {
             reloadSound.play(1, SettingsGame.gunReloadVolume);
@@ -107,6 +117,7 @@ public abstract class Gun {
             if (currentAmmo < 0) {
                 currentAmmo = 0;
             }
+            Player.ammoBar.setAmmoBar();
             gunShootTime = this.reloadSpeed;
         }
         if (currentAmmo <= 0 && clipAmmo <= 0) {
@@ -124,6 +135,7 @@ public abstract class Gun {
         if (gunShootTime < swapSpeed) {
             gunShootTime = swapSpeed;
         }
+        Player.ammoBar.setAmmoBar();
     }
 
     public void maxAmmo() {
