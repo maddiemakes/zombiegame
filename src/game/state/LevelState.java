@@ -358,7 +358,7 @@ public class LevelState extends BasicGameState {
         for (Bullet bullet: bullets) {
 
             //see if our bullets hit a zombie, and if so, hurt them
-            if (bullet.getX() > 0 && bullet.getY() > 0 && bullet.getX() < level.getTiles().length*16 && bullet.getY() < level.getTiles().length*16) {
+            if (bullet.getX() > 0 && bullet.getY() > 0 && bullet.getX() < (level.getTiles().length-1)*16 && bullet.getY() < (level.getTiles().length-1)*16) {
                 Physics.checkBulletCollision(bullet, level.getTiles());
             }
             else {

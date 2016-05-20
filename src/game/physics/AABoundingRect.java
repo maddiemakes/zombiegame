@@ -1,6 +1,7 @@
 package game.physics;
 
 import game.level.tile.Tile;
+import game.state.LevelState;
 
 import java.util.ArrayList;
 
@@ -38,7 +39,7 @@ public class AABoundingRect extends BoundingShape {
         //we go from the left of the rect towards to right of the rect, making sure we round upwards to a multiple of 32 or we might miss a few tiles
         for(int i = (int) x; i <= x+width+(16-width%16); i+=16){
             for(int j = (int) y; j <= y+height+(16-height%16); j+=16){
-                if (i/16 <= tiles.length && j/16 <= tiles.length) {
+                if (i/16 <= LevelState.level.getTiles().length && j/16 <= LevelState.level.getTiles().length) {
                     occupiedTiles.add(tiles[i / 16][j / 16]);
                 }
             }

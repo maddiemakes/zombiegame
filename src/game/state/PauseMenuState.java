@@ -44,23 +44,26 @@ public class PauseMenuState extends BasicGameState
     }
 
     @Override
-    public void render(GameContainer container, StateBasedGame game, Graphics g)
-            throws SlickException
-    {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+
         //g.setFont(ttf);
-        ttf.drawString(450, 50, "ZombieGame");
+//        ttf.drawString(450, 50, "ZombieGame");
+        int center = container.getWidth()/2;
+
+        ttf.drawString(center - 190, 50, "ZombieGame");
         //g.setFont(smallTtf);
-        if(Mouse.getX() < 565 && Mouse.getX() > 520 && Mouse.getY() > 545 && Mouse.getY() < 565) {
+        if(Mouse.getX() <= center-115 && Mouse.getX() >= center-160 && Mouse.getY() >= 545 && Mouse.getY() <= 565) {
             g.setColor(Color.green);
-            smallTtf.drawString(500, 150, "> Play", Color.green);
+            smallTtf.drawString(center-180, 150, "> Play", Color.green);
         }else{
-            smallTtf.drawString(500, 150, "> Play", Color.white);
+//            smallTtf.drawString(center-180, 150, "> Play", Color.white);
+            smallTtf.drawString(center-160, 150, "Play", Color.white);
         }
-        if(Mouse.getX() < 560 && Mouse.getX() > 520 && Mouse.getY() > 500 && Mouse.getY() < 515) {
+        if(Mouse.getX() <= center-120 && Mouse.getX() >= center-160 && Mouse.getY() >= 500 && Mouse.getY() <= 515) {
             g.setColor(Color.green);
-            smallTtf.drawString(500, 200, "> Quit", Color.green);
+            smallTtf.drawString(center-180, 200, "> Quit", Color.green);
         }else {
-            smallTtf.drawString(500, 200, "> Quit", Color.white);
+            smallTtf.drawString(center-160, 200, "Quit", Color.white);
         }
     }
     public static Point getMousePos() {
@@ -68,18 +71,17 @@ public class PauseMenuState extends BasicGameState
     }
 
     @Override
-    public void update(GameContainer container, StateBasedGame game, int delta)
-            throws SlickException
-    {
+    public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+
+        int center = container.getWidth()/2;
+
         if(Mouse.isButtonDown(0))
         {
-            if(Mouse.getX() < 565 && Mouse.getX() > 520 && Mouse.getY() > 545 && Mouse.getY() < 565)            {
-
+            if(Mouse.getX() < center-115 && Mouse.getX() > center-160 && Mouse.getY() > 545 && Mouse.getY() < 565) {
                 game.enterState(1, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
                 LevelState.paused = false;
             }
-            if(Mouse.getX() < 560 && Mouse.getX() > 520 && Mouse.getY() > 500 && Mouse.getY() < 515)
-            {
+            if(Mouse.getX() < center-120 && Mouse.getX() > center-160 && Mouse.getY() > 500 && Mouse.getY() < 515) {
                 game.enterState(0, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
                 LevelState.restart();
 
