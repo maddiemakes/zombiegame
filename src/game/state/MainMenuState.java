@@ -33,7 +33,7 @@ public class MainMenuState extends MenuState {
         menuItemsText.add("Play");
         menuItemsText.add("Settings");
         menuItemsText.add("Exit");
-        menuItemsText.add("Look at this test menu");
+//        menuItemsText.add("Look at this test menu");
 
 
 //        game.getState(1).init(container, game);
