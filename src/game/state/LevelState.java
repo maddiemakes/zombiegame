@@ -199,14 +199,14 @@ public class LevelState extends BasicGameState {
 
 
         //this gets zombies off your case
-        for (ZombieController controller: zombieControllers) {
-            if (attackMe) {
-                controller.handleWalk(player, level, delta);
-            }
-            else {
-                controller.handleWalk(zombies.get(zombies.size() - 1), level, delta);
-            }
-        }
+//        for (ZombieController controller: zombieControllers) {
+//            if (attackMe) {
+//                controller.handleWalk(player, level, delta);
+//            }
+//            else {
+//                controller.handleWalk(zombies.get(zombies.size() - 1), level, delta);
+//            }
+//        }
 
     }
 
