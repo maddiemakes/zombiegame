@@ -17,5 +17,5 @@
 | Pause        | Escape             |
 
 ## Downloading instructions
-- Use github to download the zip. Inside there will be a "zombiegame.zip." 
+- [Download the zip from here](https://drive.google.com/open?id=0B0YNx2d9eUxscjJVaHA5V2lkdTg)
 - Extract everything in this zip (should be two folders and two files) into a folder and then run either the jar or exe (Windows only) 
