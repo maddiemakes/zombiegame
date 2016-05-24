@@ -27,7 +27,7 @@ public class Game extends StateBasedGame {
     public void initStatesList(GameContainer gc) throws SlickException {
 
         //create a level state, this state will do the whole logic and rendering for individual levels
-        this.addState(new MenuState());
+        this.addState(new MainMenuState());
         this.addState(new LevelState("level_0"));
         this.addState(new PauseMenuState());
         this.addState(new SettingsMenuState());
