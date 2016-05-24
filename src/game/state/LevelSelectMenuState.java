@@ -1,21 +1,23 @@
 package game.state;
 
-import org.newdawn.slick.*;
-
-import java.awt.Font;
-import java.io.InputStream;
-import java.util.ArrayList;
-
+import game.level.Level;
+import game.settings.SettingsGame;
 import org.newdawn.slick.Color;
+import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.util.ResourceLoader;
 
-import static game.state.LevelState.lastMenu;
+import java.awt.Font;
+import java.io.InputStream;
+import java.util.ArrayList;
 
-public class PauseMenuState extends MenuState {
+import static game.state.LevelState.lastMenu;
+import static game.state.LevelState.player;
+
+public class LevelSelectMenuState extends MenuState {
 
     @Override
     public void init(GameContainer container, StateBasedGame game)
@@ -34,9 +36,9 @@ public class PauseMenuState extends MenuState {
         LevelState.paused = true;
 
         menuItemsText = new ArrayList<>();
-        menuItemsText.add("Resume");
-        menuItemsText.add("Settings");
-        menuItemsText.add("Quit");
+        menuItemsText.add("Tester");
+        menuItemsText.add("NCSSM");
+        menuItemsText.add("Back");
     }
 
     @Override
@@ -47,13 +49,26 @@ public class PauseMenuState extends MenuState {
 //        handleMenuItems(container, game, g);
         switch (handleMenuItems(container,menuItemsText, smallTtf)) {
             case 1:
+                LevelState.startinglevel = "level_0";
+                LevelState.levelSelected = true;
+                SettingsGame.playerX = 541;
+                SettingsGame.playerY = 667;
+                player.setX(SettingsGame.playerX);
+                player.setY(SettingsGame.playerY);
+                LevelState.startLevel("level_0");
                 game.enterState(1, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
                 LevelState.paused = false;
-                lastMenu = getID();
                 break;
             case 2:
-                game.enterState(3, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
-                lastMenu = getID();
+                LevelState.startinglevel = "ncssm";
+                LevelState.levelSelected = true;
+                SettingsGame.playerX = 791;
+                SettingsGame.playerY = 1050;
+                player.setX(SettingsGame.playerX);
+                player.setY(SettingsGame.playerY);
+                LevelState.startLevel("ncssm");
+                game.enterState(1, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+                LevelState.paused = false;
                 break;
             case 3:
                 game.enterState(0, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
@@ -65,6 +80,6 @@ public class PauseMenuState extends MenuState {
     @Override
     public int getID()
     {
-        return 2;
+        return 7;
     }
 }

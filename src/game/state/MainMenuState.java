@@ -36,20 +36,19 @@ public class MainMenuState extends MenuState {
         menuItemsText.add("Look at this test menu");
 
 
-        game.getState(1).init(container, game);
+//        game.getState(1).init(container, game);
     }
 
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 
+        LevelState.levelSelected = false;
         int center = container.getWidth()/2;
         ttf.drawString(center - 190, 50, "ZombieGame");
         smallTtf.drawString(container.getWidth()-215, container.getHeight()-30, "Music by Dubwolfer", Color.white);
         switch (handleMenuItems(container,menuItemsText,smallTtf)) {
             case 1:
-                game.enterState(1, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
-                LevelState.paused = false;
-                lastMenu = getID();
+                game.enterState(7, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
                 break;
             case 2:
                 game.enterState(3, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));

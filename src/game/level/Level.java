@@ -178,19 +178,4 @@ public class Level {
         return offset_y;
     }
 
-//    private void loadObjects() throws SlickException{
-//
-//        //we only have one layer defined, slick2d does not support getting an object layer by name but that does not matter to much for our game
-//        int objectAmount = map.getObjectCount(0);
-//
-//        //the objects are loaded into an array, again retrieval by name is not supported
-//        for(int i = 0; i < objectAmount; i++){
-//            switch(map.getObjectName(0, i)){
-//                case "Objective":
-////                    addLevelObject(new Objective(map.getObjectX(0, i),map.getObjectY(0, i)));
-//                    break;
-//            }
-//        }
-//
-//    }
 }

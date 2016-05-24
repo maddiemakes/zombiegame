@@ -39,7 +39,7 @@ public class LevelState extends BasicGameState {
 
     public StateBasedGame   game;
     public  static  Level   level;
-    private         String  startinglevel;
+    public  static  String  startinglevel;
     public  static  int     containerHeight;
     public  static  int     containerWidth;
     private         Physics physics = new Physics();
@@ -81,6 +81,8 @@ public class LevelState extends BasicGameState {
     public  static int numberOfDrops            = SettingsGame.numberOfDrops;
     public  static boolean menuChange           = false;
     public  static int lastMenu;
+    public  static boolean levelSelected = false;
+    public  static ArrayList<String> levels = new ArrayList<>();
 
     public  static Music music;
     public  static Music openingMenuMusic;
@@ -91,61 +93,66 @@ public class LevelState extends BasicGameState {
     public  static Sound[] playerHurt = new Sound[7];
 
 
-    public LevelState(String startingLevel){
-        this.startinglevel = startingLevel;
+    public LevelState(){
+        levels.clear();
+        levels.add("level_0");
+        levels.add("ncssm");
     }
 
     public void init(GameContainer container, StateBasedGame sbg) throws SlickException {
-        game = sbg;
-        font = new Font("Verdana", Font.BOLD, 10);
-        ttf = new TrueTypeFont(font, true);
-        //at the start of the game we don't have a player yet
-        Pistol pistol = new Pistol();
-        Rifle rifle = new Rifle();
-        playerGuns[0] = pistol;
-        playerGuns[1] = rifle;
-        playerGun = playerGuns[0];
-        player = new Player(SettingsGame.playerX, SettingsGame.playerY);
+            game = sbg;
+            font = new Font("Verdana", Font.BOLD, 10);
+            ttf = new TrueTypeFont(font, true);
+            //at the start of the game we don't have a player yet
+            Pistol pistol = new Pistol();
+            Rifle rifle = new Rifle();
+            playerGuns[0] = pistol;
+            playerGuns[1] = rifle;
+            playerGun = playerGuns[0];
+            player = new Player(SettingsGame.playerX, SettingsGame.playerY);
 
-        //gets size of the screen
-        containerHeight = container.getHeight();
-        containerWidth = container.getWidth();
+            //gets size of the screen
+            containerHeight = container.getHeight();
+            containerWidth = container.getWidth();
 
-        //once we initialize our level, we want to load the right level
-        level = new Level(startinglevel, player);
+            //once we initialize our level, we want to load the right level
+        if (levelSelected) {
+            startLevel(startinglevel);
+//            level = new Level(startinglevel, player);
+        }
 
-        //and we create a controller, for now we use the MouseAndKeyBoardPlayerController
-        playerController = new MouseAndKeyBoardPlayerController(player);
+            //and we create a controller, for now we use the MouseAndKeyBoardPlayerController
+            playerController = new MouseAndKeyBoardPlayerController(player);
 
-        //this sets all of our music and sounds
-        zombieAlarm = new Sound("data/audio/sounds/alerts/missile_alarm.ogg");
-        zombieHurt  = new Sound[]{
-                      new Sound("data/audio/sounds/zombies/zombie-3.ogg"),
-                      new Sound("data/audio/sounds/zombies/zombie-5.ogg"),
-                      new Sound("data/audio/sounds/zombies/zombie-6.ogg"),
-                      new Sound("data/audio/sounds/zombies/zombie-7.ogg"),
-                      new Sound("data/audio/sounds/zombies/zombie-10.ogg"),
-                      new Sound("data/audio/sounds/zombies/zombie-12.ogg"),};
-        zombieDeath = new Sound[]{
-                      new Sound("data/audio/sounds/zombies/zombie-4.ogg"),
-                      new Sound("data/audio/sounds/zombies/zombie-9.ogg"),
-                      new Sound("data/audio/sounds/zombies/zombie-10.ogg"),
-                      new Sound("data/audio/sounds/zombies/zombie-16.ogg"),
-                      new Sound("data/audio/sounds/zombies/zombie-20.ogg"),};
-        playerHurt  = new Sound[]{
-                      new Sound("data/audio/sounds/player/mrk_breathing_hurt10.ogg"),
-                      new Sound("data/audio/sounds/player/mrk_breathing_hurt11.ogg"),
-                      new Sound("data/audio/sounds/player/mrk_breathing_hurt12.ogg"),
-                      new Sound("data/audio/sounds/player/mrk_breathing_hurt13.ogg"),
-                      new Sound("data/audio/sounds/player/mrk_breathing_hurt14.ogg"),
-                      new Sound("data/audio/sounds/player/mrk_breathing_hurt15.ogg"),
-                      new Sound("data/audio/sounds/player/mrk_breathing_hurt16.ogg"),};
+            //this sets all of our music and sounds
+            zombieAlarm = new Sound("data/audio/sounds/alerts/missile_alarm.ogg");
+            zombieHurt = new Sound[]{
+                    new Sound("data/audio/sounds/zombies/zombie-3.ogg"),
+                    new Sound("data/audio/sounds/zombies/zombie-5.ogg"),
+                    new Sound("data/audio/sounds/zombies/zombie-6.ogg"),
+                    new Sound("data/audio/sounds/zombies/zombie-7.ogg"),
+                    new Sound("data/audio/sounds/zombies/zombie-10.ogg"),
+                    new Sound("data/audio/sounds/zombies/zombie-12.ogg"),};
+            zombieDeath = new Sound[]{
+                    new Sound("data/audio/sounds/zombies/zombie-4.ogg"),
+                    new Sound("data/audio/sounds/zombies/zombie-9.ogg"),
+                    new Sound("data/audio/sounds/zombies/zombie-10.ogg"),
+                    new Sound("data/audio/sounds/zombies/zombie-16.ogg"),
+                    new Sound("data/audio/sounds/zombies/zombie-20.ogg"),};
+            playerHurt = new Sound[]{
+                    new Sound("data/audio/sounds/player/mrk_breathing_hurt10.ogg"),
+                    new Sound("data/audio/sounds/player/mrk_breathing_hurt11.ogg"),
+                    new Sound("data/audio/sounds/player/mrk_breathing_hurt12.ogg"),
+                    new Sound("data/audio/sounds/player/mrk_breathing_hurt13.ogg"),
+                    new Sound("data/audio/sounds/player/mrk_breathing_hurt14.ogg"),
+                    new Sound("data/audio/sounds/player/mrk_breathing_hurt15.ogg"),
+                    new Sound("data/audio/sounds/player/mrk_breathing_hurt16.ogg"),};
 
-        openingMenuMusic = new Music("data/audio/music/menu_theme_by_dubwolfer.ogg");
-        gameOverMusic = new Music("data/audio/music/game_over_theme_by_dubwolfer.ogg");
-        music = openingMenuMusic;
-        music.setVolume(SettingsGame.musicVolume);
-        music.loop();
+            openingMenuMusic = new Music("data/audio/music/menu_theme_by_dubwolfer.ogg");
+            gameOverMusic = new Music("data/audio/music/game_over_theme_by_dubwolfer.ogg");
+            music = openingMenuMusic;
+            music.setVolume(SettingsGame.musicVolume);
+            music.loop();
     }
 
     public void update(GameContainer container, StateBasedGame sbg, int delta) throws SlickException {
@@ -180,38 +187,6 @@ public class LevelState extends BasicGameState {
 
             //handle our physics
             physics.handlePhysics(level, delta);
-
-            //handle our special terrains
-//            switch (Physics.checkTerrainCollision(player, level.getTiles())) {
-//                case "waste":
-//                    player.damage(1);
-//                    break;
-//                case "water":
-//                    player.setSpeed(3);
-//                    break;
-//                case "ammo":
-//                    playerGuns[0].maxAmmo();
-//                    playerGuns[1].maxAmmo();
-//                    break;
-//                default:
-//                    player.setSpeed(1);
-//                    break;
-//            }
-
-            //special terrain for zombies too
-//            for (Zombie zombie: zombies) {
-//                switch (Physics.checkTerrainCollision(zombie, level.getTiles())) {
-////                case "waste":
-////                    zombie.damage(1);
-////                    break;
-//                    case "water":
-//                        zombie.setSpeed(2);
-//                        break;
-//                    default:
-//                        zombie.setSpeed(1);
-//                        break;
-//                }
-//            }
 
             //this checks to see if bullets hit things
             //and removes them if they're "dead"
@@ -273,6 +248,11 @@ public class LevelState extends BasicGameState {
         //COLOR IS WHITE BEYOND HERE
     }
 
+    public static void startLevel(String startinglevel) throws SlickException {
+        if (levelSelected) {
+            level = new Level(startinglevel, player);
+        }
+    }
     //this method is overriden from basicgamestate and will trigger once you press any key on your keyboard
     public void keyPressed(int key, char code){
         //if the key is escape, close our application

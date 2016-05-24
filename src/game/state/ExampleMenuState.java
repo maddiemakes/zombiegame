@@ -34,7 +34,7 @@ public class ExampleMenuState extends MenuState {
         menuItemsText.add("Back to Main Menu");
 
 
-        game.getState(1).init(container, game);
+//        game.getState(1).init(container, game);
     }
 
     @Override

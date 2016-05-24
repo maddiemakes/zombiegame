@@ -28,12 +28,13 @@ public class Game extends StateBasedGame {
 
         //create a level state, this state will do the whole logic and rendering for individual levels
         this.addState(new MainMenuState());
-        this.addState(new LevelState("level_0"));
+        this.addState(new LevelState());
         this.addState(new PauseMenuState());
         this.addState(new SettingsMenuState());
         this.addState(new VolumeMenuState());
         this.addState(new ControlsMenuState());
         this.addState(new ExampleMenuState());
+        this.addState(new LevelSelectMenuState());
         this.enterState(0);
 
     }

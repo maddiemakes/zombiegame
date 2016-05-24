@@ -85,8 +85,10 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
             }
 
             if (SettingsGame.devSettings) {
+                System.out.println("dev?");
                 //invincibility!
                 if (i.isKeyPressed(invincibility)) {
+                    System.out.println("invincible");
                     player.invincible = !player.invincible;
                 }
             }
