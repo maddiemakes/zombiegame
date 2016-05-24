@@ -33,7 +33,7 @@ public class Physics {
                 if(t.getBoundingShape().checkCollision(obj.getBoundingShape())){
                     //if it's a special terrain tile, let us go through it
                     if (obj instanceof Character) {
-                        if (t instanceof WasteTile || t instanceof WaterTile || t instanceof AmmoTile) {
+                        if (t instanceof WasteTile || t instanceof WaterTile) {
                             return false;
                         }
                     }
