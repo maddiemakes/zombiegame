@@ -33,6 +33,7 @@ public class Game extends StateBasedGame {
         this.addState(new SettingsMenuState());
         this.addState(new VolumeMenuState());
         this.addState(new ControlsMenuState());
+        this.addState(new ExampleMenuState());
         this.enterState(0);
 
     }

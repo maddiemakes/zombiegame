@@ -1,14 +1,8 @@
 package game.state;
 
 import org.lwjgl.input.Mouse;
-import org.newdawn.slick.*;
-
-import java.awt.*;
-import java.awt.Font;
-import java.io.InputStream;
-import java.util.ArrayList;
-
 import org.newdawn.slick.Color;
+import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -16,10 +10,15 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.util.ResourceLoader;
 
+import java.awt.Font;
+import java.awt.*;
+import java.io.InputStream;
+import java.util.ArrayList;
+
 import static game.state.LevelState.lastMenu;
 import static game.state.LevelState.menuChange;
 
-public class MenuState extends BasicGameState {
+public class ExampleMenuState extends BasicGameState {
 
     private Font font;
     private TrueTypeFont ttf;
@@ -42,10 +41,12 @@ public class MenuState extends BasicGameState {
         this.game = game;
 
         menuItemsText = new ArrayList<>();
-        menuItemsText.add("Play");
-        menuItemsText.add("Settings");
-        menuItemsText.add("Exit");
-        menuItemsText.add("Look at this test menu");
+        menuItemsText.add("This");
+        menuItemsText.add("Is");
+        menuItemsText.add("Just");
+        menuItemsText.add("A");
+        menuItemsText.add("Test");
+        menuItemsText.add("Back to Main Menu");
 
 
         game.getState(1).init(container, game);
@@ -89,20 +90,8 @@ public class MenuState extends BasicGameState {
                 if (Mouse.isButtonDown(0) && !menuChange) {
                     menuChange = true;
                     switch (menuItem) {
-                        case 1:
-                            game.enterState(1, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
-                            LevelState.paused = false;
-                            lastMenu = getID();
-                            break;
-                        case 2:
-                            game.enterState(3, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
-                            lastMenu = getID();
-                            break;
-                        case 3:
-                            System.exit(0);
-                            break;
-                        case 4:
-                            game.enterState(6);
+                        case 6:
+                            game.enterState(0);
                             break;
                         default:
                             break;
@@ -122,6 +111,6 @@ public class MenuState extends BasicGameState {
     @Override
     public int getID()
     {
-        return 0;
+        return 6;
     }
 }
