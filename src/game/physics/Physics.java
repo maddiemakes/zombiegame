@@ -78,6 +78,9 @@ public class Physics {
             if (t instanceof BorderTile) {
                 bullet.setHealth(0);
             }
+            if (t instanceof SolidTile) {
+                bullet.setHealth(0);
+            }
         }
     }
 
@@ -167,8 +170,8 @@ public class Physics {
                             c.setHealth((int) c.getHealth() + (int) (c.getMaxHealth() * 0.5));
                             if (c.getHealth() > c.getMaxHealth()) {
                                 c.setHealth((int)c.getMaxHealth());
-                                ((Player) c).healthBar.setHealthBar((Player)c);
                             }
+                            ((Player) c).healthBar.setHealthBar((Player)c);
                             //remove the object from the level
                             removeQueue.add(obj);
                         }

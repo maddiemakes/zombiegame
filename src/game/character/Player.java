@@ -15,7 +15,7 @@ public class Player extends Character {
 
     public static double rotate;
     public static boolean invincible = false;
-    protected static int maxHealth;
+//    protected static int maxHealth;
     public HealthBar healthBar;
     public static AmmoBar ammoBar;
 
@@ -82,9 +82,9 @@ public class Player extends Character {
 
     }
 
-    public float getMaxHealth() {
-        return maxHealth;
-    }
+//    public float getMaxHealth() {
+//        return maxHealth;
+//    }
 
     public void updateHealthBar() {
         healthBar.setHealthBar(this);
