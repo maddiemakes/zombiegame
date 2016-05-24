@@ -179,6 +179,9 @@ public class LevelState extends BasicGameState {
                 dropTimer -= delta;
                 zombieWave(delta);
 
+                //periodically adds bullets to your gun to prevent fully running out of ammo
+                playerGun.restore();
+
                 //press P to spawn zombies
                 if (spawnNew) {
                     spawnZombie();

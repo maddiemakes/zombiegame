@@ -196,11 +196,11 @@ public abstract class Character extends LevelObject {
         health -= damage;
     }
 
-    public int getHealth() {
+    public float getHealth() {
         return health;
     }
 
-    public int getMaxHealth() {
+    public float getMaxHealth() {
         return maxHealth;
     }
 

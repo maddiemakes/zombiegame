@@ -23,6 +23,7 @@ public abstract class Gun {
     protected int currentAmmo;
     protected int reloadSpeed;
     protected int swapSpeed;
+    protected int bulletRecharge;
 
     protected Sound shootSound;
     protected Sound reloadSound;
@@ -39,6 +40,7 @@ public abstract class Gun {
         clipSize = 5;
         reloadSpeed = 1;
         swapSpeed = 350;
+        bulletRecharge = 30000;
         try {
             shootSound = new Sound("data/audio/sounds/guns/Gatling_1.ogg");
             reloadSound = new Sound("data/audio/sounds/guns/pistolReload.ogg");
@@ -142,4 +144,10 @@ public abstract class Gun {
         currentAmmo = maxAmmo;
     }
 
+    public void restore() {
+        if (LevelState.gunShootTime <= -bulletRecharge && currentAmmo < maxAmmo) {
+            LevelState.gunShootTime = 0;
+            currentAmmo++;
+        }
+    }
 }

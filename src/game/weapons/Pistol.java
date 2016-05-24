@@ -1,5 +1,6 @@
 package game.weapons;
 
+import game.state.LevelState;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
@@ -13,6 +14,7 @@ public class Pistol extends Gun {
         currentAmmo = maxAmmo;
         fireRate = 200;
         reloadSpeed = 3000;
+        bulletRecharge = 5000;
         try {
             shootSound = new Sound("data/audio/sounds/guns/usp_fire.ogg");
             reloadSound = new Sound("data/audio/sounds/guns/pistolReload.ogg");
@@ -20,4 +22,5 @@ public class Pistol extends Gun {
             e.printStackTrace();
         }
     }
+
 }

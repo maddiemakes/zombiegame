@@ -10,7 +10,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
 import java.util.Random;
-import org.newdawn.slick.geom.Rectangle;
 
 public class Player extends Character {
 
@@ -83,7 +82,7 @@ public class Player extends Character {
 
     }
 
-    public int getMaxHealth() {
+    public float getMaxHealth() {
         return maxHealth;
     }
 

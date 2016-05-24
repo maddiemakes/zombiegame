@@ -13,6 +13,7 @@ public class Rifle extends Gun {
         currentAmmo = maxAmmo;
         fireRate = 100;
         reloadSpeed = 4000;
+        bulletRecharge = 10000;
         try {
             shootSound = new Sound("data/audio/sounds/guns/usp_fire.ogg");
             reloadSound = new Sound("data/audio/sounds/guns/AK47_Reload.ogg");
