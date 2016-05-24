@@ -146,7 +146,7 @@ public abstract class Gun {
 
     public void restore() {
         if (LevelState.gunShootTime <= -bulletRecharge && currentAmmo < maxAmmo) {
-            LevelState.gunShootTime = 0;
+            LevelState.gunShootTime = -1;
             currentAmmo++;
         }
     }
