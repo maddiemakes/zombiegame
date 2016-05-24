@@ -38,6 +38,16 @@ public class Bullet extends LevelObject {
         }
     }
 
+    @Override
+    public int getTimer() {
+        return 0;
+    }
+
+    @Override
+    public void setTimer(int delta) {
+
+    }
+
     public void updateBoundingShape(){
         boundingShape.updatePosition(x+7,y+4);
     }

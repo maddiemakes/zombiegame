@@ -2,6 +2,7 @@ package game.level;
 
 import game.physics.AABoundingRect;
 import game.physics.BoundingShape;
+import org.newdawn.slick.SlickException;
 
 public abstract class LevelObject {
 
@@ -12,6 +13,7 @@ public abstract class LevelObject {
 
     protected float    x_velocity = 0;
     protected float    y_velocity = 0;
+//    protected int      timer;
 
 
     public LevelObject(float x, float y){
@@ -64,8 +66,10 @@ public abstract class LevelObject {
         return boundingShape;
     }
 
-    public String getType() {
-        return type;
-    }
+    public abstract void render(float offset_x, float offset_y) throws SlickException;
+
+    public abstract int getTimer();
+
+    public abstract void setTimer(int delta);
 
 }

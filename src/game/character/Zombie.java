@@ -1,5 +1,7 @@
 package game.character;
 
+import game.level.object.AmmoPickup;
+import game.level.object.HealthPickup;
 import game.physics.AABoundingRect;
 import game.settings.SettingsGame;
 import game.state.LevelState;
@@ -24,9 +26,11 @@ public class Zombie extends Character {
         originalDiagonalSpeed = 0.04f;
         maximumSpeed = 0.06f;
         diagonalSpeed = 0.04f;
-        health = 100;
-        type = "zombie";
+        maxHealth = 100;
+        health = maxHealth;
         attack = 5;
+
+//        LevelObject[] drops = new LevelObject[]{new HealthPickup(), new AmmoPickup};
     }
 
     public int getAttack() {
@@ -36,6 +40,14 @@ public class Zombie extends Character {
     public void updateBoundingShape(){
         boundingShape.updatePosition(x+6,y+6);
     }
+
+    @Override
+    public int getTimer() {
+        return 0;
+    }
+
+    @Override
+    public void setTimer(int delta) { }
 
     public void damage(int damage) {
         playSound(LevelState.zombieHurt);
@@ -55,6 +67,24 @@ public class Zombie extends Character {
                 soundThing[rand.nextInt(soundThing.length)].play(1, SettingsGame.zombieVolume);
             }
         }
+    }
+
+    public void drop() throws SlickException {
+        Random rand = new Random();
+            if (rand.nextInt(100) < 3 && LevelState.dropTimer <= 0) {
+                switch (rand.nextInt(LevelState.numberOfDrops)) {
+                    case 0:
+                        LevelState.level.addLevelObject(new HealthPickup(x,y));
+                        break;
+                    case 1:
+                        LevelState.level.addLevelObject(new AmmoPickup(x,y));
+                        break;
+                    default:
+                        break;
+                }
+                LevelState.dropTimer = SettingsGame.dropTimer;
+            }
+//        }
     }
 
 }

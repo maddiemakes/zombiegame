@@ -8,6 +8,7 @@ import game.controller.PlayerController;
 import game.controller.ZombieController;
 import game.enums.Facing;
 import game.level.Level;
+import game.level.object.AmmoPickup;
 import game.physics.Physics;
 
 import game.settings.SettingsGame;
@@ -75,6 +76,11 @@ public class LevelState extends BasicGameState {
     private static int zombiesSpawnedThisWave   = SettingsGame.zombiesSpawnedThisWave;
     public  static int zombieWaveTimer          = SettingsGame.zombieWaveTimer;
     private static int zombieSpawnTimer         = SettingsGame.zombieWaveTimer;
+
+    public  static int dropTimer                = SettingsGame.dropTimer;
+    public  static int numberOfDrops            = SettingsGame.numberOfDrops;
+    public  static boolean menuChange           = false;
+    public  static int lastMenu;
 
     public  static Music music;
     public  static Music openingMenuMusic;
@@ -163,6 +169,7 @@ public class LevelState extends BasicGameState {
                 gunShootTime -= delta;
                 zombieSpawnTimer -= delta;
                 player.hurtTimer -= delta;
+                dropTimer -= delta;
                 zombieWave(delta);
 
                 //press P to spawn zombies
@@ -175,36 +182,36 @@ public class LevelState extends BasicGameState {
             physics.handlePhysics(level, delta);
 
             //handle our special terrains
-            switch (Physics.checkTerrainCollision(player, level.getTiles())) {
-                case "waste":
-                    player.damage(1);
-                    break;
-                case "water":
-                    player.setSpeed(3);
-                    break;
-                case "ammo":
-                    playerGuns[0].maxAmmo();
-                    playerGuns[1].maxAmmo();
-                    break;
-                default:
-                    player.setSpeed(1);
-                    break;
-            }
+//            switch (Physics.checkTerrainCollision(player, level.getTiles())) {
+//                case "waste":
+//                    player.damage(1);
+//                    break;
+//                case "water":
+//                    player.setSpeed(3);
+//                    break;
+//                case "ammo":
+//                    playerGuns[0].maxAmmo();
+//                    playerGuns[1].maxAmmo();
+//                    break;
+//                default:
+//                    player.setSpeed(1);
+//                    break;
+//            }
 
             //special terrain for zombies too
-            for (Zombie zombie: zombies) {
-                switch (Physics.checkTerrainCollision(zombie, level.getTiles())) {
-//                case "waste":
-//                    zombie.damage(1);
-//                    break;
-                    case "water":
-                        zombie.setSpeed(2);
-                        break;
-                    default:
-                        zombie.setSpeed(1);
-                        break;
-                }
-            }
+//            for (Zombie zombie: zombies) {
+//                switch (Physics.checkTerrainCollision(zombie, level.getTiles())) {
+////                case "waste":
+////                    zombie.damage(1);
+////                    break;
+//                    case "water":
+//                        zombie.setSpeed(2);
+//                        break;
+//                    default:
+//                        zombie.setSpeed(1);
+//                        break;
+//                }
+//            }
 
             //this checks to see if bullets hit things
             //and removes them if they're "dead"
@@ -254,10 +261,10 @@ public class LevelState extends BasicGameState {
         //next wave screen
         if (zombieAlarm.playing() && zombieWaveTimer > 2000 && zombieWaveTimer < SettingsGame.zombieWaveAlarm) {
             if (zombiesSpawned > 0) {
-                g.drawString("Wave " + (currentWave + 1), containerWidth/2 - 20, 100);
+                g.drawString("Wave " + (currentWave + 1), containerWidth/6 + 20, 100);
             }
             else {
-                g.drawString("Wave " + currentWave, containerWidth/2 - 20, 100);
+                g.drawString("Wave " + currentWave, containerWidth/6 + 20, 100);
             }
         }
         //KEEP THESE IN ORDER. HEALTH BAR COLORING DEPENDS ON IT
@@ -402,6 +409,7 @@ public class LevelState extends BasicGameState {
         zombieControllers.clear();
         zombies.clear();
         bullets.clear();
+        level.removeObjects(level.getLevelObjects());
 
         paused                      = false;
         gameOver                    = false;

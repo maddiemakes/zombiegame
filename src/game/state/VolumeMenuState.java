@@ -14,6 +14,10 @@ import javax.swing.*;
 import java.awt.Font;
 import java.awt.*;
 import java.io.InputStream;
+import java.util.ArrayList;
+
+import static game.state.LevelState.lastMenu;
+import static game.state.LevelState.menuChange;
 
 public class VolumeMenuState extends BasicGameState
 {
@@ -22,6 +26,8 @@ public class VolumeMenuState extends BasicGameState
     private Font smallFont;
     private TrueTypeFont smallTtf;
     private StateBasedGame game;
+    private ArrayList<String> menuItemsText;
+
     /*
     -volume
     ***new levelState
@@ -46,41 +52,20 @@ public class VolumeMenuState extends BasicGameState
         smallFont = new Font("Verdana", Font.BOLD, 18);
         smallTtf = new TrueTypeFont(smallFont, false);
         LevelState.paused = true;
+
+        menuItemsText = new ArrayList<>();
+        menuItemsText.add("Master Volume:");
+        menuItemsText.add("Music Volume:");
+        menuItemsText.add("Back");
     }
 
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-
-//        g.setFont(ttf);
-//        ttf.drawstring(450, 50, "Volume");
         int center = container.getWidth()/2;
 
 
         ttf.drawString(center - 190, 50, "ZombieGame");
-        //g.setFont(smallTtf);
-        if(Mouse.getX() <= center-60 && Mouse.getX() >= center-160 && Mouse.getY() >= 545 && Mouse.getY() <= 565) {
-            g.setColor(Color.green);
-
-            smallTtf.drawString(center-180, 150, "> Master Volume:", Color.green);
-        }else{
-//            smallTtf.drawString(center-180, 150, "> Play", Color.white);
-            smallTtf.drawString(center-160, 150, "Master Volume:", Color.white);
-        }
-        JSlider mv = new JSlider(0, 100, 100);
-
-        if(Mouse.getX() <= center-60 && Mouse.getX() >= center-160 && Mouse.getY() >= 500 && Mouse.getY() <= 515) {
-            g.setColor(Color.green);
-            smallTtf.drawString(center-180, 200, "> Music Volume:", Color.green);
-        }else {
-            smallTtf.drawString(center-160, 200, "Music Volume:", Color.white);
-        }
-
-        if(Mouse.getX() <= center-115 && Mouse.getX() >= center-160 && Mouse.getY() >= 455 && Mouse.getY() <= 475) {
-            g.setColor(Color.green);
-            smallTtf.drawString(center-180, 250, "> Back", Color.green);
-        }else {
-            smallTtf.drawString(center-160, 250, "Back", Color.white);
-        }
+        handleMenuItems(container, game, g);
     }
     public static Point getMousePos() {
         return new Point(Mouse.getX(), Mouse.getY());
@@ -89,25 +74,46 @@ public class VolumeMenuState extends BasicGameState
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 
+    }
+
+    private void handleMenuItems(GameContainer container, StateBasedGame game, Graphics g) {
+
         int center = container.getWidth()/2;
+        int menuY = 150;
+        int mouseX = center-160;
+        int mouseY = 545;
+        boolean mouseHover = false;
+        int menuItem = 0;
+        g.setFont(smallTtf);
 
-        if(Mouse.isButtonDown(0))
-        {
-            if(Mouse.getX() <= center-60 && Mouse.getX() >= center-160 && Mouse.getY() >= 545 && Mouse.getY() <= 565) {
-//                game.enterState(1, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+        for (String string: menuItemsText) {
+            if (!mouseHover) {
+                menuItem++;
             }
-
-            if(Mouse.getX() <= center-60 && Mouse.getX() >= center-160 && Mouse.getY() >= 500 && Mouse.getY() <= 515) {
-//                game.enterState(3, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+            if (Mouse.getX() >= mouseX && Mouse.getX() <= mouseX + smallTtf.getWidth(string) && Mouse.getY() >= mouseY && Mouse.getY() <= mouseY + smallTtf.getHeight(string)) {
+                smallTtf.drawString(center-180, menuY, "> " + string, Color.green);
+                mouseHover = true;
+                if (Mouse.isButtonDown(0) && !menuChange) {
+                    menuChange = true;
+                    switch (menuItem) {
+                        case 1:
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            game.enterState(3);
+                            break;
+                    }
+                } else if (!Mouse.isButtonDown(0) && menuChange) {
+                    menuChange = false;
+                }
             }
-            if(Mouse.getX() <= center-115 && Mouse.getX() >= center-160 && Mouse.getY() >= 455 && Mouse.getY() <= 475) {
-                game.enterState(3);
-
+            else {
+                smallTtf.drawString(center-160, menuY, string, Color.white);
             }
-
-            // System.out.println(getMousePos());
+            menuY += 50;
+            mouseY -= 50;
         }
-
     }
 
     @Override

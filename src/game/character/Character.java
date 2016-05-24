@@ -20,7 +20,8 @@ public abstract class Character extends LevelObject {
     protected float originalDiagonalSpeed = 1;
     protected float maximumSpeed = 1;
     protected float diagonalSpeed = 1;
-    protected int health = 10;
+    protected int maxHealth = 10;
+    protected int health = maxHealth;
     public float offsetx;
     public float offsety;
 
@@ -195,8 +196,12 @@ public abstract class Character extends LevelObject {
         health -= damage;
     }
 
-    public float getHealth() {
+    public int getHealth() {
         return health;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
     }
 
     public void setHealth(int i) {

@@ -1,13 +1,16 @@
 package game.physics;
 
+import game.character.Player;
 import game.character.Zombie;
 import game.level.Level;
 import game.level.LevelObject;
-import game.level.tile.Tile;
+import game.level.object.AmmoPickup;
+import game.level.object.HealthPickup;
+import game.level.tile.*;
 import game.character.Character;
-import game.settings.SettingsGame;
 import game.state.LevelState;
 import game.weapons.Bullet;
+import org.newdawn.slick.SlickException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +21,7 @@ public class Physics {
 
     public void handlePhysics(Level level, int delta){
         handleCharacters(level,delta);
+        handleLevelObjects(level,delta);
     }
 
     public static boolean checkCollision(LevelObject obj, Tile[][] mapTiles){
@@ -28,10 +32,8 @@ public class Physics {
             if(t.getBoundingShape() != null){
                 if(t.getBoundingShape().checkCollision(obj.getBoundingShape())){
                     //if it's a special terrain tile, let us go through it
-                    if (obj.getClass().toString().startsWith("class game.character.")) {
-                        if (t.getClass().toString().equals("class game.level.tile.WasteTile")
-                                || t.getClass().toString().equals("class game.level.tile.WaterTile")
-                                || t.getClass().toString().equals("class game.level.tile.AmmoTile")) {
+                    if (obj instanceof Character) {
+                        if (t instanceof WasteTile || t instanceof WaterTile || t instanceof AmmoTile) {
                             return false;
                         }
                     }
@@ -50,15 +52,15 @@ public class Physics {
             if(t.getBoundingShape() != null){
                 if(t.getBoundingShape().checkCollision(obj.getBoundingShape())){
                     //return names of special tiles
-                    if (t.getClass().toString().equals("class game.level.tile.WasteTile")) {
+                    if (t instanceof WasteTile) {
                         return "waste";
                     }
-                    if (t.getClass().toString().equals("class game.level.tile.WaterTile")) {
+                    if (t instanceof WaterTile) {
                         return "water";
                     }
-                    if (t.getClass().toString().equals("class game.level.tile.AmmoTile")) {
-                        return "ammo";
-                    }
+//                    if (t instanceof AmmoTile) {
+//                        return "ammo";
+//                    }
                 }
             }
         }
@@ -72,7 +74,8 @@ public class Physics {
         for(Tile t : tiles){
             //if this tile has a bounding shape
             //stops bullets from going offscreen
-            if (t.getClass().toString().equals("class game.level.tile.BorderTile")) {
+//            if (t.getClass().toString().equals("class game.level.tile.BorderTile")) {
+            if (t instanceof BorderTile) {
                 bullet.setHealth(0);
             }
         }
@@ -80,7 +83,8 @@ public class Physics {
 
     //not used yet
     public static boolean checkZombieCollision(Character zombie, Character zombie2) {
-        if (zombie.getType().equals("zombie") && zombie2.getType().equals("zombie")) {
+//        if (zombie.getType().equals("zombie") && zombie2.getType().equals("zombie")) {
+        if (zombie instanceof Zombie && zombie2 instanceof Zombie) {
             if (zombie.getBoundingShape().checkCollision(zombie2.getBoundingShape())) {
                 return true;
             }
@@ -93,10 +97,86 @@ public class Physics {
         return false;
     }
 
+    private void handleLevelObjects(Level level, int delta) {
+        ArrayList<LevelObject> removeQueue = new ArrayList<>();
+        for (LevelObject obj : level.getLevelObjects()) {
+            handleGameObject(obj, level, delta);
+            obj.setTimer(delta);
+            if (obj.getTimer() < 0) {
+                removeQueue.add(obj);
+            }
+        }
+        level.removeObjects(removeQueue);
+    }
+
     private void handleCharacters(Level level, int delta){
         for(Character c : level.getCharacters()){
             handleGameObject(c,level,delta);
             handleHealthCheck(c);
+
+            //special cases for zombies
+            if (c instanceof Zombie) {
+                //special terrain check for zombies
+                switch (checkTerrainCollision(c, level.getTiles())) {
+                    case "water":
+                        c.setSpeed(2);
+                        break;
+                    default:
+                        c.setSpeed(1);
+                        break;
+                }
+            }
+
+            //special cases for the player
+            if(c instanceof Player){
+
+                //special terrain check
+                switch (checkTerrainCollision(c, level.getTiles())) {
+                    case "waste":
+                        c.damage(1);
+                        break;
+                    case "water":
+                        c.setSpeed(3);
+                        break;
+                    default:
+                        c.setSpeed(1);
+                        break;
+                }
+
+                ArrayList<LevelObject> removeQueue = new ArrayList<LevelObject>();
+
+                //we have to check if he collides with anything special, such as objectives for example
+                for(LevelObject obj : level.getLevelObjects()){
+
+                    //if we walk over ammo
+                    if(obj instanceof AmmoPickup){
+                        //if it collides
+                        if(obj.getBoundingShape().checkCollision(c.getBoundingShape())){
+                            //give max ammo
+                            playerGuns[0].maxAmmo();
+                            playerGuns[1].maxAmmo();
+                            //remove the object from the level
+                            removeQueue.add(obj);
+                        }
+                    }
+
+                    //if we walk over health
+                    if (obj instanceof HealthPickup) {
+                        if (obj.getBoundingShape().checkCollision(c.getBoundingShape())) {
+                            //add 50% of the maximum health to the player
+                            c.setHealth((int) c.getHealth() + (int) (c.getMaxHealth() * 0.5));
+                            if (c.getHealth() > c.getMaxHealth()) {
+                                c.setHealth((int)c.getMaxHealth());
+                                ((Player) c).healthBar.setHealthBar((Player)c);
+                            }
+                            //remove the object from the level
+                            removeQueue.add(obj);
+                        }
+                    }
+                }
+
+                level.removeObjects(removeQueue);
+            }
         }
     }
 
@@ -104,12 +184,17 @@ public class Physics {
     private void handleHealthCheck(Character c) {
         if (c.getHealth() <= 0) {
             //kills zombies
-            if (c.type.equals("zombie")) {
+            if (c instanceof Zombie) {
                 Integer k = 0;
                 List<Integer> dead = new ArrayList<>();
                 for (Zombie zombie: zombies) {
                     if (zombie.getHealth() <= 0) {
                         dead.add(k);
+                        try {
+                            zombie.drop();
+                        } catch (SlickException e) {
+                            e.printStackTrace();
+                        }
                     }
                     k++;
                 }
@@ -128,8 +213,9 @@ public class Physics {
                 }
                 dead.clear();
             }
+
             //kills player and triggers game over
-            else if (c.type.equals("player") && !gameOver) {
+            else if (c instanceof Player && !gameOver) {
                 music = gameOverMusic;
                 music.loop();
                 gameOver = true;
@@ -141,7 +227,7 @@ public class Physics {
 
         //calculate how much we actually have to move
         float x_movement = obj.getXVelocity()*delta;
-        float y_movement   = obj.getYVelocity()*delta;
+        float y_movement = obj.getYVelocity()*delta;
 
         //we have to calculate the step we have to take
         float step_y = 0;

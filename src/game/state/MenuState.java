@@ -5,8 +5,8 @@ import org.newdawn.slick.*;
 
 import java.awt.*;
 import java.awt.Font;
-import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -16,6 +16,9 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.util.ResourceLoader;
 
+import static game.state.LevelState.lastMenu;
+import static game.state.LevelState.menuChange;
+
 public class MenuState extends BasicGameState {
 
     private Font font;
@@ -23,6 +26,7 @@ public class MenuState extends BasicGameState {
     private Font smallFont;
     private TrueTypeFont smallTtf;
     private StateBasedGame game;
+    private ArrayList<String> menuItemsText;
 
     @Override
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -37,38 +41,23 @@ public class MenuState extends BasicGameState {
         smallTtf = new TrueTypeFont(smallFont, false);
         this.game = game;
 
+        menuItemsText = new ArrayList<>();
+        menuItemsText.add("Play");
+        menuItemsText.add("Settings");
+        menuItemsText.add("Exit");
+
+
         game.getState(1).init(container, game);
     }
 
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 
-        //g.setFont(ttf);
-//        ttf.drawString(450, 50, "ZombieGame");
         int center = container.getWidth()/2;
 
         ttf.drawString(center - 190, 50, "ZombieGame");
         smallTtf.drawString(container.getWidth()-215, container.getHeight()-30, "Music by Dubwolfer", Color.white);
-        //g.setFont(smallTtf);
-        if(Mouse.getX() <= center-115 && Mouse.getX() >= center-160 && Mouse.getY() >= 545 && Mouse.getY() <= 565) {
-            smallTtf.drawString(center-180, 150, "> Play", Color.green);
-        }else{
-//            smallTtf.drawString(center-180, 150, "> Play", Color.white);
-            smallTtf.drawString(center-160, 150, "Play", Color.white);
-        }
-        if(Mouse.getX() <= center-75 && Mouse.getX() >= center-160 && Mouse.getY() >= 500 && Mouse.getY() <= 515) {
-            g.setColor(Color.green);
-            smallTtf.drawString(center-180, 200, "> Settings", Color.green);
-        }else {
-            smallTtf.drawString(center-160, 200, "Settings", Color.white);
-        }
-
-        if(Mouse.getX() <= center-125 && Mouse.getX() >= center-160 && Mouse.getY() >= 455 && Mouse.getY() <= 475) {
-            g.setColor(Color.green);
-            smallTtf.drawString(center-180, 250, "> Exit", Color.green);
-        }else {
-            smallTtf.drawString(center-160, 250, "Exit", Color.white);
-        }
+        handleMenuItems(container, game, g);
     }
 
     public static Point getMousePos() {
@@ -77,29 +66,51 @@ public class MenuState extends BasicGameState {
 
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+    }
+
+    private void handleMenuItems(GameContainer container, StateBasedGame game, Graphics g) {
 
         int center = container.getWidth()/2;
+        int menuY = 150;
+        int mouseX = center-160;
+        int mouseY = 545;
+        boolean mouseHover = false;
+        int menuItem = 0;
+        g.setFont(smallTtf);
 
-        if(Mouse.isButtonDown(0))
-        {
-            //play
-            if(Mouse.getX() <= center-115 && Mouse.getX() >= center-160 && Mouse.getY() >= 545 && Mouse.getY() <= 565)
-            {
-                game.enterState(1, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
-                LevelState.paused = false;
+        for (String string: menuItemsText) {
+            if (!mouseHover) {
+                menuItem++;
             }
-
-            //settings
-            if(Mouse.getX() <= center-75 && Mouse.getX() >= center-160 && Mouse.getY() >= 500 && Mouse.getY() <= 515) {
-                game.enterState(3, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+            if (Mouse.getX() >= mouseX && Mouse.getX() <= mouseX + smallTtf.getWidth(string) && Mouse.getY() >= mouseY && Mouse.getY() <= mouseY + smallTtf.getHeight(string)) {
+                smallTtf.drawString(center-180, menuY, "> " + string, Color.green);
+                mouseHover = true;
+                if (Mouse.isButtonDown(0) && !menuChange) {
+                    menuChange = true;
+                    switch (menuItem) {
+                        case 1:
+                            game.enterState(1, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+                            LevelState.paused = false;
+                            lastMenu = getID();
+                            break;
+                        case 2:
+                            game.enterState(3, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+                            lastMenu = getID();
+                            break;
+                        case 3:
+                            System.exit(0);
+                            break;
+                    }
+                } else if (!Mouse.isButtonDown(0) && menuChange) {
+                    menuChange = false;
+                }
             }
-
-            //exit
-            if(Mouse.getX() <= center-125 && Mouse.getX() >= center-160 && Mouse.getY() >= 455 && Mouse.getY() <= 475) {
-                System.exit(0);
+            else {
+                smallTtf.drawString(center-160, menuY, string, Color.white);
             }
+            menuY += 50;
+            mouseY -= 50;
         }
-
     }
 
     @Override

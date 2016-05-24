@@ -35,16 +35,21 @@ public class Player extends Character {
         diagonalSpeed = 0.1f;
         maxHealth = 1000;
         health = maxHealth;
-        type = "player";
         healthBar = new HealthBar(20, Game.WINDOW_HEIGTH/Game.SCALE-12);
-//        healthBaseRect = new Rectangle(20, ((Game.WINDOW_HEIGTH / Game.SCALE) - 12), ((Game.WINDOW_WIDTH/Game.SCALE) / 5),(((Game.WINDOW_HEIGTH)/Game.SCALE) / 20) - 7);
-//        healthBar = new HealthBar(healthBaseRect.getX() + 1.1f, healthBaseRect.getY() + 1.5f, healthBaseRect.getWidth() - 2.5f, healthBaseRect.getHeight() - 3);
         ammoBar = new AmmoBar(Game.WINDOW_WIDTH/Game.SCALE - 20, Game.WINDOW_HEIGTH/Game.SCALE-12);
     }
 
     public void updateBoundingShape(){
         boundingShape.updatePosition(x+6,y+21);
     }
+
+    @Override
+    public int getTimer() {
+        return 0;
+    }
+
+    @Override
+    public void setTimer(int delta) { }
 
     //TODO
     public void setMouseQuadrant()
@@ -89,6 +94,7 @@ public class Player extends Character {
     public HealthBar getHealthBar() {
         return healthBar;
     }
+
     public AmmoBar getAmmoBar() {
         return ammoBar;
     }

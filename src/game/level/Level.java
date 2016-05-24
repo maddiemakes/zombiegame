@@ -4,6 +4,8 @@ import game.Game;
 import game.character.Character;
 
 import game.character.Player;
+import game.level.object.AmmoPickup;
+import game.level.object.HealthPickup;
 import game.level.tile.*;
 import game.weapons.Bullet;
 import org.newdawn.slick.SlickException;
@@ -22,9 +24,14 @@ public class Level {
     //a list of all characters present somewhere on this map
     private ArrayList<Character> characters;
 
+    //a list of the objects in this map (excluding characters)
+    private ArrayList<LevelObject> levelObjects;
+
     public Level(String level, Player player) throws SlickException{
         map = new TiledMap("data/levels/" + level + ".tmx","data/levels/");
         characters = new ArrayList<>();
+
+        levelObjects = new ArrayList<>();
 
         this.player = player;
         addCharacter(player);
@@ -66,9 +73,6 @@ public class Level {
                     case "water":
                         tile = new WaterTile(x,y);
                         break;
-                    case "ammo":
-                        tile = new AmmoTile(x,y);
-                        break;
                     default:
                         tile = new SolidTile(x,y);
                         break;
@@ -86,6 +90,22 @@ public class Level {
         return characters;
     }
 
+    public void addLevelObject(LevelObject obj){
+        levelObjects.add(obj);
+    }
+
+    public ArrayList<LevelObject> getLevelObjects(){
+        return levelObjects;
+    }
+
+    public void removeObject(LevelObject obj){
+        levelObjects.remove(obj);
+    }
+
+    public void removeObjects(ArrayList<LevelObject> objects) {
+        levelObjects.removeAll(objects);
+    }
+
     public Tile[][] getTiles(){
         return tiles;
     }
@@ -98,11 +118,17 @@ public class Level {
         //render the map first
         map.render(-(offset_x%16), -(offset_y%16), offset_x/16, offset_y/16, 33, 19);
 
-        //and then render the characters on top of the map
+        //render the bullets
         for(Bullet b : bullets) {
             b.render(offset_x, offset_y);
         }
 
+        //render the objects
+        for(LevelObject obj : levelObjects){
+            obj.render(offset_x, offset_y);
+        }
+
+        //and then render the characters on top of the map
         for(Character c : characters){
             c.render(offset_x,offset_y);
         }
@@ -137,16 +163,16 @@ public class Level {
     public int getYOffset(){
         int offset_y = 0;
 
-        int half_heigth = (int) (Game.WINDOW_HEIGTH/Game.SCALE/2);
+        int half_height = (int) (Game.WINDOW_HEIGTH/Game.SCALE/2);
 
-        int maxY = (int) (map.getHeight()*16)-half_heigth;
+        int maxY = (int) (map.getHeight()*16)-half_height;
 
-        if(player.getY() < half_heigth){
+        if(player.getY() < half_height){
             offset_y = 0;
         }else if(player.getY() > maxY){
-            offset_y = maxY-half_heigth;
+            offset_y = maxY-half_height;
         }else{
-            offset_y = (int) (player.getY()-half_heigth);
+            offset_y = (int) (player.getY()-half_height);
         }
 
         return offset_y;

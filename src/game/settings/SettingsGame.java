@@ -27,6 +27,9 @@ public class SettingsGame {
     public  static int     zombiesPerWave              = 10;
     public  static int     minimumZombieSpawnDelay     = 200;
 
+    public  static int     dropTimer                   = 5000;
+    public  static int     numberOfDrops               = 2;
+
     //(these are for when the others get muted)
     private static boolean muted                       = false;
     private static float   musicVolumeMax              = 1;
