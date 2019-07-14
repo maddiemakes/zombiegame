@@ -23,15 +23,15 @@ func _ready():
 	
 func _physics_process(delta):
 	if Input.is_action_pressed("ui_down"):
-		motion.y = SPEED
+		motion.y += 1
 	elif Input.is_action_pressed("ui_up"):
-		motion.y = -SPEED
+		motion.y -= 1
 	else:
 		motion.y = 0
 	if Input.is_action_pressed("ui_right"):
-		motion.x = SPEED
+		motion.x += 1
 	elif Input.is_action_pressed("ui_left"):
-		motion.x = -SPEED
+		motion.x -= 1
 	else:
 		motion.x = 0
 	if motion.x == 0 and motion.y == 0:
@@ -46,8 +46,9 @@ func _physics_process(delta):
 		anim= "right"
 	elif mouse_pos.x < position.x and !is_deadzone():
 		anim =  "left"
-	cur_tile = map.world_to_map(position)
+	cur_tile = map.world_to_map(global_position)
 	#print(cur_tile)
 	sprite.play(anim)
-	move_and_slide(motion)	
+	motion = motion.normalized()
+	move_and_slide(motion*SPEED)	
 	pass
