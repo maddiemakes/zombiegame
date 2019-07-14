@@ -9,7 +9,7 @@ var motion = Vector2()
 var mouse_pos
 var cur_tile
 onready var sprite = get_node("sprite")
-onready var map = get_parent().get_node("TileMap").get_node("BackgroundLayer")
+onready var map = get_parent().get_node("TileMap/BackgroundLayer")
 var anim = "down"
 
 func is_deadzone():
