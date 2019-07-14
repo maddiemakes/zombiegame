@@ -29,8 +29,9 @@ func _physics_process(delta):
 	#update data
 	player_pos = map.world_to_map(player.global_position)
 	curr_pos = map.world_to_map(global_position)
-	#print(get_distance(curr_pos, player_pos))
+	#Get Path
 	
+	#set velocity/anim
 	
 	#End logisitics
 	velocity = velocity.normalized()
