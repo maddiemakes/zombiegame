@@ -7,12 +7,13 @@ const SPEED = 125
 const SENSITIVITY = 10
 var motion = Vector2()
 var mouse_pos
+var cur_tile
 onready var sprite = get_node("sprite")
-onready var map = get_node("TileMap")
+onready var map = get_parent().get_node("TileMap").get_node("BackgroundLayer")
 var anim = "down"
 
 func is_deadzone():
-	return abs(mouse_pos.x - position.x) < SENSITIVITY or abs(mouse_pos.y - position.y) < SENSITIVITY
+	return abs(mouse_pos.x - position.x) < SENSITIVITY
 	pass
 
 func _ready():
@@ -45,6 +46,8 @@ func _physics_process(delta):
 		anim= "right"
 	elif mouse_pos.x < position.x and !is_deadzone():
 		anim =  "left"
+	cur_tile = map.world_to_map(position)
+	#print(cur_tile)
 	sprite.play(anim)
 	move_and_slide(motion)	
 	pass
