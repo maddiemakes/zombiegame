@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/usp_fire.ogg-f1fb0f34c3509a02e32a1a31133261a4.oggstr"
+
+[deps]
+
+source_file="res://data/audio/sounds/guns/usp_fire.ogg"
+dest_files=[ "res://.import/usp_fire.ogg-f1fb0f34c3509a02e32a1a31133261a4.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

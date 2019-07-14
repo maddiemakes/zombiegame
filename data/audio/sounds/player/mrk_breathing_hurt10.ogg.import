@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/mrk_breathing_hurt10.ogg-f7633a551407bbf82c7082f6a93d9cd8.oggstr"
+
+[deps]
+
+source_file="res://data/audio/sounds/player/mrk_breathing_hurt10.ogg"
+dest_files=[ "res://.import/mrk_breathing_hurt10.ogg-f7633a551407bbf82c7082f6a93d9cd8.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
