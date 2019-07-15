@@ -30,11 +30,14 @@ func _physics_process(delta):
 	player_pos = map.world_to_map(player.global_position)
 	curr_pos = map.world_to_map(global_position)
 	#Get Path
-	
+		
 	#set velocity/anim
 	
 	#End logisitics
 	velocity = velocity.normalized()
 	move_and_collide(velocity*SPEED)
 	$AnimatedSprite.play(anim)
+	if velocity == Vector2.ZERO:
+		$AnimatedSprite.playing = false
+		$AnimatedSprite.set_frame(0)
 	pass

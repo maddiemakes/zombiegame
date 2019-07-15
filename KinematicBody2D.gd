@@ -43,7 +43,7 @@ func _physics_process(delta):
 		motion.x -= 1
 	else:
 		motion.x = 0
-	if motion.x == 0 and motion.y == 0:
+	if motion == Vector2.ZERO:
 		sprite.playing = false
 		sprite.set_frame(0)
 	mouse_pos = get_global_mouse_position()
