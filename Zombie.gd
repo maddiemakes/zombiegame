@@ -4,6 +4,7 @@ extends KinematicBody2D
 # var a = 2
 # var b = "text"
 const SPEED = 200
+var health = 100
 var velocity = Vector2()
 var player_pos
 var curr_pos

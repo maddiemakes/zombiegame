@@ -5,7 +5,9 @@ extends KinematicBody2D
 # var b = "textvar"
 const SPEED = 125
 const SENSITIVITY = 10
+var health = 100
 var motion = Vector2()
+var is_slowed = false
 var mouse_pos
 var cur_tile
 onready var sprite = get_node("sprite")
@@ -16,12 +18,19 @@ func is_deadzone():
 	return abs(mouse_pos.x - position.x) < SENSITIVITY
 	pass
 
+func die():
+	print("The player is dead")
+	#TODO
+	pass
+
 func _ready():
 	# Called when the node is added to the scene for the first time.
 	# Initialization here
 	pass
 	
 func _physics_process(delta):
+	if health <= 0:
+		die()
 	if Input.is_action_pressed("ui_down"):
 		motion.y += 1
 	elif Input.is_action_pressed("ui_up"):
@@ -46,9 +55,18 @@ func _physics_process(delta):
 		anim= "right"
 	elif mouse_pos.x < position.x and !is_deadzone():
 		anim =  "left"
+	
 	cur_tile = map.world_to_map(global_position)
-	print(map.tile_set.tile_get_name(map.get_cellv(cur_tile)))
+	var tile_name = map.tile_set.tile_get_name(map.get_cellv(cur_tile))
+	if tile_name == "Toxic":
+		health = health - 0.1
+	elif tile_name == "Tar":
+		is_slowed = true
+	else:
+		is_slowed = false
+		health = health + 0.05
+	
 	sprite.play(anim)
 	motion = motion.normalized()
-	move_and_slide(motion*SPEED)	
+	move_and_slide(motion*SPEED*0.5) if is_slowed else move_and_slide(motion*SPEED)	
 	pass
