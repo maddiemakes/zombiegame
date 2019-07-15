@@ -9,7 +9,7 @@ var motion = Vector2()
 var mouse_pos
 var cur_tile
 onready var sprite = get_node("sprite")
-onready var map = get_parent().get_node("TileMap/BackgroundLayer")
+onready var map = get_parent().get_node("TileMap/CollisionLayer")
 var anim = "down"
 
 func is_deadzone():
@@ -47,7 +47,7 @@ func _physics_process(delta):
 	elif mouse_pos.x < position.x and !is_deadzone():
 		anim =  "left"
 	cur_tile = map.world_to_map(global_position)
-	#print(cur_tile)
+	print(map.tile_set.tile_get_name(map.get_cellv(cur_tile)))
 	sprite.play(anim)
 	motion = motion.normalized()
 	move_and_slide(motion*SPEED)	

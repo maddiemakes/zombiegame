@@ -10,7 +10,6 @@ var curr_pos
 var anim = "down"
 onready var player = get_tree().get_root().get_node("World/Player")
 onready var map = get_tree().get_root().get_node("World/TileMap/BackgroundLayer")
-onready var sprite = get_node("sprite")
 
 
 
