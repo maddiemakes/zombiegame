@@ -4,7 +4,7 @@ extends KinematicBody2D
 # var a = 2
 # var b = "textvar"
 const SPEED = 125
-const SENSITIVITY = 20
+const SENSITIVITY = 50
 var health = 100
 var motion = Vector2()
 var is_slowed = false
@@ -15,7 +15,7 @@ onready var map = get_parent().get_node("TileMap/CollisionLayer")
 var anim = "down"
 
 func is_deadzone():
-	return abs(mouse_pos.x - position.x) < SENSITIVITY || !abs(mouse_pos.y - position.y) > SENSITIVITY
+	return abs(mouse_pos.x - position.x) < SENSITIVITY || !abs(mouse_pos.y - position.y) < SENSITIVITY
 	pass
 
 func die():

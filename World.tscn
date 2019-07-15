@@ -6973,7 +6973,6 @@ extents = Vector2( 10, 12.4832 )
 [node name="World" type="Node"]
 
 [node name="TileMap" type="Node2D" parent="."]
-editor/display_folded = true
 
 [node name="BackgroundLayer" type="TileMap" parent="TileMap"]
 editor/display_folded = true
