@@ -12,6 +12,7 @@ var mouse_pos
 var cur_tile
 onready var sprite = get_node("sprite")
 onready var map = get_parent().get_node("TileMap/CollisionLayer")
+onready var health_text = get_node("Camera2D/Health")
 var anim = "down"
 
 func is_deadzone():
@@ -29,6 +30,7 @@ func _ready():
 	pass
 	
 func _physics_process(delta):
+	health_text.set_text("Health: " + str(health))
 	if health <= 0:
 		die()
 	if Input.is_action_pressed("ui_down"):
@@ -59,12 +61,13 @@ func _physics_process(delta):
 	cur_tile = map.world_to_map(global_position)
 	var tile_name = map.tile_set.tile_get_name(map.get_cellv(cur_tile))
 	if tile_name == "Toxic":
-		health = health - 0.1
+		health = health - 0.2
 	elif tile_name == "Tar":
 		is_slowed = true
 	else:
 		is_slowed = false
-		health = health + 0.05
+		if health < 100:
+			health = health + 0.05
 	
 	sprite.play(anim)
 	motion = motion.normalized()
