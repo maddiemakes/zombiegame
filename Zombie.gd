@@ -3,53 +3,53 @@ extends KinematicBody2D
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-const SPEED = 200
+enum STATES { IDLE, FOLLOW }
+var _state = null
+const SPEED = 75
 var health = 100
 var velocity = Vector2()
-var player_pos
-var curr_pos
 var anim = "down"
-onready var player = get_tree().get_root().get_node("World/Player")
-onready var map = get_tree().get_root().get_node("World/TileMap/CollisionLayer")
-var graph = []
+var path = []
+var target_point_world = Vector2()
+var target_position = Vector2()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#Generate map
-	var reg = RegEx.new()
-	reg.compile('wood_\\d+')
-	var tile_name
-	for i in range(0,99):
-		graph.append([])
-		for j in range(0,99):
-			tile_name = map.tile_set.tile_get_name(map.get_cellv(Vector2(i,j)))
-			if reg.search(tile_name):
-				graph[i].append(1)
-			else:
-				graph[i].append(0)
-	pass # Replace with function body.
+	_change_state(STATES.FOLLOW)
+	print("path" + str(path))
 
-func sqr(num):
-	return num*num
+func get_target_pos():
+	return get_parent().get_parent().get_node("Player").position
 
-func get_distance(initial, dest):
-	#distance heuristic for A*
-	return abs(sqrt(sqr(dest.x - initial.x) + sqr(dest.y - initial.y)))
+func _change_state(new_state):
+	if new_state == STATES.FOLLOW:
+		target_position = get_target_pos()
+		path = get_parent().get_parent().get_node('TileMap/CollisionLayer')._get_path(position, get_target_pos())
+		if not path or len(path) == 1:
+			_change_state(STATES.IDLE)
+			return
+		# The index 0 is the starting cell
+		# we don't want the character to move back to it in this example
+		target_point_world = path[1]
+	_state = new_state
 
-func _physics_process(delta):
-	#update data
-	player_pos = map.world_to_map(player.global_position)
-	curr_pos = map.world_to_map(global_position)
-	var tile_name = map.tile_set.tile_get_name(map.get_cellv(curr_pos))
-	#Get Path
-	
-	#set velocity/anim
-	
-	#End logisitics
-	velocity = velocity.normalized()
-	move_and_collide(velocity*SPEED)
+
+func _process(delta):
+	if not _state == STATES.FOLLOW:
+		return
+	var arrived_to_next_point = move_to(target_point_world)
+	print(arrived_to_next_point)
+	if arrived_to_next_point:
+		path.remove(0)
+		if len(path) == 0:
+			_change_state(STATES.IDLE)
+			return
+		target_point_world = path[0]
 	$AnimatedSprite.play(anim)
-	if velocity == Vector2.ZERO:
-		$AnimatedSprite.playing = false
-		$AnimatedSprite.set_frame(0)
-	pass
+func move_to(world_position):
+	var MASS = 10.0
+	var ARRIVE_DISTANCE = 10.0
+
+	var desired_velocity = (world_position - position).normalized()
+	move_and_slide(desired_velocity*SPEED)
+	return position.distance_to(world_position) < ARRIVE_DISTANCE

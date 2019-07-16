@@ -21,7 +21,7 @@ func is_deadzone():
 
 func die():
 	print("The player is dead")
-	#TODO
+	get_tree().reload_current_scene()
 	pass
 
 func _ready():
@@ -48,6 +48,10 @@ func _physics_process(delta):
 	if motion == Vector2.ZERO:
 		sprite.playing = false
 		sprite.set_frame(0)
+	else: 
+		var zombies = get_tree().get_nodes_in_group("Zombie")
+		for zombie in zombies:
+			zombie._change_state(zombie.STATES.FOLLOW)
 	mouse_pos = get_global_mouse_position()
 	if mouse_pos.y > position.y:
 		anim = "down"
@@ -66,7 +70,7 @@ func _physics_process(delta):
 		is_slowed = true
 	else:
 		is_slowed = false
-		if health < 100:
+		if health < 99.95:
 			health = health + 0.05
 	
 	sprite.play(anim)
