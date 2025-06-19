@@ -1,5 +1,5 @@
 # zombiegame
-2D zombie game by Madison Wells, Jacob Smith, and Heather Murray.
+2D zombie game by Madison Wells, Jacob Smith, and Hunter Murray.
 
 ## Gameplay Instructions
 - Zombies come in waves. Shoot them with your guns.
